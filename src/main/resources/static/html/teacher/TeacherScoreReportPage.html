@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title>教师查看学生报告</title>
+	<link rel="stylesheet" href="{$base}/raffle/bootstrap.min.css">
+	<style>
+        html
+        {
+         height:100%;
+         margin:0;
+        }
+        body
+        {
+            height:100%;
+            margin:0; 
+        }
+     .top{
+        width: 90%;
+        height: 8%;
+		margin-top:3%;
+      }
+	 .body{
+        width: 90%;
+        height: 92%;
+		margin-left:5%;
+      } 
+	 .file{
+        width: 100%;
+        height: 100%;
+		border-style:solid;
+		border-width:%1;
+		border-color:black;
+      }
+	  .pdfFile{
+	  font-family:YouYuan;
+	  padding-left:5%;
+	  }
+	 .item1{
+        width: 40%;
+        height: 5%;
+		margin-left:5%;
+      }
+	 .item2{
+        width: 40%;
+        height: 5%;
+		margin-left:85%;
+      }
+      .itemName{
+        font-family: YouYuan;
+        font-size: 20px;
+		padding-left:3%;
+      }
+	  
+	</style>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/jquery.isotope.min.js"></script>
+	<script src="../../js/jquery.inview.min.js"></script>
+	<script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.media.js"></script>
+	<script src="../../js/jquery.params.js"></script>
+	<script type="text/javascript">
+    var id;
+    var sid;
+    $(function() {
+         id = $.query.get("groupid");
+         sid=$.query.get("seminarid");
+          $.ajax({
+             type:"GET", //请求方式
+             url:"/group/"+id, //请求路径
+             cache: false,
+             contentType : "application/json",
+             dataType: 'json',   //返回值类型
+             success:function(data){
+               if(data)
+                   {
+                        $('#name').text("讨论课"+sid);
+                        $('#groupname').text(data.groupname);
+                        $('#leader').text(data.leader.name);
+                        $('.body').media({width:1000, height:800,autoplay: true,src: data.report,});
+                   }
+             },
+             error:function(result){
+                alert();
+             }
+      });
+    });
+    function sscore(){
+    var a=$('#score').val();
+    if(a)
+    {
+    if(a=="3"||a=="4"||a=="5")
+    {
+          $.ajax({
+             type:"PUT", //请求方式
+             url:"/group/"+id+"/grade", //请求路径
+             cache: false,
+             contentType : "application/json",
+             data:JSON.stringify(a),
+             dataType: 'json',   //返回值类型
+             success:function(data){
+                   alert("success!");
+                   window.location.href="TeacherScoreHome.html?seminarid="+sid;
+             },
+             error:function(result){
+             }
+      });
+      }
+      else
+      {
+      alert("填写分数区间不对！");
+      }
+      }
+      else
+      {
+      alert("未填写分数！");
+      }
+    }
+</script>
+</head>
+<body>
+
+<div class="top">
+	<div class="item1">
+		<label class="itemName" id="name"></label>
+		<label class="itemName" id="groupname"></label>
+		<label class="itemName" id="leader"></label>
+	</div>
+	<div class="item2">
+		<label class="itemName">评分:</label>
+		<input type="text" placeholder="3-5" id="score">
+		<button class="itemName" onclick="sscore()">确认打分</button>
+	</div>
+</div>
+<div class="body">
+	<div class="file">
+		<object class="pdfFile"></object>
+	</div>
+</div>
+</body>
+</html>

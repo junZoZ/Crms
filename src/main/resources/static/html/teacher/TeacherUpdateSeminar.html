@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>修改讨论课</title>
+    <link rel="stylesheet" href="../../css/teacher/content.css" type="text/css" />
+    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.isotope.min.js"></script>
+    <script src="../../js/jquery.inview.min.js"></script>
+    <script src="../../js/jquery.params.js"></script>
+    <script>
+        //var courseID = ${sessionScope.courseID};
+          var courseID = 12;
+          var seminarID;
+$(function() {
+     seminarID = $.query.get("seminarid");
+    });
+        window.onload=function(){
+         getCourseInformation(courseID);
+         getSeminarInformation(seminarID);
+    }
+
+
+ //得到课程的基本信息
+    function getCourseInformation(courseID)
+    {
+
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+courseID,
+        cache: true,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+        success:function(data){
+
+         $("#courseName").html(data.name);
+         $("#courseDescription").html(data.description);
+
+         },
+         error:function(data){
+         }
+         });
+    }
+
+   function getSeminarInformation(seminarID)
+   {
+       $.ajax({
+        type:"GET", //请求方式
+        url: "/seminar/" + seminarID,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+
+        success:function(data){
+
+         $("#name").val(data.name);
+         $("#description").val(data.description);
+         $('#groupingMethod').val(data.groupingMethod);
+
+          $("#startTime").val(data.startTime);
+           $("#endTime").val(data.endTime);
+
+           $('#report').val(data.seminarProportion.report);
+           $('#presentation').val(data.seminarProportion.presentation);
+           $('#c').val(data.seminarProportion.c);
+           $('#b').val(data.seminarProportion.b);
+           $('#a').val(data.seminarProportion.a);
+
+         },
+         error:function(data){
+         }
+         });
+
+
+   }
+
+
+function submit()
+        {
+             //判断是否为空()
+             if($('#name').val() == ""||$('#startTime').val()== ""||$('#endTime').val()== ""||$('#report').val()== ""|| $('#presentation').val()== ""||
+                    $('#c').val()== ""||$('#b').val()== ""||$('#a').val()== ""){
+                    alert("带*内容不能为空！");
+             }
+
+             else if( parseInt($('#c').val())+ parseInt($('#b').val())+ parseInt($('#a').val())!=100){
+                  alert("三种分数占比应为100！");
+             }
+             else if( parseInt($('#presentation').val())+ parseInt($('#report').val()) !=100){
+                  alert("报告和讨论课分数占比应为100！");
+             }
+             else
+             {
+
+                  s = "";
+                  if($('#groupingMethod').val() =="fixed")
+                     { s = s + "固定分组";}
+                  else
+                     { s = s + "随机分组"; }
+
+                 var newSemiar ={
+                                "name": $('#name').val(),
+                                "description": $('#description').val(),
+                                "startTime": $('#startTime').val(),
+                                "endTime": $('#endTime').val(),
+                                "groupingMethod" : s,
+                                "seminarProportion": {
+                                    "report": $('#report').val(),
+                                    "presentation": $('#presentation').val(),
+                                    "c": $('#c').val(),
+                                    "b": $('#b').val(),
+                                    "a": $('#a').val()
+                              }
+
+
+                 };
+
+
+
+            $.ajax({
+               type:"PUT",
+               url:"/seminar/"+seminarID,
+               cache: false,
+               contentType : "application/json",
+               data:JSON.stringify(newSemiar),
+               dataType: 'json',   //返回值类型
+               success:function(data){
+                    alert("提交成功！");
+                    window.location.href="TeacherSeminarInfo.html?seminarid="+seminarID;
+                },
+               error:function(result){
+               }
+               });
+
+
+        }
+
+        }
+
+        function reset()
+     {
+
+           var msg = confirm("确认重置？");
+           if( msg)
+           {
+                        getSeminarInformation(seminarID);
+           }
+
+         }
+
+             function goback()
+         {
+            window.location.href("TeacherSeminarInfo.html");
+         }
+
+    </script>
+</head>
+<body>
+
+<div class="top">
+    <div class="font">
+        课堂管理系统
+    </div>
+    <div class="icon">
+        <a href="TeacherCourseHomePage.html"><img src="../../images/home.png">首页</a>
+        <img src="../../images/help.png">帮助
+        <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="body">
+    <div class="navigation">
+        <div class="courseName" id="courseName"></div>
+        <div class="line"></div>
+        <div class="courseIntroduction" id="courseDescription"></div>
+    </div>
+    <div class="content">
+        <div class="block">
+            <div class="title">创建讨论课</div>
+            <div class="returnButton" onclick="goback()">返回上一页</div>
+            <div class="line"></div>
+            <div class="itemBody">
+                <div class="item">
+                    <label class="itemName">讨论课名称*:</label>
+                    <input type="text" id="name" class="bigInput">
+                </div>
+                <div class="item" style="height:40%;">
+                    <label class="itemName">讨论课说明:&nbsp;</label>
+                    <textarea class="textStyle" id="description"></textarea>
+                </div>
+                <div class="item">
+                    <label class="itemName">分组方式*:&nbsp;&nbsp;</label>
+                    <select class="bigSelect" id="groupingMethod">
+                        <option value ="fixed">固定分组</option>
+                        <option value ="random">随机分组</option>
+                    </select>
+                </div>
+                <div class="item">
+                    <label class="itemName">开始时间*:&nbsp;&nbsp; </label>
+                    <input type="date" id="startTime" class="timeStyle">
+                    <label class="itemName" style="margin-left: 10%">结束时间*:&nbsp;&nbsp;</label>
+                    <input type="date" id="endTime" class="timeStyle">
+                </div>
+                <div class="item">
+                    <label class="itemName">评分规则*:&nbsp;&nbsp;</label>
+                    <label class="itemName">讨论课分数占比</label>
+                    <input type="text" id="presentation" class="smallInput">
+                    <label class="itemName">报告分数占比</label>
+                    <input type="text"  id="report" class="smallInput">
+                </div>
+                <div class="item" style="margin-left: 18%">
+                    <label class="itemName">5分占比</label>
+                    <input type="text" id="c" class="smallInput">
+                    <label class="itemName">4分占比</label>
+                    <input type="text" id="b" class="smallInput">
+                    <label class="itemName">3分占比</label>
+                    <input type="text" id="a" class="smallInput">
+                </div>
+                <div class="item">
+                    <button class="submit" onclick="submit()">提交</button>
+                    <button class="reset" onclick="reset()">重置</button>
+
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>新建课程</title>
+    <link href="../../css/teacher/TeacherCreateCoursePage.css" rel="stylesheet" type="text/css"/>
+
+    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.isotope.min.js"></script>
+    <script src="../../js/jquery.inview.min.js"></script>
+    <script>
+        function submit()
+        {
+
+             //判断是否为空
+             if($('#name').val() == ""||$('#startTime').val()== ""||$('#endTime').val()== ""||$('#report').val()== ""|| $('#presentation').val()== ""||
+                    $('#c').val()== ""||$('#b').val()== ""||$('#a').val()== ""){
+                    alert("带*内容不能为空！");
+             }
+
+             else if( parseInt($('#c').val())+ parseInt($('#b').val())+ parseInt($('#a').val())!=100){
+                  alert("三种分数占比应为100！");
+             }
+             else if( parseInt($('#presentation').val())+ parseInt($('#report').val()) !=100){
+                  alert("报告和讨论课分数占比应为100！");
+             }
+             else
+             {
+                var newCourse ={"name": $('#name').val(),
+                             "description": $('#description').val(),
+                             "startTime":  $('#startTime').val(),
+                             "endTime":  $('#endTime').val(),
+                             "courseProportion": {
+                                    "report": $('#report').val(),
+                                    "presentation": $('#presentation').val(),
+                                    "c": $('#c').val(),
+                                    "b": $('#b').val(),
+                                    "a": $('#a').val()
+                              }
+                   };
+
+            $.ajax({
+               type:"POST",
+               url:"/course",
+               cache: false,
+               contentType : "application/json",
+               data:JSON.stringify(newCourse),
+               dataType: 'json',   //返回值类型
+               success:function(data){//person为后台返回的数据，json格式
+                    alert("提交成功！");
+                    window.location.href="TeacherCourseHomePage.html";
+                },
+               error:function(result){
+               }
+               });
+          }
+
+     }
+
+      function reset()
+     {
+
+           var msg = confirm("确认重置？");
+           if( msg)
+           {
+               $('#name').val("");
+               $('#description').val("");
+               $('#startTime').val("");
+               $('#endTime').val("");
+               $('#report').val("");
+               $('#presentation').val("");
+               $('#c').val("");
+               $('#b').val("");
+               $('#a').val("");
+           }
+
+         }
+
+    </script>
+</head>
+<body>
+<div class="top">
+    <div class="font">
+        课堂管理系统
+    </div>
+    <div class="icon">
+        <a href="TeacherCourseHomePage.html"><img src="../../images/home.png">首页</a>
+        <img src="../../images/help.png">帮助
+        <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="body">
+    <div class="navigation">
+        <div class="title">导航</div>
+        <div class="line"></div>
+        <div class="courseIntroduction"><a class="guidefont" href="TeacherHomePage.html">基本信息</a>
+            <a class="guidefont" href="TeacherCourseHomePage.html">课程信息</a>
+            <a class="guidefont" href="TeacherCreateCoursePage.html">新建课程</a>
+        </div>
+    </div>
+    <div class="content">
+
+        <div class="title">新建课程</div>
+        <hr class="line"/>
+
+        <br/>
+        <div class="form">
+            课程名称*：<input type="text" id="name"/>
+
+            <br/>
+            <br/>
+            开始时间*：<input type="date" id="startTime"/>  结束时间*：<input type="date" id="endTime"/><br/><br/>
+
+            课程介绍：<br/>
+            <textarea name="courseinfo" cols="80" rows="5" id="description"></textarea><br/>
+
+
+            评分规则*： <br/>
+
+            <div class="scorerule">
+                <p> 讨论课分数占比:<input type="text" id="presentation">报告分数占比：<input type="text" id="report"></p>
+
+                <p>五分占比:<input type="text" name="five" id="c" >四分占比：<input type="text" name="four" id = "b">三分占比：<input type="text" name="three" id = "a"></p>
+            </div>
+
+
+            <br/>
+
+            <div class="buttons">
+
+                <input class="button" type="submit" onclick="submit()"  value="提交" />
+                <input class="button" type="reset" onclick="reset()" value="重置" />
+
+            </div>
+
+        </div>
+
+
+        <div class="clear"></div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>老师查看讨论课</title>
+    <link href="../../css/teacher/content.css" rel="stylesheet" type="text/css"/>
+
+    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.isotope.min.js"></script>
+    <script src="../../js/jquery.inview.min.js"></script>
+    <script src="../../js/jquery.params.js"></script>
+    <script>
+          var courseID = 12;
+          var seminarID;
+$(function() {
+     seminarID = $.query.get("seminarid");
+    });
+        window.onload=function(){
+         getCourseInformation(courseID);
+       getSeminarInformation(seminarID);
+    }
+
+
+ //得到课程的基本信息
+    function getCourseInformation(courseID)
+    {
+
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+courseID,
+        cache: true,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+        success:function(data){
+
+         $("#courseName").html(data.name);
+         $("#courseDescription").html(data.description);
+
+         },
+         error:function(data){
+         }
+         });
+    }
+
+   function getSeminarInformation(seminarID)
+   {
+       $.ajax({
+        type:"GET", //请求方式
+        url: "/seminar/" + seminarID,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+
+        success:function(data){
+
+         $("#name").html(data.name);
+         $("#description").html(data.description);
+
+         if(data.groupingMethod == "fixed")
+         { $('#groupingMethod').html("固定分组");}
+         else{$('#groupingMethod').html("随机分组");}
+
+          $("#startTime").html(data.startTime);
+           $("#endTime").html(data.endTime);
+
+           str="";
+         $.each(data.topics,function(i,item){
+             //标签是老师查看某个班级信息 a href =".thml?courseID="" "
+                  str=str+"<a href=\"TeacherTopicCheck.html?topicid="+item.id+"&seminarid="+seminarID+"\"" + " " + " \" class=\"topicBlock\"> <div class=\"topicBlockFont\" id=\" " + item.id + " \" >"+ item.name +"</div></a> "
+			            });
+
+
+        str= str+" <a href=\"TeacherCreateTopic.html?seminarid="+seminarID+"\""+" "+"\" class=\"topicBlock\"> <img class=\"addImg\" src=\"../../images/smalladd.png\" alt=\"添加\"> </a> ";
+
+	     $("#topicBlockBody").html(str);
+
+
+         },
+         error:function(data){
+         }
+         });
+
+
+   }
+
+
+        function gotoScore()
+        {
+           window.location.href="TeacherScoreHome.html?seminarid="+seminarID;
+        }
+         //修改实现
+        function gotoModify()
+        {
+           window.location.href="TeacherUpdateSeminar.html?seminarid="+seminarID;
+        }
+
+         //删除实现
+         function Del()
+        {
+            var msg = confirm("确认删除？");
+           if( msg)
+           {
+              $.ajax({
+                    type:"DELETE", //请求方式
+                    url: "/seminar/" + seminarID,
+                    cache: false,   //如果使用缓存
+                    contentType : "application/json",
+                    dataType: 'json',   //返回值类型
+
+                     success:function(data){
+                              alert("已删除！");
+                              window.location.href="TeacherCourseInformation.html";
+                        },
+                     error:function(data){
+                            alert("页面加载错误！");
+                             }
+                         });
+           }
+        }
+
+
+    </script>
+</head>
+<body>
+
+
+
+<div class="top">
+    <div class="font">
+        课堂管理系统
+    </div>
+    <div class="icon">
+        <a href="TeacherCourseHomePage.html"><img src="../../images/home.png">首页</a>
+        <img src="../../images/help.png">帮助
+        <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="body">
+    <div class="navigation">
+        <div class="courseName" id="courseName"></div>
+        <div class="line"></div>
+        <div class="courseIntroduction" id="courseDescription"></div>
+    </div>
+    <div class="content">
+        <div class="block">
+            <div class="title" >讨论课信息</div>
+            <a href="TeacherCourseInformation.html" ><div class="returnButton">返回上一页</div></a>
+            <div class="line"></div>
+            <div class="itemBody">
+
+                <div class="item">
+                    <label class="itemName">讨论课名称：</label>
+                    <label class="itemName"  id="name"></label><br/>
+                    <label class="itemName">讨论课说明：</label>
+                    <label class="itemName" id="description"></label><br/>
+                    <label class="itemName">分组方式：</label>
+                    <label class="itemName" id="groupingMethod"></label><br/>
+                    <label class="itemName">开始时间：</label>
+                    <label class="itemName" id="startTime"></label><br/>
+                    <label class="itemName">结束时间：</label>
+                    <label class="itemName" id="endTime"></label><br/>
+                    <button class="leftButton" onclick="gotoScore()">评分</button>
+                    <button class="middleButton" onclick="gotoModify()">修改</button>
+                    <button class="rightButton" onclick="Del()">删除讨论课</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="block">
+
+            <div class="seminarInfo">
+                <div class="title">话题</div>
+                <div class="line"></div>
+                <div class="topicBlockBody" id="topicBlockBody">
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+</body>
+</html>

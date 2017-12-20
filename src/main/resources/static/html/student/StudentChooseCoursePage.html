@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>选择课程</title>
+    <link href="../../css/student/StudentChooseCoursePage.css" rel="stylesheet" type="text/css"/>
+    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.isotope.min.js"></script>
+    <script src="../../js/jquery.inview.min.js"></script>
+
+    <script>
+    window.onload=function(){
+      getCourseInformation();
+    }
+
+ //得到课程的基本信息
+    function getCourseInformation()
+    {
+     var cn=$("#course").val();
+    var tn=$("#teacher").val();
+    if(!cn)
+    {
+    cn="*"
+    }
+    if(!tn)
+    {
+    tn="*"
+    }
+    var tr=" <div class=\"title\">课程信息</div>"+
+              "<hr class=\"line\"/>"
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/class?courseName="+cn+"&teacherName="+tn,
+        cache: true,   //如果使用缓存
+        data:'',
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $.each(data,function(i,item){
+         tr=tr+  " <div class=\"main_box_right_content\">"
+				+"<h3 class=\"classtitle\">"+item.courseName
+				+	"<button onclick=\"cho(\'"+item.id+"\')\">选择课程</button></h3><div class=\"divideline\"></div><div  class=\"classinfo\"><table class=\"table\"><tr><td class=\"tabletext\">班级："+item.name+"</td><td class=\"tabletext\">地点："+item.site+"</td>"
+               +" </tr><tr><td class=\"tabletext\">班级人数："+item.numStudent+"</td>  <td class=\"tabletext\">时间:"+item.time+"</td></tr></table></div></div><p/>" }),
+                $("#class").html(tr)
+         },
+         error:function(data){
+             alert("页面加载错误！");
+         }
+         });
+    }
+
+    function cho(id)
+    {
+     var msg=confirm("是否要选择此门课？");
+   if(msg==1)
+   {
+    $.ajax({
+        type:"POST", //请求方式
+        url: "/class/"+id+"/student",
+        cache: true,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         window.location.href="StudentChooseCoursePage.html";
+         },
+         error:function(data){
+         }
+         });
+    }
+    }
+
+     </script>
+
+</head>
+<body>
+    	<div class="top">
+        	<div class="font">
+        		课堂管理系统
+        	</div>
+        	<div class="icon">
+                <a href="StudentCourseHome.html"><img src="../../images/home.png">首页</a>
+                <img src="../../images/help.png">帮助
+                <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+            </div>
+        	<div class="clear"></div>
+    	</div>
+        <div class="body">
+          <div class="navigation">
+                <div class="title">导航</div>
+                <div class="line"></div>
+                <div class="courseIntroduction"> <div class="courseIntroduction"><a class="guidefont" href="StudentHomePage.html">基本信息</a>
+                    <a class="guidefont" href="StudentCourseHome.html">课程信息</a>
+                    <a class="guidefont" href="StudentChooseCoursePage.html">选择课程</a></div>
+                </div>
+            </div>
+            <div class="content">
+              <div class="title">选择课程</div>
+              <hr class="line"/>
+                   
+          <div class="checkcourse">
+          <div class="itemName">
+          <p>任课教师：<input type="text"  id="teacher" name="teacher"></p>
+           <p>课程名称：<input type="text" id="course" name="course"><input type="submit" onclick="getCourseInformation()" value="查询"></p>
+           
+           </div>
+              </div>
+                <div id="class"></div>
+            </div>
+
+
+            <div class="clear"></div>
+        </div>
+</body>
+</html>

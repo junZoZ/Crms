@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>打分</title>
+    <link rel="stylesheet" href="../../css/common/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/teacher/content.css">
+</head>
+<script src="../../js/jquery.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/jquery.isotope.min.js"></script>
+<script src="../../js/jquery.inview.min.js"></script>
+<script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery.params.js"></script>
+<script type="text/javascript">
+var seminarID;
+$(function() {
+     seminarID = $.query.get("seminarid");
+    });
+   window.onload=function(){
+   scoreLoad(5);
+   }
+   function back()
+   {
+   window.location.href="TeacherSeminarInfo.html?seminarid="+seminarID;
+   }
+    function scoreLoad(id){
+      $.ajax({
+             type:"GET", //请求方式
+             url:"/seminar/"+id+"/group", //请求路径
+             cache: false,
+             contentType : "application/json",
+             dataType: 'json',   //返回值类型
+             success:function(data){
+               if(data)
+                   {
+                    $.each(data,function(i,item1){
+                    $.ajax({
+                    type:"GET", //请求方式
+                   url:"/group/"+item1, //请求路径
+                  cache: false,
+                 contentType : "application/json",
+                    dataType: 'json',   //返回值类型
+                    success:function(data){
+                    if(data)
+                    {
+                      var html = '<tbody class="tableContent"><tr><td>'+data.topic+'</td><td>'+data.groupname+'</td><td>'+data.leader.name+'</td><td>'+data.discussionScore+'</td><td>'+ data.is_submit+'</td><td>'+data.reportScore+'</td><td>'+data.score+'</td><td><a href="TeacherScoreReportPage.html?seminarid='+seminarID+'&groupid='+data.id+'"</a><img src="../../Img/view.png" alt="预览"> <a download="../../abc.rar" href="../../abc.rar"> <img src="../../images/download.png" alt="下载"></a></td></tr></tbody>';
+
+                          $('#scoreTable').append(html);
+                    }
+                    },
+                    error:function(result){
+                alert();}
+                    });
+                    })
+                   }
+             },
+             error:function(result){
+             }
+      }); }
+</script>
+<body>
+<div class="top">
+    <div class="font">
+        课堂管理系统
+    </div>
+    <div class="icon">
+        <a href="TeacherCourseHomePage.html"><img src="../../images/home.png">首页</a>
+        <img src="../../images/help.png">帮助
+        <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="body">
+    <div class="navigation">
+        <div class="courseName">OOAD</div>
+        <div class="line"></div>
+        <div class="courseIntroduction">ooad is xxx</div>
+    </div>
+    <div class="content">
+    <div class="contentBlock">
+        <div class="title">评分</div>
+        <div class="returnButton" onclick="back()">返回上一页</div>
+        <div class="line"></div>
+        <div class="itemBody">
+            <table class="table table-striped" id="scoreTable">
+                <thead class="tableTitle">
+                <tr>
+                    <th>Topic</th>
+                    <th>组名</th>
+                    <th>组长</th>
+                    <th>课堂讨论得分</th>
+                    <th>报告提交情况</th>
+                    <th>报告分数</th>
+                    <th>总分</th>
+                    <th>报告</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+    <div class="clear"></div>
+</div>
+</body>
+</html>

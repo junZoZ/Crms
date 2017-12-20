@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>学生查看讨论课（随机）</title>
+    <link href="../../css/student/content.css" rel="stylesheet" type="text/css"/>
+
+    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.isotope.min.js"></script>
+    <script src="../../js/jquery.inview.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://sandbox.runjs.cn/uploads/rs/55/sjckzedf/lanrenzhijia.css">
+    <link rel="stylesheet" href="bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/bootstrap-theme.css">
+    <script src="bootstrap/jquery-1.10.2.js"></script>
+    <script src="bootstrap/bootstrap.js"></script>
+    <script type="text/javascript" src="http://sandbox.runjs.cn/uploads/rs/55/sjckzedf/jquery-1.8.0.min.js">
+    var file = document.getElementById("file");
+var fileName = document.getElementById("filenName");
+function handleFile(){
+    fileName.value = file.value;
+}
+
+    </script>
+    <script>
+jQuery(document).ready(function($) {
+	$('.uploadbutton').click(function(){
+		$('.theme-popover-mask').fadeIn(100);
+		$('.theme-popover').slideDown(200);
+	})
+	$('.theme-poptit .close').click(function(){
+		$('.theme-popover-mask').fadeOut(100);
+		$('.theme-popover').slideUp(200);
+	})
+
+})
+
+</script>
+
+
+    <style>
+
+	div.dd{
+		width:150px;
+		float:left;
+		}
+		div.dd2{
+		width:150px;
+		float:left;
+		}
+    input.myipt1{
+		width:220px;
+		height:30px;
+
+
+    }
+	 input.myipt2{
+		width:60px;
+		height:22.5px;
+		opacity: 10;
+        filter:alpha(opacity=0);
+        cursor:pointer;
+		overflow: hidden;
+
+    }
+	 input.myipt3{
+		width:220px;
+		height:100px;
+
+    }
+	  .fileinput-button {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .fileinput-button input{
+            position:absolute;
+            right: 0px;
+            top: 0px;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            font-size: 200px;
+			background-color:#3CF;
+        }
+    </style>
+
+
+
+
+    <script>
+        //var courseID = ${sessionScope.courseID};
+          var courseID = 12;
+          var seminarID = 34;
+
+         window.onload=function(){
+         getCourseInformation(courseID);
+         getSeminarInformation(seminarID);
+         getMyGroupInformation(seminarID);
+    }
+
+
+ //得到课程的基本信息
+    function getCourseInformation(courseID)
+    {
+
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+courseID,
+        cache: true,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+        success:function(data){
+
+         $("#courseName").html(data.name);
+         $("#courseDescription").html(data.description);
+
+         },
+         error:function(data){
+         }
+         });
+    }
+
+   function getSeminarInformation(seminarID)
+   {
+       $.ajax({
+        type:"GET", //请求方式
+        url: "/seminar/" + seminarID,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+
+        success:function(data){
+
+         $("#name").html(data.name);
+         $("#description").html(data.description);
+
+
+          $("#startTime").html(data.startTime);
+          $("#endTime").html(data.endTime);
+
+           str="";
+         $.each(data.topics,function(i,item){
+             //标签是老师查看某个话题信息 a href =".thml?courseID="" "
+                  str=str+"<a href=\" StudentViewTopicPage(random).html?tipicid="+item.id+" \" class=\"smallblock\"> <div class=\"blockFont\" id=\" " + item.id + " \" >"+ item.name +"</div></a> "
+			            });
+
+	     $("#blockBody").html(str);
+
+
+         },
+         error:function(data){
+         }
+         });
+   }
+
+ function getMyGroupInformation(seminarID)
+   {
+       $.ajax({
+        type:"GET", //请求方式
+        url: "/seminar/" + seminarID+"/group/my",
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+
+        success:function(data){
+
+
+           str="<label class=\"itemName\">选择话题：</label><label class=\"itemName\" > ";
+
+             $.each(data.topics,function(i,item){
+
+                  str=str +  item.name+"&nbsp\;&nbsp\;"
+			            });
+               str +=" </label><br/><label class=\"itemName\">组号：</label> <label class=\"itemName\" >"+ data.id+" </label><br/>";
+                str+= "  <label class=\"itemName\">组长：</label><label class=\"itemName\" > "+ data.leader.name
+                +"</label><br/><label class=\"itemName\">组员：</label><label class=\"itemName\" >"
+            $.each(data.members,function(i,item){
+                str=str + item.name+"&nbsp\;&nbsp\;"
+			            });
+            str +="</label><br/>";
+	     $("#groupItem").html(str);
+
+         },
+         error:function(data){
+             alert("页面加载错误！");
+         }
+         });
+   }
+
+function goback()
+    {
+    //你所要跳转的页面
+        window.location.href="StudentCourseInformation.html";
+    }
+
+function checkGrade()
+{
+   window.location.href="StudentViewGradePage.html";
+}
+    </script>
+</head>
+<body>
+    
+        <div class="top">
+          <div class="font">
+            课堂管理系统
+          </div>
+          <div class="icon">
+              <a href="StudentCourseHome.html"><img src="../../images/home.png">首页</a>
+              <img src="../../images/help.png">帮助
+              <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="body">
+            <div class="navigation">
+                <div class="courseName" id="courseName"></div>
+                <div class="line"></div>
+                <div class="courseIntroduction" id="courseDescription"></div>
+            </div>
+            <div class="content">
+                <div class="block">
+                    <div class="title" id="name"></div>
+                    <button class="returnButton"  onClick="goback()">返回上一页</button>
+                    <div class="line"></div>
+                    <div class="itemBody">
+                        <div class="item">
+                          <label class="itemName" id="description"></label>
+						  <div class="line"></div>
+                        </div>
+						<div class="item">
+                          <label class="itemName">分组方式：</label>
+						  <label class="itemName">随机分组</label><br/>
+                          <label class="itemName">开始时间：</label>
+						  <label class="itemName"id="startTime"></label><br/>
+						  <label class="itemName" >结束时间：</label>
+						  <label class="itemName" id="endTime"></label>
+						  <div class="item"></div>
+						  <div class="line"></div>
+						</div>
+						<div class="item"></div>
+						<div class="item" id="groupItem">
+
+                        </div>
+					</div>
+                </div>
+				 <div class="block">
+                    <div class="title">话题</div>
+                    <div class="line"></div>
+					<div class="blockBody" id="blockBody">
+
+					</div>
+                    <div class="item">
+                        <button class="uploadbutton" >上传报告</button>
+				    </div>
+					<div class="item">
+                        <button class="viewscorebutton" onclick="checkGrade()">查看分数</button>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <!--                              上传报告                     -->
+        <div class="theme-popover">
+            <div class="theme-poptit">
+                <a href="javascript:;" title="关闭" class="close">×</a>
+                <h3 align="center">上传报告</h3>
+            </div>
+            <div class="theme-popbod dform">
+                <form class="theme-signin" name="loginform" action="" method="post">
+                    <ol>
+
+
+                        <li><strong>选择文件：</strong><input class="myipt1" type="text"  id="upfile" name="upfile" /></li>
+
+                        <li> <span class="btn btn-success fileinput-button">
+            <span>浏览</span>
+            <input type="file" id="file" onchange="upfile.value=this.value" >
+        </span></li>
+
+
+
+
+                        <div class="dd" >
+                            <li><input class="btn btn-primary" type="submit" name="submit" value=" 提 交 " /></li>
+                        </div><div class="dd">
+
+                        <li><input class="btn btn-primary" type="submit" name="reset" value=" 重 置 " /></li>
+                    </div>
+                    </ol>
+                </form>
+            </div>
+        </div>
+        <div class="theme-popover-mask"></div>
+
+</body>
+</html>

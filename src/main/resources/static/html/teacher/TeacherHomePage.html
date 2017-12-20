@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>教师基本信息</title>
+     <link href="../../css/common/HomePage.css" rel="stylesheet" type="text/css"/>
+    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.isotope.min.js"></script>
+    <script src="../../js/jquery.inview.min.js"></script>
+
+    <script>
+    window.onload=function(){
+      getCourseInformation();
+    }
+
+ //得到课程的基本信息
+    function getCourseInformation()
+    {
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/me",
+        cache: true,   //如果使用缓存
+        data:'',
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+       document.getElementById("tid").innerText=data.id;
+       document.getElementById("name").innerText=data.name;
+       document.getElementById("number").innerText=data.number;
+       document.getElementById("phone").innerText=data.phone;
+       document.getElementById("gender").innerText=data.gender;
+       document.getElementById("email").innerText=data.email;
+       document.getElementById("title").innerText=data.title;
+       document.getElementById("school").innerText=data.school.name;
+         },
+         error:function(data){
+         }
+         });
+    }
+
+
+    function login()
+    {
+    window.location.href="/me/modify/Teacher";
+    }
+
+     </script>
+
+</head>
+<body>
+    	<div class="top">
+        	<div class="font">
+        		课堂管理系统
+        	</div>
+        	<div class="icon">
+                <a href="TeacherCourseHomePage.html"><img src="../../images/home.png">首页</a>
+                <img src="../../images/help.png">帮助
+                <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+        	</div>
+        	<div class="clear"></div>
+    	</div>
+        <div class="body">
+            <div class="navigation">
+                <div class="title">导航</div>
+                <div class="line"></div>
+                <div class="courseIntroduction"> <a class="guidefont" href="TeacherHomePage.html">基本信息</a>
+                    <a class="guidefont" href="TeacherCourseHomePage.html">课程信息</a>
+                    <a class="guidefont" href="TeacherCreateCoursePage.html">新建课程</a>
+                </div>
+            </div>
+            <div class="content">
+            
+               <div class="title">基本信息</div>
+               <div class="line"></div>
+                <div class="imgarea"><img class="img" src="../../images/link.jpg"/></div>
+                
+                 <div class="info">
+        <table class="table">
+        <tr class="itemName">
+        <td >用户名：<span id="tid">12345678978</span></td>
+        <td>教工号：<span id="number">12345678978</span></td>
+        </tr>
+        <tr class="itemName">
+        <td>姓名：<span id="name">12345678978</span></td>
+        <td>性别：<span id="gender">12345678978</span></td>
+        </tr>
+        <tr class="itemName">
+        <td>学校：<span id="school">12345678978</span></td>
+        <td>职称：<span id="title">12345678978</span></td>
+        </tr>
+        <tr class="itemName">
+        <td>E-mail：<span id="email">12345678978</span></td>
+        <td>联系方式：<span id="phone">12345678978</span></td>
+        </tr>
+        </table>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="button">
+        <button onclick="login()">修改</button>
+        </div>
+        </div>
+            </div>
+            
+           
+            <div class="clear"></div>
+        </div>
+</body>
+</html>

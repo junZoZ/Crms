@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>查看话题</title>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/teacher/content.css">
+    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.isotope.min.js"></script>
+    <script src="../../js/jquery.inview.min.js"></script>
+
+    <script>
+    window.onload=function(){
+      getTopicInformation(5);
+    }
+
+ //得到课程的基本信息
+    function getTopicInformation(id)
+    {
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/topic/"+id,
+        cache: true,   //如果使用缓存
+        data:'',
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+
+              $("#name").html(data.name),
+              $("#description").html(data.description),
+              $("#groupLimit").html(data.groupLimit),
+              $("#groupStuLim").html(data.groupStuLim),
+              $("#groupChoose").html(data.groupChoose)
+         },
+         error:function(data){
+
+         }
+         });
+    }
+     </script>
+
+    <script type="text/javascript">
+    function del()
+    {
+       var bool=confirm("是否要删除此课程!");
+
+    }
+
+      function goback()
+    {
+    window.location.href="TeacherSeminarInfo.html";
+    }
+     </script>
+
+
+</head>
+<body>
+    
+        <div class="top">
+          <div class="font">
+            课堂管理系统
+          </div>
+          <div class="icon">
+              <a href="TeacherCourseHomePage.html"><img src="../../images/home.png">首页</a>
+              <img src="../../images/help.png">帮助
+              <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="body">
+            <div class="navigation">
+                <div class="courseName">OOAD</div>
+                <div class="line"></div>
+                <div class="courseIntroduction">ooad is xxx</div>
+            </div>
+            <div class="content">
+                <div class="block">
+                    <div class="title">查看话题</div>
+                    <div class="returnButton" onclick="goback()">返回上一页</div>
+                    <div class="line"></div>
+                    <div class="itemBody">
+                        <div class="item">
+                          <strong class="itemName" >题   目 :</strong>
+                          <label class="itemName"id="name"></label>
+                        </div>
+                        <div class="item" style="height:40%;">
+                          <strong class="itemName" >说   明 :</strong>
+                          <label class="itemName" id="description"></label>
+                        </div>
+                        <div class="item">
+                          <strong class="itemName">组数限制: </strong>
+                         <label class="itemName" id="groupLimit"></label>
+                        </div>
+                        <div class="item">
+                          <strong class="itemName">组内人数上限: </strong>
+                          <label class="itemName" id="groupStuLim"> </label>
+                        </div>
+                        <div class="item">
+                          <strong class="itemName">已选小组: </strong>
+                          <label  class="itemName"  id="groupChoose"> </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>学生修改固定分组</title>
+    <link href="../../css/student/content.css" rel="stylesheet" type="text/css"/>
+    <script src="../../js/jquery.js"></script>
+
+    <script type="text/javascript">
+    var groupId = 15;
+    var classId = 12;
+   window.onload=function(){
+
+    load(5);
+    getOtherStudent();
+   }
+    function load(id){
+
+      $.ajax({
+             type:"GET", //请求方式
+             url:"/class/"+id+"/classgroup", //请求路径
+             cache: false,
+             contentType : "application/json",
+             dataType: 'json',   //返回值类型
+
+             success:function(data){
+               if(data)
+                   {
+
+                   var str=' <table class="studenttable" >'+
+                    '<tr><th>角色</th><th>学号</th><th>姓名</th><th>操作</th> </tr><tr><td>队长</td><td>'+data.leader.number+'</td> <td>'+data.leader.name+'</td> <td></td></tr>';
+
+
+                    $.each(data.member,function(i,item){
+                    if(i%2==0)
+                    {str+='<tr class="alt"><td>队员</td><td>'+item.number+'</td> <td>'+item.name+'</td> <td><img src="../../Img/exit.png" onclick="Del('+item.id+')"></td></tr>';}
+                    else
+                     {str+='<tr><td>队员</td><td>'+item.number+'</td> <td>'+item.name+'</td> <td><img src="../../Img/exit.png" onclick="Del('+item.id+')"></td></tr>';}
+
+                          });
+                       str+='</table>';
+                       $('#tableBody1').html(str);
+                    }
+
+
+             },
+                    error:function(result){
+                alert();}
+      });
+       }
+
+       function getOtherStudent()
+    {
+     $.ajax({
+             type:"GET", //请求方式
+             url:"/class/"+classId+"/student?nameWith="+ $('#name').val() +"&noWith=" +$('#no').val(), //请求路径
+
+             cache: false,
+             contentType : "application/json",
+             dataType: 'json',   //返回值类型
+
+             success:function(data){
+               if(data)
+                   {
+
+                   var str=' <table class="studenttable" >'+
+                    '<tr><th>学号</th><th>姓名</th><th>操作</th> </tr>';
+
+                    $.each(data.member,function(i,item){
+                    if(i%2==0)
+                    {str+='<tr class="alt"><td>'+item.number+'</td> <td>'+item.name+'</td> <td><img src="../../Img/home.png" onclick="add('+item.id+')"></td></tr>';}
+                    else
+                     {str+='<tr><td>'+item.number+'</td> <td>'+item.name+'</td> <td><img src="../../Img/home.png" onclick="add('+item.id+')"></td></tr>';}
+
+                          });
+                       str+='</table>';
+                       $('#tableBody2').html(str);
+
+                    }
+
+
+             },
+                    error:function(result){
+                    }
+      });
+       }
+
+  function Del(memberId)
+  {
+        var msg = confirm("确定要删除吗？");
+        if(msg){
+
+
+               $.ajax({
+             type:"PUT", //请求方式
+             url:"/group/"+groupId+"/remove", //请求路径
+             cache: false,
+             contentType : "application/json",
+             data:JSON.stringify(memberId),
+             dataType: 'json',   //返回值类型
+
+             success:function(data){
+                        load(5);
+                        getOtherStudent();
+
+             },
+                    error:function(result){
+                alert("页面加载错误！");}
+      });
+             }
+  }
+
+   function add(memberId)
+  {
+        var msg = confirm("确定要添加吗？");
+        if(msg){
+
+
+               $.ajax({
+             type:"PUT", //请求方式
+             url:"/class/"+classId+"/classgroup/add", //请求路径
+             cache: false,
+             contentType : "application/json",
+             data:JSON.stringify(memberId),
+             dataType: 'json',   //返回值类型
+
+             success:function(data){
+                        alert("添加成功！");
+                        load(5);
+                         getOtherStudent();
+
+             },
+                    error:function(result){
+                alert("页面加载错误！");}
+      });
+             }
+  }
+   function goback()
+    {
+    //你所要跳转的页面
+    window.location.href="StudentViewGroupPage.html";
+    }
+
+</script>
+</head>
+
+<body>
+
+<div class="top">
+    <div class="font">
+        课堂管理系统
+    </div>
+    <div class="icon">
+        <a href="StudentCourseHome.html"><img src="../../images/home.png">首页</a>
+        <img src="../../images/help.png">帮助
+        <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="body">
+    <div class="navigation">
+        <div class="courseName">OOAD</div>
+        <div class="line"></div>
+        <div class="courseIntroduction">ooad is xxx</div>
+    </div>
+    <div class="content">
+        <div class="block">
+            <div class="title">固定分组</div>
+            <div class="returnButton" onclick="goback()">返回上一页</div>
+            <div class="line"></div>
+            <div class="itemBody">
+                <div class="item" id="tableBody1">
+
+                </div>
+            </div>
+            <div class="block">
+                <div class="title">添加队员</div>
+                <div class="line"></div>
+                <div class="itemBody">
+                    <div class="item">
+                        <label class="itemName">学号：</label>
+                        <input type="text"  id="no">
+                        <label class="itemName">姓名：</label>
+                        <input type="text" id="name">
+                        <div class="returnButton" onclick="getOtherStudent()" >查询</div>
+                    </div>
+                    <div class="item" id="tableBody2">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+</body>
+
+</html>
