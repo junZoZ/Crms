@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>学生查看小组</title>
+    <link href="../../css/student/content.css" rel="stylesheet" type="text/css"/>
+    <script>
+            function goback()
+    {
+    //你所要跳转的页面
+    window.location.href="StudentCourseInformation.html";
+    }
+     function gonext()
+    {
+    //你所要跳转的页面
+    window.location.href="StudentModifyGroupPage.html";
+    }
+    </script>
+
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.isotope.min.js"></script>
+    <script src="../../js/jquery.inview.min.js"></script>
+    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+   window.onload=function(){
+   load(5);
+   }
+    function load(id){
+      $.ajax({
+             type:"GET", //请求方式
+             url:"/class/"+id+"/classgroup", //请求路径
+             cache: false,
+             contentType : "application/json",
+             dataType: 'json',   //返回值类型
+             success:function(data){
+               if(data)
+                   {
+                   var html='<tr><td>队长</td><td>'+data.leader.number+'</td> <td>'+data.leader.name+'</td> </tr>';
+                   $('#studenttable').append(html);
+                    $.each(data.member,function(i,item){
+                    if(i%2==0)
+                    {html='<tr class="alt"><td>队员</td><td>'+item.number+'</td> <td>'+item.name+'</td> </tr>';}
+                    else
+                     {html='<tr><td>队员</td><td>'+item.number+'</td> <td>'+item.name+'</td> </tr>';}
+                          $('#studenttable').append(html);
+                          });
+                    }
+             },
+                    error:function(result){
+                alert();}
+      }); }
+</script>
+
+</head>
+<body>
+    
+        <div class="top">
+          <div class="font">
+            课堂管理系统
+          </div>
+          <div class="icon">
+              <a href="StudentCourseHome.html"><img src="../../images/home.png">首页</a>
+              <img src="../../images/help.png">帮助
+              <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="body">
+            <div class="navigation">
+                <div class="courseName">OOAD</div>
+                <div class="line"></div>
+                <div class="courseIntroduction">ooad is xxx</div>
+            </div>
+            <div class="content">
+                <div class="block">
+                    <div class="title">固定分组</div>
+                    <div class="returnButton"  onClick="goback()">返回上一页</div>
+                    <div class="line"></div>
+                    <div class="itemBody">
+                        <div class="item">
+                          <table class="studenttable" id="studenttable">
+
+                          </table>
+                        </div>
+						<div class="itemBody">
+						  <div class="item">
+						<button class="modifyButton" onclick="gonext()"> 修改 </button>
+						</div>
+					</div>
+					</div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+</body>
+</html>

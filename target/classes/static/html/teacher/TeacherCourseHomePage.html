@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>教师主页</title>
+   <link href="../../css/teacher/TeacherCourseHomePage.css" rel="stylesheet" type="text/css"/>
+    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.isotope.min.js"></script>
+    <script src="../../js/jquery.inview.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="http://sandbox.runjs.cn/uploads/rs/55/sjckzedf/lanrenzhijia.css">
+    <script>
+    function mody(id)
+    {
+       jQuery(document).ready(function($) {
+		$('.theme-popover-mask').fadeIn(100);
+		$('.theme-popover').slideDown(200);
+	  $('.theme-poptit .close').click(function(){
+		$('.theme-popover-mask').fadeOut(100);
+		$('.theme-popover').slideUp(200);
+	})
+    })
+  }
+</script>
+
+
+    <style>
+	div.dd{
+		width:150px;
+		float:left;
+		}
+    input.myipt1{
+		width:220px;
+		height:30px;
+
+    }
+	 input.myipt2{
+		width:120px;
+		height:20px;
+
+    }
+	 input.myipt3{
+		width:220px;
+		height:100px;
+
+    }
+    </style>
+
+    <script type="text/javascript">
+    function del(id)
+    {
+    var bool=confirm("是否要删除此课程!");
+    var u= "/course/"+id
+    if(bool)
+    {
+        $.ajax({
+        type:"DELETE", //请求方式
+        url: u,
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+                     window.location.href="TeacherCourseHomePage.html";
+         },
+         error:function(data){
+         }
+         });
+     }
+    }
+     </script>
+
+    <script>
+    window.onload=function(){
+      getCourseInformation();
+    }
+
+ //得到课程的基本信息
+    function getCourseInformation()
+    {
+    var tr=" <div class=\"title\">课程信息</div>"+
+              "<hr class=\"line\"/>"
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course",
+        cache: true,   //如果使用缓存
+        data:'',
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+        $.each(data,function(i,item){
+        tr=tr+" <div class=\"main_box_right_content\"><h3 class=\"classtitle\">"+item.name+"<button  onclick=\"del(\'"+item.id+"\')\">删除课程</button><button  onclick=\"mody(\'"+item.id+"\')\">修改课程</button></h3><hr/>"
+              +"<div class=\"classinfo\" ><a  href=\"TeacherCourseInformation.html"+"\" style=\"color:black;text-decoration:none\" ><table class=\"table\"><tr><td class=\"tabletext\">班级数："+item.numClass+"</td>  <td class=\"tabletext\">学生人数："+item.numStudent+"</td></tr>"
+               +"<tr><td class=\"tabletext\">开始时间："+item.startTime+"</td>  <td class=\"tabletext\">结束时间:"+item.endTime+"</td></tr></table></a></div></div><br/>";
+                    }),
+                    tr=tr+"<div class=\"main_box_right_content\" onclick=\"add()\"><img class=\"addcourse\" src=\"../../images/add.png\"></div>"
+              $("#course").html(tr)
+         },
+         error:function(data){
+         }
+         });
+    }
+    function add(){
+       window.location.href="TeacherCreateCoursePage.html";
+    }
+     </script>
+
+
+</head>
+<body>
+
+    	<div class="top">
+        	<div class="font">
+        		课堂管理系统
+        	</div>
+        	<div class="icon">
+                <a href="TeacherCourseHomePage.html"><img src="../../images/home.png">首页</a>
+                <img src="../../images/help.png">帮助
+                <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+        	</div>
+        	<div class="clear"></div>
+    	</div>
+        <div class="body">
+            <div class="navigation">
+                <div class="title">导航</div>
+                <div class="line"></div>
+                <div class="courseIntroduction">
+                    <a class="guidefont" href="TeacherHomePage.html">基本信息</a>
+                    <a class="guidefont" href="TeacherCourseHomePage.html">课程信息</a>
+                    <a class="guidefont" href="TeacherCreateCoursePage.html">新建课程</a>
+                </div>
+            </div>
+            <div class="content" id="course">
+
+            </p>
+
+                <div class="clear"></div>
+        </div>
+        </div>
+
+  <!--........ 弹窗........                                         -->
+        <div class="theme-popover">
+            <div class="theme-poptit">
+                <a href="javascript:;" title="关闭" class="close">×</a>
+                <h3 align="center">创建课程</h3>
+            </div>
+            <div class="theme-popbod dform">
+                <form class="theme-signin" name="loginform" >
+                    <ol>
+
+                        <li><strong>课程名称：</strong><input class="myipt1" type="text"  value="OOAD"  /></li>
+                        <li><strong>开始时间：</strong><input class="myipt2" type="date"  value="2017-9-1"  /></li>
+                        <li><strong>结束时间：</strong><input class="myipt2" type="date"  value="2018-1-1"  /></li>
+                        <li><strong>课程介绍：</strong><input class="myipt3" type="text"  value="xxxxx"  /></li>
+
+                        <div class="dd" >
+                            <li><input class="btn btn-primary" type="submit" name="submit" value=" 提 交 " onclick="modify()"/></li>
+                        </div><div class="dd">
+
+                        <li><input class="btn btn-primary" type="submit" name="reset" value=" 重 置 " /></li>
+                    </div>
+                    </ol>
+                </form>
+            </div>
+        </div>
+        <div class="theme-popover-mask"></div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Online View PDF</title>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.media.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('.media').media({width:800, height:600,autoplay: true,src: 'abc.pdf',});
+    });
+</script>
+
+<script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.isotope.min.js"></script>
+<script src="js/jquery.inview.min.js"></script>
+<script src="js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+
+
+<script type="text/javascript">
+    function login(){
+         $.ajax({
+             type:"PUT", //请求方式
+             url:"/me", //请求路径
+             cache: false,
+             contentType : "application/json",
+             success:function(data){
+
+             },
+             error:function(result){
+
+             }
+      });
+    };
+    </script>
+
+
+</head>
+<body>
+<div class="media"></div>
+<a href="abc.pdf" target="_blank">打开PDF</a>
+<a href="/me" data-method="POST" > <button>修改</button></a>
+</body>
+</html>

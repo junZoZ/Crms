@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>创建话题</title>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/teacher/content.css">
+    <link rel="stylesheet" href="../../css/teacher/frame.css">
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/jquery.isotope.min.js"></script>
+    <script src="../../js/jquery.inview.min.js"></script>
+    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../js/jquery.params.js"></script>
+    <script type="text/javascript">
+var seminarid;
+$(function() {
+     seminarid = $.query.get("seminarid");
+    });
+ function black(){
+   document.getElementById("name").value="";
+   document.getElementById("description").value="";
+   document.getElementById("groupLimit").value="";
+   document.getElementById("limit").value="";
+    };
+  function submit(){
+   var a={
+   "name":$('#name').val(),
+   "description":document.getElementById("description").value,
+   "groupLimit":$('#groupLimit').val(),
+   "limit":$('#limit').val()
+  };
+  if(!$('#name').val()||(document.getElementById("description").value=="")||!$('#groupLimit').val()||!$('#limit').val())
+  {
+  alert("信息未填写完整！");
+  }
+  else
+  {
+  $.ajax({
+             type:"POST", //请求方式
+             url:"/seminar/"+seminarid+"/topic", //请求路径
+             cache: false,
+             contentType : "application/json",
+             data:JSON.stringify(a),
+             dataType: 'json',   //返回值类型
+             success:function(data){
+               if(data)
+                   {
+                        alert("success!");
+                        window.location.href="TeacherSeminarInfo.html?seminarid="+seminarid;
+                   }
+             },
+             error:function(result){
+                alert();
+             }
+      });
+  }
+  };
+
+      function goback()
+         {
+            window.location.href("TeacherSeminarInfo.html");
+         }
+</script>
+</head>
+<body>
+        <div class="top">
+          <div class="font">
+            课堂管理系统
+          </div>
+          <div class="icon">
+              <a href="TeacherCourseHomePage.html"><img src="../../images/home.png">首页</a>
+              <img src="../../images/help.png">帮助
+              <a href="../common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="body">
+            <div class="navigation">
+                <div class="courseName">OOAD</div>
+                <div class="line"></div>
+                <div class="courseIntroduction">ooad is xxx</div>
+            </div>
+            <div class="content">
+                <div class="block">
+                    <div class="title">讨论课</div>
+                    <div class="returnButton" onclick="goback()">返回上一页</div>
+                    <div class="line"></div>
+                    <div class="itemBody">
+                        <div class="item">
+                          <label class="itemName">题   目 :</label>
+                          <input type="text" name="seminarName" class="bigInput" id="name">
+                        </div>
+                        <div class="item" style="height:40%;">
+                          <label class="itemName">说   明 :</label>
+                          <textarea class="textStyle" id="description" ></textarea>
+                        </div>
+                        <div class="item">
+                          <label class="itemName">组数限制: </label>
+                          <input type="text" name="groupLimit" class="middleInput" id="groupLimit">
+                        </div>
+                        <div class="item">
+                          <label class="itemName">组内人数上限: </label>
+                          <input type="text" name="groupLimit" class="middleInput"  id="limit">
+                        </div>
+                        <div class="item">
+                          <button class="submit" onclick="submit()">提 交</button>
+                          <button class="reset" onclick="black()">重 置</button>
+                          <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+</body>
+</html>
