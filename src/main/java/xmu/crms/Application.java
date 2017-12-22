@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 import javax.servlet.MultipartConfigElement;
 
-@SpringBootApplication(exclude={DataSourceAutoConfiguration.class}) // same as @Configuration @EnableAutoConfiguration @ComponentScan
+@SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
 @ComponentScan(basePackages={"xmu.crms.view"})
 public class Application {
 
