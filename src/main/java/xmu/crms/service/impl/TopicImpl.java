@@ -17,13 +17,13 @@ public class TopicImpl implements TopicService{
     }
 
     @Override
-    public Boolean updateTopicByTopicId(BigInteger topicId, Topic topic) throws TopicNotFoundException, IllegalArgumentException {
-        return null;
+    public void updateTopicByTopicId(BigInteger topicId, Topic topic) throws TopicNotFoundException, IllegalArgumentException {
+
     }
 
     @Override
-    public Boolean deleteTopicByTopicId(BigInteger topicId) throws IllegalArgumentException {
-        return null;
+    public void deleteTopicByTopicId(BigInteger topicId) throws IllegalArgumentException {
+
     }
 
     @Override
@@ -37,13 +37,13 @@ public class TopicImpl implements TopicService{
     }
 
     @Override
-    public Boolean deleteTopicById(BigInteger groupId, BigInteger topicId) throws IllegalArgumentException {
-        return null;
+    public void deleteTopicById(BigInteger groupId, BigInteger topicId) throws IllegalArgumentException {
+
     }
 
     @Override
-    public Boolean deleteSeminarGroupTopicByTopicId(BigInteger topicId) throws IllegalArgumentException {
-        return null;
+    public void deleteSeminarGroupTopicByTopicId(BigInteger topicId) throws IllegalArgumentException {
+
     }
 
     @Override
@@ -52,7 +52,7 @@ public class TopicImpl implements TopicService{
     }
 
     @Override
-    public Boolean deleteTopicBySeminarId(BigInteger seminarId) throws IllegalArgumentException {
-        return null;
+    public void deleteTopicBySeminarId(BigInteger seminarId) throws IllegalArgumentException {
+
     }
 }

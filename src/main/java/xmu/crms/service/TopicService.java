@@ -37,7 +37,7 @@ public interface TopicService {
      * @throws IllegalArgumentException Id格式错误或topic格式错误时抛出
      * @author aixing
      */
-    Boolean updateTopicByTopicId(BigInteger topicId, Topic topic) throws TopicNotFoundException, IllegalArgumentException;
+    void updateTopicByTopicId(BigInteger topicId, Topic topic) throws TopicNotFoundException, IllegalArgumentException;
 
     /**
      * 删除topic.
@@ -47,7 +47,7 @@ public interface TopicService {
      * @return 是否成功
      * @throws IllegalArgumentException Id格式错误时抛出
      */
-    Boolean deleteTopicByTopicId(BigInteger topicId) throws IllegalArgumentException;
+    void deleteTopicByTopicId(BigInteger topicId) throws IllegalArgumentException;
 
 
     /**
@@ -84,7 +84,7 @@ public interface TopicService {
      * @throws IllegalArgumentException groupId格式错误或topicId格式错误时抛出
      * @author zhouzhongjun
      */
-    Boolean deleteTopicById(BigInteger groupId, BigInteger topicId) throws IllegalArgumentException;
+    void deleteTopicById(BigInteger groupId, BigInteger topicId) throws IllegalArgumentException;
 
     /**
      * 按topicId删除SeminarGroupTopic表信息.
@@ -95,7 +95,7 @@ public interface TopicService {
      * @throws IllegalArgumentException topicId格式错误
      * @author zhouzhongjun
      */
-    Boolean deleteSeminarGroupTopicByTopicId(BigInteger topicId) throws IllegalArgumentException;
+    void deleteSeminarGroupTopicByTopicId(BigInteger topicId) throws IllegalArgumentException;
 
     /**
      * 按话题id和小组id获取讨论课小组选题信息
@@ -121,6 +121,6 @@ public interface TopicService {
      * @see TopicService #deleteSeminarGroupTopicByTopicId(BigInteger topicId)
      * @see GradeService   #deleteStudentScoreGroupByTopicId(BigInteger seminarGroupTopicId)
      */
-    Boolean deleteTopicBySeminarId(BigInteger seminarId) throws IllegalArgumentException;
+    void deleteTopicBySeminarId(BigInteger seminarId) throws IllegalArgumentException;
 
 }
