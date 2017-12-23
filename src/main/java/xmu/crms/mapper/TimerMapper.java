@@ -6,5 +6,8 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
+/**
+ * @author zzj
+ * */
 public interface TimerMapper {
 }
