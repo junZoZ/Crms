@@ -29,8 +29,11 @@ public class IdAndNameDTO {
 		this.name = name;
 	}
 
-
-
-
-
+	@Override
+	public String toString() {
+		return "IdAndNameDTO{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				'}';
+	}
 }

@@ -1,5 +1,7 @@
 package xmu.crms.dto;
-
+/**
+ * @author zyx
+ * */
 public class TopicDTO {
 
     Integer id;

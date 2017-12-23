@@ -11,6 +11,9 @@ import java.math.BigInteger;
 import java.util.List;
 
 @Component
+/**
+ * @author zyx
+ * */
 public class TopicDao {
 
     @Autowired
@@ -20,7 +23,7 @@ public class TopicDao {
     {
         Topic topic=topicMapper.getTopicByTopicId(id);
         if(topic==null)
-            throw new TopicNotFoundException();
+        {throw new TopicNotFoundException();}
         return topic;
     }
 
@@ -28,14 +31,14 @@ public class TopicDao {
     {
         Integer res=topicMapper.updateTopicByTopicId(topic);
         if(res==null)
-            throw new TopicNotFoundException();
+        {throw new TopicNotFoundException();}
     }
 
     void deleteTopicByTopicId(Topic topic)throws  TopicNotFoundException
     {
         Integer res=topicMapper.deleteTopicByTopicId(topic);
         if(res==null)
-            throw new TopicNotFoundException();
+        {throw new TopicNotFoundException();}
     }
 
     List<Topic> listTopicBySeminarId(BigInteger seminarId)
