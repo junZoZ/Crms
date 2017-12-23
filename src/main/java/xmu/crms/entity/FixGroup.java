@@ -1,9 +1,7 @@
 package xmu.crms.entity;
 
 import java.math.BigInteger;
-/**
- * @author zyx
- * */
+
 public class FixGroup {
 	private BigInteger id;
 	private ClassInfo classInfo;
@@ -27,5 +25,13 @@ public class FixGroup {
 	public void setLeader(User leader) {
 		this.leader = leader;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "FixGroup{" +
+				"id=" + id +
+				", classInfo=" + classInfo +
+				", leader=" + leader +
+				'}';
+	}
 }

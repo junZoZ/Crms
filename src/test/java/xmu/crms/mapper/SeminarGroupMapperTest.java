@@ -123,7 +123,6 @@ public class SeminarGroupMapperTest {
     public void  getSeminarGroupByGroupId()
     {
         SeminarGroup s = seminarGroupMapper.getSeminarGroupByGroupId(new BigInteger("4"));
-        System.out.println(s.getLeader().getId());
     }
 
     @Test

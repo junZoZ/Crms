@@ -1,15 +1,14 @@
 package xmu.crms.service;
 
-import xmu.crms.entity.Seminar;
-import xmu.crms.entity.SeminarGroup;
-import xmu.crms.exception.GroupNotFoundException;
-
 import java.math.BigInteger;
 import java.util.List;
 
+import xmu.crms.entity.SeminarGroup;
+import xmu.crms.exception.GroupNotFoundException;
+
 /**
  * @author Yexiaona
- * @version 2.10
+ * @version 2.20
  */
 public interface GradeService {
 
@@ -17,24 +16,22 @@ public interface GradeService {
      * 按seminarGroupTopicId删除学生打分表.
      *
      * @param seminarGroupTopicId  小组话题表的Id
-     * @return true删除成功  false删除失败
      * @throws IllegalArgumentException topicId格式错误时抛出
      * @author zhouzhongjun
      */
-    Boolean deleteStudentScoreGroupByTopicId(BigInteger seminarGroupTopicId) throws IllegalArgumentException;
+    void deleteStudentScoreGroupByTopicId(BigInteger seminarGroupTopicId) throws IllegalArgumentException;
 
     /**
-     * 获取某学生一堂讨论课信息.
-     * <p>获取某学生一堂讨论课的详细信息（包括成绩）<br>
+     * 获取学生某一堂讨论课的小组信息.
+     * <p>获取某学生一堂讨论课的小组信息（包括成绩）<br>
      *
-     * @param userId         学生id
      * @param seminarGroupId 讨论课小组id
      * @return seminarGroup 讨论课小组信息（包括成绩）
-     * @throws xmu.crms.exception.GroupNotFoundException 无此小组
+     * @throws GroupNotFoundException 无此小组
      * @throws IllegalArgumentException                  userId或seminarGrouopId格式错误
      * @author qinlingyun
      */
-    SeminarGroup getSeminarGroupBySeminarGroupId(BigInteger userId, BigInteger seminarGroupId)
+    SeminarGroup getSeminarGroupBySeminarGroupId(BigInteger seminarGroupId)
             throws GroupNotFoundException, IllegalArgumentException;
 
     /**
@@ -44,10 +41,11 @@ public interface GradeService {
      * @return list 学生历史讨论课小组列表（包含成绩）
      * @throws IllegalArgumentException userId格式错误
      * @author qinlingyun
-     * @see SeminarGroupService#listSeminarGroupIdByStudentId(BigInteger)
-     * @see GradeService#getSeminarGroupBySeminarGroupId(BigInteger, BigInteger)
+     * @see SeminarGroupService#listSeminarGroupIdByStudent(BigInteger) 
+     * @see GradeService#getSeminarGroupBySeminarGroupId(BigInteger)
      */
     List<SeminarGroup> listSeminarGradeByUserId(BigInteger userId) throws IllegalArgumentException;
+
 
     /**
      * 按课程id获取学生该课程所有讨论课
@@ -61,7 +59,7 @@ public interface GradeService {
      * @see SeminarGroupService#listSeminarGroupBySeminarId(BigInteger)
      * @see GradeService#listSeminarGradeByUserId(BigInteger) 
      */
-    List<SeminarGroup> listSeminarGradeByCourseId(BigInteger userId,BigInteger courseId) throws IllegalArgumentException;
+    List<SeminarGroup> listSeminarGradeByCourseId(BigInteger userId, BigInteger courseId) throws IllegalArgumentException;
 
     /**
      * 提交对其他小组的打分.
@@ -70,11 +68,10 @@ public interface GradeService {
      * @param groupId   小组Id
      * @param grade     分数
      * @param topicId   话题id
-     * @return true 提交成功 false 提交失败
      * @throws IllegalArgumentException topicId或userId或seminarId或groupId或grade格式错误
      * @author Huhui
      */
-    Boolean insertGroupGradeByUserId(BigInteger topicId, BigInteger userId, BigInteger groupId, BigInteger grade)
+    void insertGroupGradeByUserId(BigInteger topicId, BigInteger userId, BigInteger groupId, BigInteger grade)
             throws IllegalArgumentException;
 
     /**
@@ -82,12 +79,11 @@ public interface GradeService {
      *
      * @param seminar_group_id 讨论课组id
      * @param grade            分数
-     * @return Boolean true 操作成功 false 操作失败
      * @throws GroupNotFoundException   未找到小组
      * @throws IllegalArgumentException seminar_group_id或grade格式错误
      * @author Huhui
      */
-    Boolean updateGroupByGroupId(BigInteger seminar_group_id, BigInteger grade)
+    void updateGroupByGroupId(BigInteger seminar_group_id, BigInteger grade)
             throws GroupNotFoundException, IllegalArgumentException;
 
     /**

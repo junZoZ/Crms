@@ -1,9 +1,7 @@
 package xmu.crms.entity;
 
 import java.math.BigInteger;
-/**
- * @author zyx
- * */
+
 public class Attendance {
 	private BigInteger id;
 	private User student;
@@ -41,5 +39,15 @@ public class Attendance {
 	public void setAttendanceStatus(Integer attendanceStatus) {
 		this.attendanceStatus = attendanceStatus;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Attendance{" +
+				"id=" + id +
+				", student=" + student +
+				", classInfo=" + classInfo +
+				", seminar=" + seminar +
+				", attendanceStatus=" + attendanceStatus +
+				'}';
+	}
 }

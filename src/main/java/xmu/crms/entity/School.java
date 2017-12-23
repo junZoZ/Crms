@@ -1,9 +1,7 @@
 package xmu.crms.entity;
 
 import java.math.BigInteger;
-/**
- * @author cb
- * */
+
 public class School {
 	private BigInteger id;
 	private String name;
@@ -41,5 +39,14 @@ public class School {
 	public void setCity(String city) {
 		this.city = city;
 	}
-		
+
+	@Override
+	public String toString() {
+		return "School{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", province='" + province + '\'' +
+				", city='" + city + '\'' +
+				'}';
+	}
 }

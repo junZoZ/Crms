@@ -2,9 +2,7 @@ package xmu.crms.entity;
 
 import java.math.BigInteger;
 import java.util.Date;
-/**
- * @author zyx
- * */
+
 public class Course {
 	private BigInteger id;
 	private String name;
@@ -84,5 +82,21 @@ public class Course {
 	public void setThreePointPercentage(Integer threePointPercentage) {
 		this.threePointPercentage = threePointPercentage;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Course{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", startDate=" + startDate +
+				", endDate=" + endDate +
+				", teacher=" + teacher +
+				", description='" + description + '\'' +
+				", reportPercentage=" + reportPercentage +
+				", presentationPercentage=" + presentationPercentage +
+				", fivePointPercentage=" + fivePointPercentage +
+				", fourPointPercentage=" + fourPointPercentage +
+				", threePointPercentage=" + threePointPercentage +
+				'}';
+	}
 }

@@ -13,7 +13,7 @@ import xmu.crms.exception.UserNotFoundException;
 
 /**
  * @author YeHongjie
- * @version 2.10
+ * @version 2.20
  */
 public interface UserService {
 
@@ -26,13 +26,14 @@ public interface UserService {
 	 * @param userId 学生的id
 	 * @param longitude 经度
 	 * @param latitude 纬度
+	 * @return id 该记录的id
 	 * @exception IllegalArgumentException 信息不合法，id格式错误 
 	 * @exception ClassesNotFoundException 未找到班级
 	 * @exception SeminarNotFoundException 未找到讨论课
 	 * @exception UserNotFoundException 未找到对应用户
 	 */
-	void insertAttendanceById(BigInteger classId, BigInteger seminarId,
-							  BigInteger userId, double longitude, double latitude) throws
+	BigInteger insertAttendanceById(BigInteger classId, BigInteger seminarId,
+                                    BigInteger userId, double longitude, double latitude) throws
 			IllegalArgumentException,ClassesNotFoundException,SeminarNotFoundException,UserNotFoundException;
 
 	/**
@@ -99,8 +100,8 @@ public interface UserService {
 	 * @exception ClassesNotFoundException throws when 未找到对应班级
 	 * @exception UserNotFoundException throws when 无符合条件的学生
 	 */
-	List<User> listUserByClassId(BigInteger classId,String numBeginWith,
-								 String nameBeginWith) throws IllegalArgumentException,
+	List<User> listUserByClassId(BigInteger classId, String numBeginWith,
+                                 String nameBeginWith) throws IllegalArgumentException,
 			ClassesNotFoundException, UserNotFoundException;
 
 
@@ -145,7 +146,7 @@ public interface UserService {
 	 * @exception ClassesNotFoundException 未找到班级
 	 * @exception SeminarNotFoundException 未找到讨论课 
 	 */
-	List<User> listLateStudent(BigInteger seminarId,BigInteger classId) throws
+	List<User> listLateStudent(BigInteger seminarId, BigInteger classId) throws
 			IllegalArgumentException, ClassesNotFoundException, SeminarNotFoundException;
 
 
@@ -161,7 +162,7 @@ public interface UserService {
 	 * @exception ClassesNotFoundException 未找到班级
 	 * @exception SeminarNotFoundException 未找到讨论课
 	 */
-	List<User> listAbsenceStudent(BigInteger seminarId,BigInteger classId) throws
+	List<User> listAbsenceStudent(BigInteger seminarId, BigInteger classId) throws
 			IllegalArgumentException, ClassesNotFoundException, SeminarNotFoundException;
 
 	/**

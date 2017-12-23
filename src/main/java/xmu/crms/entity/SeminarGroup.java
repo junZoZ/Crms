@@ -1,9 +1,7 @@
 package xmu.crms.entity;
 
 import java.math.BigInteger;
-/**
- * @author cb
- * */
+
 public class SeminarGroup {
 	private BigInteger id;
 	private Seminar seminar;
@@ -76,5 +74,19 @@ public class SeminarGroup {
 
 	public void setLeader(User leader) {
 		this.leader = leader;
+	}
+
+	@Override
+	public String toString() {
+		return "SeminarGroup{" +
+				"id=" + id +
+				", seminar=" + seminar +
+				", classInfo=" + classInfo +
+				", report='" + report + '\'' +
+				", reportGrade=" + reportGrade +
+				", presentationGrade=" + presentationGrade +
+				", finalGrade=" + finalGrade +
+				", leader=" + leader +
+				'}';
 	}
 }

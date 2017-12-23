@@ -1,9 +1,7 @@
 package xmu.crms.entity;
 
 import java.math.BigInteger;
-/**
- * @author zyx
- * */
+
 public class CourseSelection {
 	private BigInteger id;
 	private ClassInfo classInfo;
@@ -28,4 +26,12 @@ public class CourseSelection {
 		this.student = student;
 	}
 
+	@Override
+	public String toString() {
+		return "CourseSelection{" +
+				"id=" + id +
+				", classInfo=" + classInfo +
+				", student=" + student +
+				'}';
+	}
 }

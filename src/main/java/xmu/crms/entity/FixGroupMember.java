@@ -1,9 +1,7 @@
 package xmu.crms.entity;
 
 import java.math.BigInteger;
-/**
- * @author cb
- * */
+
 public class FixGroupMember {
 	private BigInteger id;
 	private FixGroup fixGroup;
@@ -28,4 +26,12 @@ public class FixGroupMember {
 		this.student = student;
 	}
 
+	@Override
+	public String toString() {
+		return "FixGroupMember{" +
+				"id=" + id +
+				", fixGroup=" + fixGroup +
+				", student=" + student +
+				'}';
+	}
 }
