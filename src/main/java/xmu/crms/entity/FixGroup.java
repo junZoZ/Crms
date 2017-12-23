@@ -1,7 +1,9 @@
 package xmu.crms.entity;
 
 import java.math.BigInteger;
-
+/**
+ * @author zyx
+ * */
 public class FixGroup {
 	private BigInteger id;
 	private ClassInfo classInfo;

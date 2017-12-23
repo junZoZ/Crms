@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.context.annotation.Bean;
-
+/**
+ * @author zyx
+ * */
 public class Event {
 	
 	private BigInteger id;
