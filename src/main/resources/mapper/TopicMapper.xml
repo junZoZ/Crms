@@ -33,17 +33,54 @@
         WHERE id=#{topicId}
     </select>
 
+
+
     <delete id="deleteTopicByTopicId" parameterType="Topic">
         DELETE FROM topic WHERE id=#{id}
     </delete>
 
-<resultMap id="topicResultMap" type="Topic">
-    <id property="id" column="id"/>
-    <result property="name" column="name"/>
-    <result property="description" column="description"/>
-    <result property="groupNumberLimit" column="group_number_limit"/>
-    <result property="groupStudentLimit" column="group_student_limit"/>
-    <result property="seminar.id" column="seminar_id"/>
-</resultMap>
+    <select id="listTopicBySeminarId" resultMap="topicResultMap">
+        SELECT  id,name,description,group_number_limit,group_student_limit,seminar_id
+        From topic
+        WHERE seminar_id=#{topicId}
+    </select>
+
+    <insert id="insertTopicBySeminarId" parameterType="Topic" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO topic
+        (id, name, description, group_number_limit, group_student_limit, seminar_id)
+        VALUES
+        (#{id}, #{name}, #{description}, #{groupNumberLimit}, #{groupStudentLimit}, #{seminar.id})
+    </insert>
+
+
+    <delete id="deleteTopicById" parameterType="seminarGroupTopic">
+        DELETE FROM seminar_group_topic WHERE topic_id=#{topic.id} AND seminar_group_id=#{seminarGroup.id}
+    </delete>
+
+    <delete id="deleteSeminarGroupTopicByTopicId">
+        DELETE FROM seminar_group_topic WHERE topic_id=#{topicId}
+    </delete>
+
+    <select id="getSeminarGroupTopicById" parameterType="SeminarGroupTopic" resultMap="seminarGroupTopicResultMap">
+        SELECT  id,topic_id,seminar_group_id,presentation_grade
+        From seminar_group_topic
+        WHERE topic_id=#{topic.id} AND seminar_group_id=#{seminarGroup.id}
+    </select>
+
+    <resultMap id="topicResultMap" type="Topic">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="groupNumberLimit" column="group_number_limit"/>
+        <result property="groupStudentLimit" column="group_student_limit"/>
+        <result property="seminar.id" column="seminar_id"/>
+    </resultMap>
+
+    <resultMap id="seminarGroupTopicResultMap" type="SeminarGroupTopic">
+        <id property="id" column="id"/>
+        <result property="topic.id" column="topic_id"/>
+        <result property="seminarGroup.id" column="seminar_group_id"/>
+        <result property="presentationGrade" column="presentation_grade"/>
+    </resultMap>
 
 </mapper>
