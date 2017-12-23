@@ -94,7 +94,6 @@ public class GroupController {
 
             example.setMember(list);
             return s;
-
         }
 
         public  void add(Student s) {
