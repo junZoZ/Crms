@@ -120,5 +120,6 @@ public interface CourseService {
 	 * @exception ClassNotFoundException 未找到班级
 	 */
 	 List<ClassInfo> listClassByUserId(BigInteger userId)throws IllegalArgumentException,CourseNotFoundException,ClassNotFoundException;
+
 }
 

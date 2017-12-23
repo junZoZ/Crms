@@ -109,4 +109,13 @@ public class TopicMapperTest {
         System.out.println(seminarGroupTopic1.getPresentationGrade());
 
     }
+
+    @Test
+    public void deleteTopicBySeminarId()
+    {
+        Seminar seminar=new Seminar();
+        seminar.setId(new BigInteger("5"));
+        Integer res=topicMapper.deleteTopicBySeminarId(seminar);
+        System.out.println(res);
+    }
 }
