@@ -3,5 +3,70 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xmu.crms.mapper.SeminarGroupMapper">
 
+    <insert id="insertSeminarGroupMemberByGroupId" parameterType="SeminarGroupMember" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO seminar_group_member
+        (id,seminar_group_id,student_id)
+        VALUES
+        (#{id},  #{seminarGroup.id}, #{student.id})
+    </insert>
+
+</mapper>    <delete id="deleteSeminarGroupByGroupId">
+        DELETE FROM seminar_group WHERE id=#{seminarGroupId}
+    </delete>
+
+    <select id="getSeminarGroupByGroupId"  resultMap="seminarGroupResultMap">
+        SELECT  id,seminar_id,report_grade,presentation_grade,final_grade,report,class_id,leader_id
+        From seminar_group
+        WHERE id = #{groupId}
+    </select>
+
+    <select id="getSeminarGroupById" parameterType="SeminarGroupMember" resultMap="seminarGroupResultMap">
+        SELECT  seminar_group.id,seminar_group.seminar_id,seminar_group.report_grade,seminar_group.presentation_grade,
+        seminar_group.final_grade,seminar_group.report,seminar_group.class_id,seminar_group.leader_id
+        From seminar_group_member,seminar_group
+        WHERE seminar_group_member.student_id = #{student.id} AND seminar_group_member.seminar_group_id = seminar_group.id
+            AND seminar_group.seminar_id = #{seminarGroup.seminar.id}
+    </select>
+
+    <select id="listGroupByTopicId" resultMap="seminarGroupResultMap">
+        SELECT  seminar_group.id,seminar_group.seminar_id,seminar_group.report_grade,seminar_group.presentation_grade,
+        seminar_group.final_grade,seminar_group.report,seminar_group.class_id,seminar_group.leader_id
+        From seminar_group_topic,seminar_group
+        WHERE seminar_group_topic.topic_id = #{topicId} AND seminar_group_topic.seminar_group_id = seminar_group.id
+    </select>
+
+    <insert id="insertTopicByGroupId" parameterType="SeminarGroupTopic" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO seminar_group_topic
+        (id,topic_id,seminar_group_id,presentation_grade)
+        VALUES
+        (#{id}, #{topic.id}, #{seminarGroup.id}, #{presentationGrade})
+    </insert>
+
+    <update id="assignLeaderById"  parameterType="SeminarGroup" >
+        UPDATE  seminar_group
+        <set>
+            leader_id = #{leader.id},
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="resignLeaderById" >
+        UPDATE  seminar_group
+        <set>
+                leader_id = NULL,
+        </set>
+        WHERE id = #{seminarGroupId}
+    </update>
+
+    <resultMap id="seminarGroupResultMap" type="SeminarGroup">
+        <id property="id" column="id"/>
+        <result property="seminar.id" column="seminar_id"/>
+        <result property="classInfo.id" column="class_id"/>
+        <result property="report" column="report"/>
+        <result property="reportGrade" column="report_grade"/>
+        <result property="presentationGrade" column="presentation_grade"/>
+        <result property="finalGrade" column="final_grade"/>
+        <result property="leader.id" column="leader_id"/>
+    </resultMap>
 
 </mapper>

@@ -20,6 +20,7 @@ public class TopicDao {
     {
         Topic topic=topicMapper.getTopicByTopicId(id);
         if(topic==null)
+        if(topic == null)
             throw new TopicNotFoundException();
         return topic;
     }
@@ -28,6 +29,8 @@ public class TopicDao {
     {
         Integer res=topicMapper.updateTopicByTopicId(topic);
         if(res==null)
+        Integer res = topicMapper.updateTopicByTopicId(topic);
+        if(res == null)
             throw new TopicNotFoundException();
     }
 
@@ -35,6 +38,7 @@ public class TopicDao {
     {
         Integer res=topicMapper.deleteTopicByTopicId(topic);
         if(res==null)
+        if(res == null)
             throw new TopicNotFoundException();
     }
 
