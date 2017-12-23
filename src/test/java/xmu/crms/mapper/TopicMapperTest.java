@@ -111,6 +111,14 @@ public class TopicMapperTest {
     }
 
     @Test
+    public void listSeminarGroupTopicByGroupId()
+    {
+        List<SeminarGroupTopic> list=topicMapper.listSeminarGroupTopicByGroupId(new BigInteger("5"));
+        for(SeminarGroupTopic s:list)
+            System.out.println(s);
+    }
+
+    @Test
     public void deleteTopicBySeminarId()
     {
         Seminar seminar=new Seminar();
