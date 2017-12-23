@@ -10,7 +10,6 @@
         (#{id},  #{seminarGroup.id}, #{student.id})
     </insert>
 
-</mapper>    <delete id="deleteSeminarGroupByGroupId">
     <delete id="deleteSeminarGroupByGroupId">
         DELETE FROM seminar_group WHERE id=#{seminarGroupId}
     </delete>
