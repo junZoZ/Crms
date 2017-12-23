@@ -14,17 +14,17 @@ public interface TopicMapper {
 
     Topic getTopicByTopicId(BigInteger id);
 
-    void updateTopicByTopicId(Topic topic);
+    Integer updateTopicByTopicId(Topic topic);
 
-    void deleteTopicByTopicId(Topic topic);
+    Integer deleteTopicByTopicId(Topic topic);
 
     List<Topic> listTopicBySeminarId(BigInteger seminarId);
 
     void insertTopicBySeminarId(Topic topic);
 
-    void deleteTopicById(SeminarGroupTopic seminarGroupTopic);
+    Integer deleteTopicById(SeminarGroupTopic seminarGroupTopic);
 
-    void deleteSeminarGroupTopicByTopicId(BigInteger topicId);
+    Integer deleteSeminarGroupTopicByTopicId(BigInteger topicId);
 
     SeminarGroupTopic getSeminarGroupTopicById(SeminarGroupTopic seminarGroupTopic);
 

@@ -39,7 +39,8 @@ public class TopicMapperTest {
         topic.setGroupNumberLimit(5);
         topic.setGroupStudentLimit(5);
         topic.setSeminar(seminar);
-        topicMapper.updateTopicByTopicId(topic);
+        Integer res=topicMapper.updateTopicByTopicId(topic);
+        System.out.println(res);
     }
 
     @Test
@@ -47,7 +48,8 @@ public class TopicMapperTest {
     {
         Topic topic=new Topic();
         topic.setId(new BigInteger("5"));
-        topicMapper.deleteTopicByTopicId(topic);
+        Integer res=topicMapper.deleteTopicByTopicId(topic);
+        System.out.println(res);
     }
 
     @Test
@@ -81,14 +83,16 @@ public class TopicMapperTest {
         seminarGroup.setId(new BigInteger("1"));
         seminarGroupTopic.setTopic(topic);
         seminarGroupTopic.setSeminarGroup(seminarGroup);
-        topicMapper.deleteTopicById(seminarGroupTopic);
+        Integer res=topicMapper.deleteTopicById(seminarGroupTopic);
+        System.out.println(res);
     }
 
     @Test
     public void deleteSeminarGroupTopicByTopicId()
     {
         SeminarGroupTopic  seminarGroupTopic = new SeminarGroupTopic();
-        topicMapper.deleteSeminarGroupTopicByTopicId(new BigInteger("1"));
+        Integer res=topicMapper.deleteSeminarGroupTopicByTopicId(new BigInteger("1"));
+        System.out.println(res);
     }
 
     @Test
