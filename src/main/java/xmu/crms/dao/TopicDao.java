@@ -19,7 +19,6 @@ public class TopicDao {
     public Topic getTopicByTopicId(BigInteger id) throws  TopicNotFoundException
     {
         Topic topic=topicMapper.getTopicByTopicId(id);
-        if(topic==null)
         if(topic == null)
             throw new TopicNotFoundException();
         return topic;
@@ -27,8 +26,6 @@ public class TopicDao {
 
     void updateTopicByTopicId(Topic topic)throws  TopicNotFoundException
     {
-        Integer res=topicMapper.updateTopicByTopicId(topic);
-        if(res==null)
         Integer res = topicMapper.updateTopicByTopicId(topic);
         if(res == null)
             throw new TopicNotFoundException();
@@ -37,7 +34,6 @@ public class TopicDao {
     void deleteTopicByTopicId(Topic topic)throws  TopicNotFoundException
     {
         Integer res=topicMapper.deleteTopicByTopicId(topic);
-        if(res==null)
         if(res == null)
             throw new TopicNotFoundException();
     }
