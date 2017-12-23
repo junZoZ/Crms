@@ -67,6 +67,10 @@
         WHERE topic_id=#{topic.id} AND seminar_group_id=#{seminarGroup.id}
     </select>
 
+    <delete id="deleteTopicBySeminarId" parameterType="Seminar">
+        DELETE FROM topic WHERE id=#{id}
+    </delete>
+
     <resultMap id="topicResultMap" type="Topic">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
