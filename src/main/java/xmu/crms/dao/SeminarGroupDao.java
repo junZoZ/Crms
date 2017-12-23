@@ -11,7 +11,9 @@ import xmu.crms.mapper.SeminarGroupMapper;
 
 import java.math.BigInteger;
 import java.util.List;
-
+/**
+* @author zyx
+* */
 @Component
 public class SeminarGroupDao {
     @Autowired
@@ -31,8 +33,8 @@ public class SeminarGroupDao {
     List<User> listSeminarGroupMemberByGroupId(BigInteger groupId) throws GroupNotFoundException{
         List<User> userList = seminarGroupMapper.listSeminarGroupMemberByGroupId(groupId);
         if(userList == null)
-            throw new GroupNotFoundException();
-        else return  userList;
+        {throw new GroupNotFoundException();}
+        else {return  userList;}
     }
 
     List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId){
@@ -70,22 +72,22 @@ public class SeminarGroupDao {
     SeminarGroup getSeminarGroupByGroupId(BigInteger groupId)throws GroupNotFoundException{
         SeminarGroup seminarGroup = seminarGroupMapper.getSeminarGroupByGroupId(groupId);
         if(seminarGroup == null)
-            throw new GroupNotFoundException();
-        else return seminarGroup;
+        {throw new GroupNotFoundException();}
+        else {return seminarGroup;}
     }
 
     SeminarGroup getSeminarGroupById(SeminarGroupMember seminarGroupMember)throws GroupNotFoundException{
         SeminarGroup seminarGroup = seminarGroupMapper.getSeminarGroupById(seminarGroupMember);
         if(seminarGroup == null)
-            throw  new GroupNotFoundException();
-        else return  seminarGroup;
+        {throw  new GroupNotFoundException();}
+        else {return  seminarGroup;}
     }
 
     List<SeminarGroup> listGroupByTopicId(BigInteger topicId)throws GroupNotFoundException{
         List<SeminarGroup> seminarGroupList = seminarGroupMapper.listGroupByTopicId(topicId);
         if(seminarGroupList == null)
-            throw  new GroupNotFoundException();
-        else return  seminarGroupList;
+        {throw  new GroupNotFoundException();}
+        else {return  seminarGroupList;}
     }
 
 
@@ -96,13 +98,13 @@ public class SeminarGroupDao {
     void assignLeaderById(SeminarGroup seminarGroup)throws GroupNotFoundException{
         Integer result = seminarGroupMapper.assignLeaderById(seminarGroup);
         if(result == 0)
-            throw  new GroupNotFoundException();
+        {throw  new GroupNotFoundException();}
     }
 
     void resignLeaderById(BigInteger seminarGroupId)throws GroupNotFoundException{
         Integer result = seminarGroupMapper.resignLeaderById(seminarGroupId);
         if(result == 0)
-            throw  new GroupNotFoundException();
+        {throw  new GroupNotFoundException();}
     }
 
 }
