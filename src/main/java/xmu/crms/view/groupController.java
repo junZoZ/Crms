@@ -1,14 +1,16 @@
 package xmu.crms.view;
 
+import xmu.crms.dto.TopicDTO;
 import xmu.crms.vo.fixedgroupVo;
 import xmu.crms.vo.Student;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import xmu.crms.vo.groupscoreVo;
 
 import java.util.ArrayList;
 
 @RestController
-public class groupController {
+public class GroupController {
     class testgroup
     {
         fixedgroupVo  example=new fixedgroupVo();
@@ -126,14 +128,15 @@ public class groupController {
 
     }
 
-
-
-
-
     testgroup ex = new testgroup();
     testGroupAll exall = new testGroupAll();
 
-
+    @ResponseStatus(value= HttpStatus.CREATED)
+    @RequestMapping(value="/group/{groupID}/topic",method = RequestMethod.POST)
+    public String topicChoose(@PathVariable("groupID") Integer groupId,  @RequestBody TopicDTO tid)
+    {
+        return "1111";
+    }
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/class/{classId}/classgroup", method = RequestMethod.GET)
     @ResponseBody
@@ -150,23 +153,20 @@ public class groupController {
         exall.add(s);
 
     }
+
+    //ScoreHome get
     @ResponseStatus(value= HttpStatus.OK)
-    @RequestMapping(value = "class/{classId}/student", method = RequestMethod.GET)
+    @RequestMapping(value="/group/{groupId}",method = RequestMethod.GET)
     @ResponseBody
-    public fixedgroupVo index3(@PathVariable("classId") Integer sid,@RequestParam("nameWith") String name,
-                               @RequestParam("noWith") String no) {
+    public groupscoreVo index5(@PathVariable ("groupId") Integer sid){
 
-
-        return exall.choose(no,name);
-
+        return null;
     }
+    //scorereport put
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
-    @RequestMapping(value = "/class/{classId}/classgroup/add", method = RequestMethod.PUT)
+    @RequestMapping(value="/group/{groupId}/grade",method = RequestMethod.PUT)
     @ResponseBody
-    public void index4(@PathVariable("classId") Integer classId, @RequestBody Integer memberId) {
-        System.out.println(memberId);
-        Student s = exall.Del(memberId);
-        ex.add(s);
+    public void index6(@PathVariable ("groupId") Integer sid, @RequestBody Integer a) {
 
     }
 
