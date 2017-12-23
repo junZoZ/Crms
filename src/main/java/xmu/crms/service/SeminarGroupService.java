@@ -137,6 +137,7 @@ public interface SeminarGroupService {
 	 * @param seminarGroupId 讨论课小组的id
 	 * @see SeminarGroupService #deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId)
 	 * @exception IllegalArgumentException 信息不合法，id格式错误
+	 *
 	 */
 	 void deleteSeminarGroupByGroupId(BigInteger seminarGroupId) throws
 			IllegalArgumentException;
