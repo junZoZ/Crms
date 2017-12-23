@@ -2,6 +2,7 @@ package xmu.crms.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
+import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 
@@ -28,6 +29,6 @@ public interface TopicMapper {
 
     SeminarGroupTopic getSeminarGroupTopicById(SeminarGroupTopic seminarGroupTopic);
 
-
+    Integer deleteTopicBySeminarId(Seminar seminar);
 }
 

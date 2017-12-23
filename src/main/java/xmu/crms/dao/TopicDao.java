@@ -2,6 +2,7 @@ package xmu.crms.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 import xmu.crms.exception.TopicNotFoundException;
@@ -65,7 +66,10 @@ public class TopicDao {
         return seminarGroupTopic1;
     }
 
-
+     void deleteTopicBySeminarId(Seminar seminar)
+     {
+         Integer res=topicMapper.deleteTopicBySeminarId(seminar);
+     }
 
 }
 
