@@ -50,7 +50,7 @@ public class SeminarGroupMapperTest {
     @Test
     public void  listSeminarGroupIdByStudentId()
     {
-        List<SeminarGroup> seminar_group=seminarGroupMapper.  listSeminarGroupIdByStudentId(new BigInteger("3"));
+        List<SeminarGroup> seminar_group=seminarGroupMapper.  listSeminarGroupIdByStudentId(new BigInteger("11"));
         for(SeminarGroup i:seminar_group)
             System.out.println(i.getId()+" "+i.getSeminar().getId());
     }
@@ -122,7 +122,7 @@ public class SeminarGroupMapperTest {
     @Test
     public void  getSeminarGroupByGroupId()
     {
-        SeminarGroup s = seminarGroupMapper.getSeminarGroupByGroupId(new BigInteger("4"));
+        SeminarGroup s = seminarGroupMapper.getSeminarGroupByGroupId(new BigInteger("7"));
     }
 
     @Test
