@@ -2,6 +2,7 @@ package xmu.crms.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * @author zyx
  * */
+@Service
 public class TopicDao {
 
     @Autowired
