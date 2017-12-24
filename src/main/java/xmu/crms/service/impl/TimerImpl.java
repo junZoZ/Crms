@@ -1,12 +1,14 @@
 package xmu.crms.service.impl;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 import xmu.crms.service.TimerService;
 
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashMap;
 
+@Service
 public class TimerImpl implements TimerService {
 
 

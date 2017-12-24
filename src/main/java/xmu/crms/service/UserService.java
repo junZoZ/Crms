@@ -3,6 +3,7 @@ package xmu.crms.service;
 import java.math.BigInteger;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
 import xmu.crms.entity.Attendance;
 import xmu.crms.entity.Course;
 import xmu.crms.entity.User;

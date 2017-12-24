@@ -7,14 +7,11 @@
         DELETE FROM seminar_group_member WHERE seminar_group_id=#{seminarGroupId}
     </delete>
 
-    <delete id="deleteSeminarGroupMemberBySeminarGroupId" >
-        DELETE FROM seminar_group_member WHERE seminar_group_id=#{seminarGroupId}
-    </delete>
-
     <insert id="insertSeminarGroupMemberById" parameterType="SeminarGroupMember" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO seminar_group_member
         (id,seminar_group_id,student_id)
-        VALUES (#{id}, #{seminarGroup.id
+        VALUES
+        (#{id}, #{seminarGroup.id
 
          },#{student.id
 
@@ -32,12 +29,9 @@
     </select>
 
     <select id="listSeminarGroupIdByStudentId" resultMap="seminarGroupResultMap">
-        SELECT  seminar_group.id
-
-        ,seminar_id,class_id,report,report_grade,presentation_grade,final_grade,leader_id
+        SELECT  seminar_group.id ,seminar_id,class_id,report,report_grade,presentation_grade,final_grade,leader_id
         From seminar_group,seminar_group_member
         WHERE seminar_group_member.student_id=#{userId} and seminar_group_member.seminar_group_id=seminar_group.id
-
     </select>
 
     <select id="getSeminarGroupLeaderByGroupId" resultMap="LeaderResultMap">
@@ -129,31 +123,36 @@
 
     <resultMap id="seminarGroupResultMap" type="SeminarGroup">
         <id property="id" column="id"/>
-        <result property="seminar.id" column="seminar_id"/>
-        <result property="classInfo.id" column="class_id"/>
         <result property="report" column="report"/>
         <result property="reportGrade" column="report_grade"/>
         <result property="presentationGrade" column="presentation_grade"/>
         <result property="finalGrade" column="final_grade"/>
-        <result property="leader.id" column="leader_id"/>
+        <association property="seminar" column="seminar_id" select="xmu.crms.mapper.UtilityMapper.selectSeminar"/>
+        <association property="classInfo" column="class_id" select="xmu.crms.mapper.UtilityMapper.selectClass"/>
+        <association property="leader" column="leader_id" select="xmu.crms.mapper.UtilityMapper.selectUser"/>
     </resultMap>
 
     <resultMap id="userResultMap" type="User">
         <id property="id" column="id"/>
         <result property="phone" column="phone"/>
+        <result property="wechatId" column="wechat_id"/>
+        <result property="openid" column="openid"/>
+        <result property="avatar" column="avatar"/>
         <result property="password" column="password"/>
         <result property="name" column="name"/>
-        <result property="school.id" column="school_id"/>
         <result property="gender" column="gender"/>
         <result property="type" column="type"/>
         <result property="number" column="number"/>
         <result property="education" column="education"/>
+        <result property="title" column="title"/>
         <result property="email" column="email"/>
+        <association property="school" column="school_id" select="xmu.crms.mapper.UtilityMapper.selectSchool"/>
     </resultMap>
-    
+
+
+
     <resultMap id="LeaderResultMap" type="java.math.BigInteger">
-        <result property="leader.id" column="leader_id"/>
+        <association property="leader" column="leader_id" select="xmu.crms.mapper.UtilityMapper.selectUser"/>
     </resultMap>
 
 </mapper>
-

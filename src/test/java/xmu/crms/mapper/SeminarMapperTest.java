@@ -9,6 +9,7 @@ import xmu.crms.entity.Course;
 import xmu.crms.entity.Seminar;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -62,8 +63,12 @@ public class SeminarMapperTest {
     public void  insertSeminarByCourseId()
     {
         Seminar seminar = new Seminar();
+        seminar.setName("名字不能为空");
+        seminar.setStartTime(new Date(2017,4,4));
+        seminar.setEndTime(new Date(2017,5,5));
         Course course = new Course();
         course.setId(new BigInteger("1"));
+
         seminar.setCourse(course);
         Integer result =  seminarMapper.insertSeminarByCourseId(seminar);
         System.out.println(result);
