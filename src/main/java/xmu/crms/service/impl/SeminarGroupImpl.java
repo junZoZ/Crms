@@ -1,5 +1,8 @@
 package xmu.crms.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import xmu.crms.dao.SeminarGroupDao;
 import xmu.crms.entity.SeminarGroup;
 import xmu.crms.entity.SeminarGroupMember;
 import xmu.crms.entity.User;
@@ -9,8 +12,17 @@ import xmu.crms.service.SeminarGroupService;
 import java.math.BigInteger;
 import java.util.List;
 
+@Service
 public  class SeminarGroupImpl implements SeminarGroupService {
 
+    @Autowired
+    private SeminarGroupDao seminarGroupDao;
+    /**
+     * 按seminarGroupId删除SeminarGroupMember信息.
+     * <p>按seminarGroupId删除SeminarGroupMember信息<br>
+     * @author zhouzhongjun
+     * @param seminarGroupId 讨论课小组Id
+     */
     @Override
     public  void deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId)
     {
@@ -48,9 +60,10 @@ public  class SeminarGroupImpl implements SeminarGroupService {
     }
 
     @Override
-    public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, SeminarGroup seminarGroup) throws IllegalArgumentException {
+    public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, BigInteger classId, SeminarGroup seminarGroup) throws IllegalArgumentException {
         return null;
     }
+
 
     @Override
     public BigInteger insertSeminarGroupMemberByGroupId(BigInteger groupId, SeminarGroupMember seminarGroupMember) {

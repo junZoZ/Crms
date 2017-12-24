@@ -27,9 +27,6 @@ public class GroupController {
             example.setMember(list);
         }
 
-
-
-
         public  Student Del(Integer id) {
 
 
