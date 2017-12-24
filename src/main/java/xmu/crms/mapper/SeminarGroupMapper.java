@@ -38,8 +38,9 @@ public interface SeminarGroupMapper {
      * <p>将用户加入指定的讨论课小组<br>
      * @author zhouzhongjun
      * @param seminarGroupMember 学生的id,要加入讨论课小组的id
+     * @return insertNumber
      */
-    void insertSeminarGroupMemberById(SeminarGroupMember seminarGroupMember);
+    Integer insertSeminarGroupMemberById(SeminarGroupMember seminarGroupMember);
 
     /**
      * 查询讨论课小组成员.
@@ -91,16 +92,18 @@ public interface SeminarGroupMapper {
      * <p>在指定讨论课下创建讨论课小组<br>
      * @author zhouzhongjun
      * @param seminarGroup 小组信息(讨论课的id)
+     * @return insertNumber
      */
-    void insertSeminarGroupBySeminarId(SeminarGroup seminarGroup);
+    Integer insertSeminarGroupBySeminarId(SeminarGroup seminarGroup);
 
     /**
      * 创建小组成员信息.
      * <p>在指定小组成员表下创建一个新的小组信息<br>
      * @author zhouzhongjun
      * @param seminarGroupMember 小组成员信息(小组的id)
+     * @return insertNumber
      */
-    void insertSeminarGroupMemberByGroupId(SeminarGroupMember seminarGroupMember);
+    Integer insertSeminarGroupMemberByGroupId(SeminarGroupMember seminarGroupMember);
 
     /**
      * 删除讨论课小组.
@@ -143,8 +146,9 @@ public interface SeminarGroupMapper {
      * <p>小组通过小组id和话题id选择讨论课的话题<br>
      * @author heqi
      * @param seminarGroupTopic(groupId,topicId)
+     * @return insertNumber
      */
-    void insertTopicByGroupId(SeminarGroupTopic seminarGroupTopic);
+    Integer insertTopicByGroupId(SeminarGroupTopic seminarGroupTopic);
 
     /**
      * 成为组长.

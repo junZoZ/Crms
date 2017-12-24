@@ -20,88 +20,99 @@ public class SeminarGroupDao {
     SeminarGroupMapper seminarGroupMapper;
 
 
-    void deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId) {
+    public void deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId) {
         Integer s = seminarGroupMapper.deleteSeminarGroupMemberBySeminarGroupId(seminarGroupId);
     }
 
 
-    void insertSeminarGroupMemberById(SeminarGroupMember seminarGroupMember) {
-        seminarGroupMapper.insertSeminarGroupMemberById(seminarGroupMember);
-
+    public BigInteger insertSeminarGroupMemberById(SeminarGroupMember seminarGroupMember) {
+        Integer result = seminarGroupMapper.insertSeminarGroupMemberById(seminarGroupMember);
+        if(result == 0) {
+            return new BigInteger("-1");
+        }
+        else { return seminarGroupMember.getId(); }
     }
 
-    List<User> listSeminarGroupMemberByGroupId(BigInteger groupId) throws GroupNotFoundException{
+    public List<User> listSeminarGroupMemberByGroupId(BigInteger groupId) throws GroupNotFoundException{
         List<User> userList = seminarGroupMapper.listSeminarGroupMemberByGroupId(groupId);
-        if(userList == null)
-        {throw new GroupNotFoundException();}
-        else {return  userList;}
+        return  userList;
     }
 
-    List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId){
+    public List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId){
         List<SeminarGroup> seminarGroupList = seminarGroupMapper.listSeminarGroupIdByStudentId(userId);
         return  seminarGroupList;
     }
 
-    BigInteger getSeminarGroupLeaderByGroupId(BigInteger groupId){
+    public BigInteger getSeminarGroupLeaderByGroupId(BigInteger groupId){
         BigInteger leaderId = seminarGroupMapper.getSeminarGroupLeaderByGroupId(groupId);
         return leaderId;
     }
 
-    List<SeminarGroup> listSeminarGroupBySeminarId(BigInteger seminarId)
+    public List<SeminarGroup> listSeminarGroupBySeminarId(BigInteger seminarId)
     {
         List<SeminarGroup> seminarGroupList = seminarGroupMapper.listSeminarGroupBySeminarId(seminarId);
         return  seminarGroupList;
     }
 
-    void deleteSeminarGroupBySeminarId(BigInteger seminarId){
+    public void deleteSeminarGroupBySeminarId(BigInteger seminarId){
         Integer result = seminarGroupMapper.deleteSeminarGroupBySeminarId(seminarId);
     }
 
-    void insertSeminarGroupBySeminarId(SeminarGroup seminarGroup){
-        seminarGroupMapper.insertSeminarGroupBySeminarId(seminarGroup);
+    public BigInteger insertSeminarGroupBySeminarId(SeminarGroup seminarGroup){
+        Integer result = seminarGroupMapper.insertSeminarGroupBySeminarId(seminarGroup);
+        if(result == 0){
+            return new BigInteger("-1");
+        }
+        else {return seminarGroup.getId();}
     }
 
-    void insertSeminarGroupMemberByGroupId(SeminarGroupMember seminarGroupMember){
-        seminarGroupMapper.insertSeminarGroupMemberByGroupId(seminarGroupMember);
+    public BigInteger insertSeminarGroupMemberByGroupId(SeminarGroupMember seminarGroupMember){
+        Integer result = seminarGroupMapper.insertSeminarGroupMemberByGroupId(seminarGroupMember);
+        if(result == 0){
+            return new BigInteger("-1");
+        }
+        else {return seminarGroupMember.getId();}
     }
 
-    void deleteSeminarGroupByGroupId(BigInteger seminarGroupId){
+    public void deleteSeminarGroupByGroupId(BigInteger seminarGroupId){
         seminarGroupMapper.deleteSeminarGroupMemberBySeminarGroupId(seminarGroupId);
     }
 
-    SeminarGroup getSeminarGroupByGroupId(BigInteger groupId)throws GroupNotFoundException{
+    public SeminarGroup getSeminarGroupByGroupId(BigInteger groupId)throws GroupNotFoundException{
         SeminarGroup seminarGroup = seminarGroupMapper.getSeminarGroupByGroupId(groupId);
         if(seminarGroup == null)
         {throw new GroupNotFoundException();}
         else {return seminarGroup;}
     }
 
-    SeminarGroup getSeminarGroupById(SeminarGroupMember seminarGroupMember)throws GroupNotFoundException{
+    public SeminarGroup getSeminarGroupById(SeminarGroupMember seminarGroupMember)throws GroupNotFoundException{
         SeminarGroup seminarGroup = seminarGroupMapper.getSeminarGroupById(seminarGroupMember);
         if(seminarGroup == null)
         {throw  new GroupNotFoundException();}
         else {return  seminarGroup;}
     }
 
-    List<SeminarGroup> listGroupByTopicId(BigInteger topicId)throws GroupNotFoundException{
+    public List<SeminarGroup> listGroupByTopicId(BigInteger topicId){
         List<SeminarGroup> seminarGroupList = seminarGroupMapper.listGroupByTopicId(topicId);
-        if(seminarGroupList == null)
-        {throw  new GroupNotFoundException();}
-        else {return  seminarGroupList;}
+        return  seminarGroupList;
     }
 
 
-    void insertTopicByGroupId(SeminarGroupTopic seminarGroupTopic){
-        seminarGroupMapper.insertTopicByGroupId(seminarGroupTopic);
+    public BigInteger insertTopicByGroupId(SeminarGroupTopic seminarGroupTopic){
+        Integer result = seminarGroupMapper.insertTopicByGroupId(seminarGroupTopic);
+        if(result == 0){
+            return new BigInteger("-1");
+        }
+        else {return seminarGroupTopic.getId();}
     }
 
-    void assignLeaderById(SeminarGroup seminarGroup)throws GroupNotFoundException{
+    public void assignLeaderById(SeminarGroup seminarGroup)throws GroupNotFoundException{
         Integer result = seminarGroupMapper.assignLeaderById(seminarGroup);
         if(result == 0)
         {throw  new GroupNotFoundException();}
     }
 
-    void resignLeaderById(BigInteger seminarGroupId)throws GroupNotFoundException{
+    public void resignLeaderById(BigInteger seminarGroupId)throws GroupNotFoundException{
         Integer result = seminarGroupMapper.resignLeaderById(seminarGroupId);
         if(result == 0)
         {throw  new GroupNotFoundException();}

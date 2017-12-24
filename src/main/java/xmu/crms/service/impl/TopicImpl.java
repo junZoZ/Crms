@@ -21,9 +21,7 @@ public class TopicImpl implements TopicService{
 
    @Autowired
     private TopicDao topicDao;
-
-    @Autowired
-    private SeminarGroupTopicDao seminarGroupTopicDao;
+   
 
     @Override
     public Topic getTopicByTopicId(BigInteger topicId) throws TopicNotFoundException, IllegalArgumentException {
