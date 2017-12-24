@@ -43,15 +43,13 @@ public class GroupController {
             }
             return s;
         }
-
-        public  void add(Student s) {
+         public  void add(Student s) {
 
             ArrayList<Student> list = new ArrayList(example.getMember());
             list.add(s);
             example.setMember(list);
         }
-
-
+        
     }
 
     class testGroupAll {
