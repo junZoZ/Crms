@@ -40,7 +40,7 @@ public interface SeminarService {
 	 * @exception IllegalArgumentException CourseId 格式错误时抛出
 	 * @exception CourseNotFoundException 该课程不存在时抛出
 	 */
-	Boolean deleteSeminarByCourseId(BigInteger courseId) throws IllegalArgumentException,
+	void deleteSeminarByCourseId(BigInteger courseId) throws IllegalArgumentException,
 			CourseNotFoundException;
 
 
@@ -67,7 +67,7 @@ public interface SeminarService {
 	 * @exception IllegalArgumentException SeminarId 格式错误时抛出
 	 * @exception SeminarNotFoundException 该讨论课不存在时抛出
 	 */
-	Boolean updateSeminarBySeminarId(BigInteger seminarId, Seminar seminar) throws
+	void updateSeminarBySeminarId(BigInteger seminarId, Seminar seminar) throws
 			IllegalArgumentException,SeminarNotFoundException;
 
 
@@ -82,7 +82,7 @@ public interface SeminarService {
 	 * @exception IllegalArgumentException SeminarId 格式错误时抛出
 	 * @exception SeminarNotFoundException 该讨论课不存在时抛出
 	 */
-	Boolean deleteSeminarBySeminarId(BigInteger seminarId) throws
+	void deleteSeminarBySeminarId(BigInteger seminarId) throws
 			IllegalArgumentException,SeminarNotFoundException;
 
 
