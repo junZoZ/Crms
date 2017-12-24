@@ -11,7 +11,6 @@ import xmu.crms.exception.TopicNotFoundException;
 import xmu.crms.service.TopicService;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
