@@ -193,6 +193,7 @@ public interface SeminarGroupService {
 			GroupNotFoundException,UserNotFoundException,InvalidOperationException;
 
 
+
 	/**
 	 * 根据讨论课Id及用户id，获得该用户所在的讨论课的小组的信息.
 	 * <p>根据讨论课Id及用户id，获得该用户所在的讨论课的小组的信息<br>
