@@ -28,7 +28,7 @@ public interface SeminarGroupMapper {
      * 按seminarGroupId删除SeminarGroupMember信息.
      *
      * @author zhouzhongjun
-     * @param seminarGroupId
+     * @param seminarGroupId 小组id
      * @return Integer deleteNumber
      */
     Integer  deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId);

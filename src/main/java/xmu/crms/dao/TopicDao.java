@@ -29,48 +29,53 @@ public class TopicDao {
         return topic;
     }
 
-    void updateTopicByTopicId(Topic topic)throws  TopicNotFoundException
+    public void updateTopicByTopicId(Topic topic)throws  TopicNotFoundException
     {
         Integer res=topicMapper.updateTopicByTopicId(topic);
         if(res==null)
         {throw new TopicNotFoundException();}
     }
 
-    void deleteTopicByTopicId(Topic topic)throws  TopicNotFoundException
+    public void deleteTopicByTopicId(Topic topic)throws  TopicNotFoundException
     {
         Integer res=topicMapper.deleteTopicByTopicId(topic);
         if(res==null)
         {throw new TopicNotFoundException();}
     }
 
-    List<Topic> listTopicBySeminarId(BigInteger seminarId)
+    public List<Topic> listTopicBySeminarId(BigInteger seminarId)
     {
         List<Topic> list=topicMapper.listTopicBySeminarId(seminarId);
         return list;
     }
 
-    void insertTopicBySeminarId(Topic topic)
+    public void insertTopicBySeminarId(Topic topic)
     {
        topicMapper.insertTopicBySeminarId(topic);
     }
 
-    void deleteTopicById(SeminarGroupTopic seminarGroupTopic)
+    public void deleteTopicById(SeminarGroupTopic seminarGroupTopic)
     {
         Integer res=topicMapper.deleteTopicById(seminarGroupTopic);
     }
 
-    void deleteSeminarGroupTopicByTopicId(BigInteger topicId)
+    public void deleteSeminarGroupTopicByTopicId(BigInteger topicId)
     {
         Integer res=topicMapper.deleteSeminarGroupTopicByTopicId(topicId);
     }
 
-    SeminarGroupTopic getSeminarGroupTopicById(SeminarGroupTopic seminarGroupTopic)
+    public SeminarGroupTopic getSeminarGroupTopicById(SeminarGroupTopic seminarGroupTopic)
     {
         SeminarGroupTopic seminarGroupTopic1=topicMapper.getSeminarGroupTopicById(seminarGroupTopic);
         return seminarGroupTopic1;
     }
 
-     void deleteTopicBySeminarId(Seminar seminar)
+    public  List<SeminarGroupTopic> listSeminarGroupTopicByGroupId(BigInteger groupId)
+    {
+        return topicMapper.listSeminarGroupTopicByGroupId(groupId);
+    }
+
+    public void deleteTopicBySeminarId(Seminar seminar)
      {
          Integer res=topicMapper.deleteTopicBySeminarId(seminar);
      }

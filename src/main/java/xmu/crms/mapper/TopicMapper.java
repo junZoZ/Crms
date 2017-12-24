@@ -86,6 +86,9 @@ public interface TopicMapper {
      * @param seminar
      * @return Integer deleteNumber
      */
+
+    List<SeminarGroupTopic> listSeminarGroupTopicByGroupId(BigInteger groupId);
+
     Integer deleteTopicBySeminarId(Seminar seminar);
 }
 
