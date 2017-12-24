@@ -49,9 +49,17 @@ public class TopicDao {
         return list;
     }
 
-    public void insertTopicBySeminarId(Topic topic)
+    public BigInteger insertTopicBySeminarId(Topic topic)
     {
-       topicMapper.insertTopicBySeminarId(topic);
+        Integer s=topicMapper.insertTopicBySeminarId(topic);
+        if(s<=0)
+        {
+            return new BigInteger("-1");
+        }
+        else
+        {
+            return topic.getId();
+        }
     }
 
     public void deleteTopicById(SeminarGroupTopic seminarGroupTopic)

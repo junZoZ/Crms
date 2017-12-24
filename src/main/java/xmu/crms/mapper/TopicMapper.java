@@ -54,7 +54,7 @@ public interface TopicMapper {
      * @param topic
      * @return  deleteNumber
      */
-    void insertTopicBySeminarId(Topic topic);
+    Integer insertTopicBySeminarId(Topic topic);
     /**
      * .
      *

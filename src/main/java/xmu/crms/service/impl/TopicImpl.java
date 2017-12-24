@@ -14,6 +14,9 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author zhouzhongjun
+ **/
 public class TopicImpl implements TopicService{
 
    @Autowired
@@ -70,8 +73,7 @@ public class TopicImpl implements TopicService{
         Seminar seminar=new Seminar();
         seminar.setId(seminarId);
         topic.setSeminar(seminar);
-        topicDao.insertTopicBySeminarId(topic);
-        return topic.getId();
+        return topicDao.insertTopicBySeminarId(topic);
     }
 
     @Override
