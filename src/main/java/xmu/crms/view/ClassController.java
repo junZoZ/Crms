@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+/**
+ * @author cb
+ * */
 public class ClassController {
 
     @ResponseStatus(value= HttpStatus.OK)

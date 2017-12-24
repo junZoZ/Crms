@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
-@ComponentScan(basePackages={"xmu.crms.view"})
+@ComponentScan(basePackages={"xmu.crms.view","xmu.crms.service.impl","xmu.crms.dao"})
 public class Application {
 
     public static void main(String[] args){

@@ -68,17 +68,14 @@
     </select>
 
     <delete id="deleteTopicBySeminarId" parameterType="Seminar">
-        DELETE FROM topic WHERE id=#{id}
+        DELETE FROM topic WHERE seminar_id=#{id}
     </delete>
 
-    <delete id="deleteTopicBySeminarId" parameterType="Seminar">
-        DELETE FROM topic WHERE id=#{id}
-    </delete>
 
     <select id="listSeminarGroupTopicByGroupId"  resultMap="seminarGroupTopicResultMap">
         SELECT  id,topic_id,seminar_group_id,presentation_grade
         From seminar_group_topic
-        WHERE seminar_group_id=#{groupid}
+        WHERE seminar_group_id=#{groupId}
     </select>
 
     <resultMap id="topicResultMap" type="Topic">

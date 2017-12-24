@@ -83,12 +83,19 @@ public interface TopicMapper {
      * .
      *
      * @author cb
-     * @param seminar
+     * @param  groupId
      * @return Integer deleteNumber
      */
 
     List<SeminarGroupTopic> listSeminarGroupTopicByGroupId(BigInteger groupId);
 
+    /**
+     * .
+     *
+     * @author cb
+     * @param seminar
+     * @return Integer deleteNumber
+     */
     Integer deleteTopicBySeminarId(Seminar seminar);
 }
 
