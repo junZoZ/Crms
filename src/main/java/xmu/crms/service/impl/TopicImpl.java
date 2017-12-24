@@ -2,7 +2,6 @@ package xmu.crms.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xmu.crms.dao.SeminarGroupTopicDao;
 import xmu.crms.dao.TopicDao;
 import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroup;
@@ -12,7 +11,6 @@ import xmu.crms.exception.TopicNotFoundException;
 import xmu.crms.service.TopicService;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
