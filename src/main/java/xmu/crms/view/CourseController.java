@@ -70,7 +70,7 @@ public class CourseController {
     @RequestMapping(value="/course/{courseId}",method = RequestMethod.PUT)
     public void NewCourse1(@PathVariable("courseId") Integer courseId,@RequestBody CourseDetailVO courseDetail)
     {
-        Course course = courseService.getCourseByCourseId(new BigInteger(courseId.toString());
+        Course course = courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
         course.setName(courseDetail.getName());
         course.setDescription(courseDetail.getDescription());
         course.setStartDate(courseDetail.getStartTime());
