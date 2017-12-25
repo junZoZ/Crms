@@ -2,31 +2,31 @@ package xmu.crms.vo;
 
 import java.util.ArrayList;
 
-public class fixedgroupVo {
-    Student leader;
-    ArrayList<Student> member;
+public class FixedGroupVO {
+    UserVO leader;
+    ArrayList<UserVO> user;
 
-    public fixedgroupVo() {
-    }
-
-    public fixedgroupVo(Student leader, ArrayList<Student> member) {
-        this.leader = leader;
-        this.member = member;
-    }
-
-    public Student getLeader() {
+    public UserVO getLeader() {
         return leader;
     }
 
-    public void setLeader(Student leader) {
+    public void setLeader(UserVO leader) {
         this.leader = leader;
     }
 
-    public ArrayList<Student> getMember() {
-        return member;
+    public ArrayList<UserVO> getUser() {
+        return user;
     }
 
-    public void setMember(ArrayList<Student> member) {
-        this.member = member;
+    public void setUser(ArrayList<UserVO> user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "FixedGroupVO{" +
+                "leader=" + leader +
+                ", user=" + user +
+                '}';
     }
 }

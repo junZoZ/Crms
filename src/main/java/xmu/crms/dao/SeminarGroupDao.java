@@ -118,4 +118,8 @@ public class SeminarGroupDao {
         {throw  new GroupNotFoundException();}
     }
 
+    public void deleteSeminarGroupMemberById(SeminarGroupMember seminarGroupMember) {
+               seminarGroupMapper.deleteSeminarGroupMemberById(seminarGroupMember);
+    }
+
 }

@@ -261,4 +261,17 @@ public  class SeminarGroupImpl implements SeminarGroupService {
         seminarGroupDao.resignLeaderById(groupId);
     }
 
+    @Override
+    public void deleteSeminarGroupMemberById(BigInteger seminarGroupId, BigInteger userId) {
+
+        SeminarGroupMember seminarGroupMember=new SeminarGroupMember();
+        User user=new User();
+        user.setId(userId);
+        SeminarGroup seminarGroup=new SeminarGroup();
+        seminarGroup.setId(seminarGroupId);
+        seminarGroupMember.setStudent(user);
+        seminarGroupMember.setSeminarGroup(seminarGroup);
+        seminarGroupDao.deleteSeminarGroupMemberById(seminarGroupMember);
+    }
+
 }

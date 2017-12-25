@@ -12,13 +12,12 @@ import java.math.BigInteger;
  */
 public class ClassVO {
 
-    private BigInteger id;
+    private Integer id;
     private String name;
-    private Integer numClass;
+    private Integer numStudent;
     private String time;
     private String site;
     private Integer calling;
-    private String roster;
     private ProportionsVO proportion;
     private String courseName;
     private String courseTeacher;
@@ -27,19 +26,19 @@ public class ClassVO {
     public ClassVO() {
     }
 
-    public ClassVO(BigInteger id, String name, Integer numClass, String time, String site) {
+    public ClassVO(Integer id, String name, Integer numStudent, String time, String site) {
         this.id = id;
         this.name = name;
-        this.numClass = numClass;
+        this.numStudent = numStudent;
         this.time = time;
         this.site = site;
     }
 
-    public BigInteger getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -52,7 +51,7 @@ public class ClassVO {
     }
 
     public ClassVO(Integer numClass) {
-        this.numClass = numClass;
+        this.numStudent = numClass;
     }
 
     public String getTime() {
@@ -71,12 +70,12 @@ public class ClassVO {
         this.site = site;
     }
 
-    public Integer getNumClass() {
-        return numClass;
+    public Integer getNumStudent() {
+        return numStudent;
     }
 
-    public void setNumClass(Integer numClass) {
-        this.numClass = numClass;
+    public void setNumStudent(Integer numStudent) {
+        this.numStudent = numStudent;
     }
 
     public Integer getCalling() {
@@ -85,14 +84,6 @@ public class ClassVO {
 
     public void setCalling(Integer calling) {
         this.calling = calling;
-    }
-
-    public String getRoster() {
-        return roster;
-    }
-
-    public void setRoster(String roster) {
-        this.roster = roster;
     }
 
     public ProportionsVO getProportion() {
