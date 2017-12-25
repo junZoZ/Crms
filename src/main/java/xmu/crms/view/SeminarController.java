@@ -95,6 +95,7 @@ public class SeminarController {
             TopicVO topicVO = new TopicVO();
             topicVO.setId(item.getId().intValue());
             topicVO.setName(item.getName());
+            topicVO.setSerial(item.getSerial());
             topicVO.setDescription(item.getDescription());
             topicVO.setGroupLimit(item.getGroupNumberLimit());
             topicVO.setGroupMemberLimit(item.getGroupNumberLimit());
