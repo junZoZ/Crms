@@ -9,6 +9,7 @@ public class GroupVO {
   private IdAndNameVO leader;
   private ArrayList<IdAndNameVO> members;
   private ArrayList<IdAndNameVO> topics;
+  private String report;
 
     public GroupVO() {
     }
@@ -59,6 +60,14 @@ public class GroupVO {
 
     public void setTopics(ArrayList<IdAndNameVO> topics) {
         this.topics = topics;
+    }
+
+    public Stirng getReport() {
+        return report;
+    }
+
+    public void setReport(Stirng report) {
+        this.report = report;
     }
 
     @Override
