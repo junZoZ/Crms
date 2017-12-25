@@ -100,7 +100,7 @@ public interface ClassService {
      * @throws ClassesNotFoundException 无此Id的班级
      * @author yexiaona
      */
-    BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId) throws
+    Integer insertCourseSelectionById(BigInteger userId, BigInteger classId) throws
             UserNotFoundException, ClassesNotFoundException;
 
     /**
