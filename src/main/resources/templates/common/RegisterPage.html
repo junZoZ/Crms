@@ -8,42 +8,50 @@
                                      maximum-scale=1.0,
                                      user-scalable=no">
     <title>ClassManage</title>
-<link href="../../css/common/RegisterPage.css" rel="stylesheet" type="text/css"/>
-    <script src="../../js/jquery.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/jquery.isotope.min.js"></script>
-    <script src="../../js/jquery.inview.min.js"></script>
-    <script src="../../js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<link href="../../static/css/common/RegisterPage.css" rel="stylesheet" type="text/css"/>
+    <script src="../../static/js/jquery.js"></script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/jquery.isotope.min.js"></script>
+    <script src="../../static/js/jquery.inview.min.js"></script>
+    <script src="../../static/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
 
 
     <script type="text/javascript">
-    function login(){
-    var u={"phone":$('#phone').val(),
-                  "password":$('#password').val()};
-         $.ajax({
-             type:"POST", //请求方式
-             url:"/signin", //请求路径
-             cache: false,
-             contentType : "application/json",
-             data:JSON.stringify(u),
-             dataType: 'json',   //返回值类型
-             success:function(data){
-               if(data)
-                   {
-                      if($('#phone').val()&&$('#password').val())
-                      {
-                       getDetails();
-                      }
-                      else
-                      {
-                         alert("账号密码不能为空!");
-                      }
-                   }
-             },
-             error:function(result){
+    function login() {
+        var u = {
+            "phone": $('#phone').val(),
+            "password": $('#password').val()
+        };
+        var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+        var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+        if (!$('#phone').val() || !$('#password').val()) {
+            alert("账号密码不能为空!");
+        }
+        else if (!myreg.test($("#phone").val())) {
+            alert('请输入有效的手机号码！');
+        }
+        else if(!reg.test($("#email").val()))
+        {
+            alert("邮箱格式不正确，请重新输入！");
+        }
+        else {
+            $.ajax({
+                type: "POST", //请求方式
+                url: "/signin", //请求路径
+                cache: false,
+                contentType: "application/json",
+                data: JSON.stringify(u),
+                dataType: 'json',   //返回值类型
+                success: function (data) {
+                    if (data) {
+                        getDetails();
+                    }
+                },
+                error: function (result) {
 
-             }
-      });
+                }
+            });
+        }
     };
     </script>
 
@@ -54,14 +62,17 @@
 <div class="titleBackground"></div>
 <div class="title">课程管理系统</div>
 <div class="icon">
-<img src="../../Img/home.png">首页
-<img src="../../Img/help.png">帮助
-<img src="../../Img/exit.png">退出
+<img src="../../static/Img/home.png">首页
+<img src="../../static/Img/help.png">帮助
+<img src="../../static/Img/exit.png">退出
 </div>
-<div class="phoneNum">手机号:<input type="text" name="phoneNum"/></div>
-<div class="password">密码:<input type="text" name="password"/></div>
-<div class="name">姓名:<input type="text" name="name"/></div>
-<div class="school">学校:<input type="text" name="school"/></div>
+<div class="phoneNum">手机号:<input type="text" name="phoneNum" id="phone"/></div>
+<div class="password">密码:<input type="text" name="password" id="password"/></div>
+<div class="name">姓名:<input type="text" name="name" id="name"/></div>
+<div class="province">省:<select class="provinceSelect" id="province"></select></div>
+<div class="city">市:<select class="citySelect" id="city"></select></div>
+<div class="school">学校:<select class="schoolSelect" id="school"></select>
+    <div class="createSchool">创建学校</div> </div>
 <div class="gender">性别:</div>
 <div class="male">男<input type="radio" value="男" name="gender" checked="checked"/></div>
 <div class="female">女<input type="radio" value="女" name="gender"/></div>
@@ -69,8 +80,8 @@
 <div class="student">学生<input type="radio" value="学生" name="role" checked="checked"/></div>
 <div class="teacher">教师<input type="radio" value="教师" name="role"/></div>
 <div class="stuffNum">教工号:<input type="text" name="stuffNum"/></div>
-<div class="eMail">邮箱:<input type="text" name="eMail"/></div>
-<button class="submit">提交</button>
+<div class="eMail">邮箱:<input type="text" name="eMail" id="email"/></div>
+<button class="submit" onclick="login()">提交</button>
 </body>
 
 </html>
