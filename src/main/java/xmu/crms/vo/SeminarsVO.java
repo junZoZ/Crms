@@ -3,30 +3,84 @@ package xmu.crms.vo;
 import xmu.crms.dto.IdAndNameDTO;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
-/**
- * 
- * @author zyx
- * @Time  2017-12-2   09:57:01
- * 课程下的所有班级的简要信息
- */
 public  class SeminarsVO {
 
-	private ArrayList<IdAndNameDTO> classList;
+	Integer id;
+	String name;
+	String description;
+	String groupingMethod;
+	Date startTime;
+	Date endTime;
+	Integer grade;
 
-
-	public SeminarsVO(ArrayList<IdAndNameDTO> classList) {
-		this.classList = classList;
+	public Integer getId() {
+		return id;
 	}
 
-	public ArrayList<IdAndNameDTO> getClassList() {
-		return classList;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setClassList(ArrayList<IdAndNameDTO> classList) {
-		this.classList = classList;
+	public String getName() {
+		return name;
 	}
-    
-	
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public String getGroupingMethod() {
+		return groupingMethod;
+	}
+
+	public void setGroupingMethod(String groupingMethod) {
+		this.groupingMethod = groupingMethod;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public Integer getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Integer grade) {
+		this.grade = grade;
+	}
+
+	@Override
+	public String toString() {
+		return "SeminarsVO{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", startTime='" + startTime + '\'' +
+				", endTime='" + endTime + '\'' +
+				", grade='" + grade + '\'' +
+				'}';
+	}
 }

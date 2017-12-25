@@ -2,6 +2,8 @@ package xmu.crms.vo;
 
 import xmu.crms.dto.ProportionsDTO;
 
+import java.math.BigInteger;
+
 /**
  *
  * @author zyx
@@ -10,15 +12,14 @@ import xmu.crms.dto.ProportionsDTO;
  */
 public class ClassVO {
 
-    private Integer id;
+    private BigInteger id;
     private String name;
-    private Integer numberStudent;
+    private Integer numClass;
     private String time;
     private String site;
     private Integer calling;
     private String roster;
-    private ProportionsDTO classProportion;
-
+    private ProportionsVO proportion;
     private String courseName;
     private String courseTeacher;
 
@@ -26,32 +27,19 @@ public class ClassVO {
     public ClassVO() {
     }
 
-    public ClassVO(Integer id, String name, Integer numberStudent, String site, String time, Integer calling, String roster, ProportionsDTO classProportion) {
+    public ClassVO(BigInteger id, String name, Integer numClass, String time, String site) {
         this.id = id;
         this.name = name;
-        this.numberStudent = numberStudent;
-        this.site = site;
-        this.time = time;
-        this.calling = calling;
-        this.roster = roster;
-        this.classProportion = classProportion;
-    }
-
-    public ClassVO(Integer id, String name, Integer numberStudent, String time, String site, String courseName, String courseTeacher) {
-        this.id = id;
-        this.name = name;
-        this.numberStudent = numberStudent;
+        this.numClass = numClass;
         this.time = time;
         this.site = site;
-        this.courseName = courseName;
-        this.courseTeacher = courseTeacher;
     }
 
-    public Integer getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
@@ -63,13 +51,17 @@ public class ClassVO {
         this.name = name;
     }
 
-
-
-    public void setNumberStudent(Integer numberStudent) {
-        this.numberStudent = numberStudent;
+    public ClassVO(Integer numClass) {
+        this.numClass = numClass;
     }
 
+    public String getTime() {
+        return time;
+    }
 
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public String getSite() {
         return site;
@@ -79,12 +71,12 @@ public class ClassVO {
         this.site = site;
     }
 
-    public String getTime() {
-        return time;
+    public Integer getNumClass() {
+        return numClass;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setNumClass(Integer numClass) {
+        this.numClass = numClass;
     }
 
     public Integer getCalling() {
@@ -103,16 +95,12 @@ public class ClassVO {
         this.roster = roster;
     }
 
-    public ProportionsDTO getClassProportion() {
-        return classProportion;
+    public ProportionsVO getProportion() {
+        return proportion;
     }
 
-    public void setClassProportion(ProportionsDTO classProportion) {
-        this.classProportion = classProportion;
-    }
-
-    public Integer getNumberStudent() {
-        return numberStudent;
+    public void setProportion(ProportionsVO proportion) {
+        this.proportion = proportion;
     }
 
     public String getCourseName() {
@@ -129,21 +117,5 @@ public class ClassVO {
 
     public void setCourseTeacher(String courseTeacher) {
         this.courseTeacher = courseTeacher;
-    }
-
-    @Override
-    public String toString() {
-        return "ClassVO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", numberStudent=" + numberStudent +
-                ", time='" + time + '\'' +
-                ", site='" + site + '\'' +
-                ", calling=" + calling +
-                ", roster='" + roster + '\'' +
-                ", classProportion=" + classProportion +
-                ", courseName='" + courseName + '\'' +
-                ", courseTeacher='" + courseTeacher + '\'' +
-                '}';
     }
 }
