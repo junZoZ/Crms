@@ -30,6 +30,12 @@ public class CourseController {
     @Autowired
     private  SeminarGroupService  seminarGroupService;
 
+    @Autowired
+    private  GradeService  gradeService;
+
+    @Autowired
+    private  UserService userService;
+
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/course",method = RequestMethod.GET)
     public   List<CourseVO> getCourseList()  {
@@ -43,7 +49,7 @@ public class CourseController {
             for (Course item:courseList){
                 //获取每个course的班级数
                 Integer classNumber = classService.listClassByCourseId(item.getId()).size();
-                courseVOList.add(new CourseVO(item.getId(),item.getName(),classNumber,item.getStartDate(),item.getEndDate());
+                courseVOList.add(new CourseVO(item.getId(),item.getName(),classNumber,item.getStartDate(),item.getEndDate()));
             }
             return courseVOList;
         } catch (CourseNotFoundException e) {}
@@ -63,9 +69,9 @@ public class CourseController {
         course.setEndDate(newCourseVO.getEndTime());
         course.setPresentationPercentage(newCourseVO.getProportion().getPresentation());
         course.setReportPercentage(newCourseVO.getProportion().getReport());
-        course.setFivePointPercentage(newCourseVO.getProportion().getC());
+        course.setFivePointPercentage(newCourseVO.getProportion().getA());
         course.setFourPointPercentage(newCourseVO.getProportion().getB());
-        course.setThreePointPercentage(newCourseVO.getProportion().getA());
+        course.setThreePointPercentage(newCourseVO.getProportion().getC());
         BigInteger courseId  = courseService.insertCourseByUserId(userId,course);
         return courseId.intValue();
     }
@@ -74,7 +80,7 @@ public class CourseController {
     @RequestMapping(value = "/course/{courseId}",method = RequestMethod.GET)
     @ResponseBody
     public CourseVO CourseDescription(@PathVariable("courseId") Integer courseId)
-            throws CourseNotFoundException {
+            throws IllegalArgumentException,CourseNotFoundException {
 
         Course course = courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
         CourseVO courseVO = new CourseVO(course.getId(),course.getName(),
@@ -82,20 +88,25 @@ public class CourseController {
         return courseVO;
     }
 
+
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value="/course/{courseId}",method = RequestMethod.PUT)
-    public void NewCourse1(@PathVariable("courseId") Integer courseId,@RequestBody CourseVO courseDetail) throws CourseNotFoundException
+    public void NewCourse1(@PathVariable("courseId") Integer courseId,@RequestBody CourseVO courseDetail)
     {
-        Course course = courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
+        Course course = null;
+        try {
+            course = courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
+        } catch (CourseNotFoundException e) {}
+
         course.setName(courseDetail.getName());
         course.setDescription(courseDetail.getDescription());
         course.setStartDate(courseDetail.getStartTime());
         course.setEndDate(courseDetail.getEndTime());
         course.setPresentationPercentage(courseDetail.getProportion().getPresentation());
         course.setReportPercentage(courseDetail.getProportion().getReport());
-        course.setFivePointPercentage(courseDetail.getProportion().getC());
+        course.setFivePointPercentage(courseDetail.getProportion().getA());
         course.setFourPointPercentage(courseDetail.getProportion().getB());
-        course.setThreePointPercentage(courseDetail.getProportion().getA());
+        course.setThreePointPercentage(courseDetail.getProportion().getC());
         courseService.updateCourseByCourseId(course.getId(),course);
     }
 
@@ -140,16 +151,17 @@ public class CourseController {
     }
 
     @ResponseStatus(value= HttpStatus.OK)
-    @RequestMapping(value = "/course/{courseId}/seminars",method = RequestMethod.GET)
+    @RequestMapping(value = "/course/{courseId}/seminar",method = RequestMethod.GET)
     @ResponseBody
-    public ArrayList<SeminarsVO> ListSeminars(@PathVariable("courseId") Integer courseId,@RequestParam(value="embedGrade",required = false) boolean embedGrades) throws CourseNotFoundException{
-
+    public ArrayList<SeminarVO> ListSeminars(@PathVariable("courseId") Integer courseId,@RequestParam(value="embedGrade",required = false) boolean embedGrades) throws CourseNotFoundException{
+//        和小程序有交集
+//        需要用到jwt
         BigInteger userId=new BigInteger("233");
-        List<Seminar> seminar=seminarService.listSeminarByCourseId(new BigInteger(courseId.toString()));
-        ArrayList<SeminarsVO> seminarVO=new ArrayList<SeminarsVO>(16);
+        List<Seminar> seminar = seminarService.listSeminarByCourseId(new BigInteger(courseId.toString()));
+        ArrayList<SeminarVO> seminarVO=new ArrayList<SeminarVO>(16);
         for(Seminar item:seminar)
         {
-            SeminarsVO s=new SeminarsVO();
+            SeminarVO s=new SeminarVO();
             s.setId(item.getId().intValue());
             s.setName(item.getName());
             s.setDescription(item.getDescription());
@@ -178,7 +190,7 @@ public class CourseController {
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value = "/course/{courseId}/seminar",method = RequestMethod.POST)
     @ResponseBody
-    public Integer NewSeminar(@PathVariable("courseId") Integer courseId, @RequestBody SeminarsVO newSeminar) throws CourseNotFoundException {
+    public Integer NewSeminar(@PathVariable("courseId") Integer courseId, @RequestBody SeminarVO newSeminar) throws CourseNotFoundException {
         Seminar seminar=new Seminar();
         Course course=courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
         seminar.setCourse(course);
@@ -197,28 +209,28 @@ public class CourseController {
     }
 
 
+//小程序的url: get /course/{courseID}/seminar/current
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/course/{courseID}/grade",method = RequestMethod.GET)
-    public   ArrayList courseGrade(@PathVariable("courseID") Integer courseId)
-    {
+    public   ArrayList<CourseGradeVO> courseGrade(@PathVariable("courseID") Integer courseId) throws IllegalArgumentException{
+//        需要用到jwt
+        BigInteger userId = new BigInteger("1");
 
-        ArrayList<CourseGradeVO> courseGradeList = new ArrayList<CourseGradeVO>();
+        List<SeminarGroup> courseGradeList = gradeService.listSeminarGradeByCourseId(userId,new BigInteger(courseId.toString()));
+        ArrayList<CourseGradeVO> courseGradeVOArrayList = new ArrayList<CourseGradeVO>();
+        for(SeminarGroup item:courseGradeList){
+           CourseGradeVO courseGradeVO = new CourseGradeVO();
+           courseGradeVO.setSeminarName(item.getSeminar().getName());
+           courseGradeVO.setGroupName(item.getLeader().getName()+"的小组");
+           courseGradeVO.setLeaderName(item.getLeader().getName());
+           courseGradeVO.setPresentationGrade(item.getPresentationGrade());
+           courseGradeVO.setReportGrade(item.getReportGrade());
+           courseGradeVO.setGrade(item.getFinalGrade());
+           courseGradeVOArrayList.add(courseGradeVO);
+        }
 
-        CourseGradeVO grade1 = new CourseGradeVO("需求分析","3A2","张三",
-                3,4,4);
-        CourseGradeVO grade2 = new CourseGradeVO("界面原型设计","3A3","张三",
-                4,4,4);
-        CourseGradeVO grade3 = new CourseGradeVO("需求分析","3A2","张三",
-                3,4,4);
-        CourseGradeVO grade4 = new CourseGradeVO("界面原型设计","3A3","张三",
-                4,4,4);
-        courseGradeList.add(grade1);
-        courseGradeList.add(grade2);
-        courseGradeList.add(grade3);
-        courseGradeList.add(grade4);
-
-        return courseGradeList;
+        return courseGradeVOArrayList;
     }
 
 
@@ -227,12 +239,6 @@ public class CourseController {
 
 
 
-    @ResponseStatus(value= HttpStatus.NO_CONTENT)
-    @RequestMapping(value = "/class/{classId}",method = RequestMethod.DELETE)
-    @ResponseBody
-    public void DeleteClass(@PathVariable("classId") Integer classId) {
-
-    }
 
 
 
