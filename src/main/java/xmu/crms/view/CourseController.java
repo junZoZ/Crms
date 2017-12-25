@@ -1,13 +1,27 @@
 package xmu.crms.view;
+import org.springframework.beans.factory.annotation.Autowired;
 import xmu.crms.dto.*;
+import xmu.crms.entity.ClassInfo;
+import xmu.crms.entity.Course;
+import xmu.crms.exception.CourseNotFoundException;
+import xmu.crms.service.ClassService;
+import xmu.crms.service.CourseService;
 import xmu.crms.vo.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 @RestController
 public class CourseController {
+
+    @Autowired
+    private CourseService courseService;
+
+    @Autowired
+    private ClassService classService;
+
     class Example{
         List<CoursesListVO> courses=new ArrayList(16);
         public Example()
@@ -24,19 +38,100 @@ public class CourseController {
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/course",method = RequestMethod.GET)
-    public   List<CoursesListVO> registerfirst()
-    {
+    public   List<CoursesListVO> getCourseList() {
+//        需要用到jwt
         return ex.courses;
     }
+
 
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/course",method = RequestMethod.POST)
     public CoursesListVO NewCourse(@RequestBody CourseDTO newCourse)
     {
+//        需要用到jwt
         CoursesListVO course=new CoursesListVO(1004,newCourse.getName(),0,60,"2017-12-6","2017-12-6");
         ex.courses.add(course);
         return course;
     }
+
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value = "/course/{courseId}",method = RequestMethod.GET)
+    @ResponseBody
+    public CourseDescriptionVO CourseDescription(@PathVariable("courseId") Integer courseId)
+            throws CourseNotFoundException {
+
+        Course course = courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
+        CourseDescriptionVO courseDescription = new CourseDescriptionVO(course.getId(),course.getName(),
+                course.getDescription(),course.getTeacher().getName(),course.getTeacher().getEmail());
+        return courseDescription;
+    }
+
+    @ResponseStatus(value= HttpStatus.NO_CONTENT)
+    @RequestMapping(value="/course/{courseId}",method = RequestMethod.PUT)
+    public void NewCourse1(@PathVariable("courseId") Integer courseId,@RequestBody CourseDetailVO courseDetail)
+    {
+        Course course = courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
+        course.setName(courseDetail.getName());
+        course.setDescription(courseDetail.getDescription());
+        course.setStartDate(courseDetail.getStartTime());
+        course.setEndDate(courseDetail.getEndTime());
+        course.setPresentationPercentage(courseDetail.getCourseProportion().getPresentation());
+        course.setReportPercentage(courseDetail.getCourseProportion().getReport());
+        course.setFivePointPercentage(courseDetail.getCourseProportion().getC());
+        course.setFourPointPercentage(courseDetail.getCourseProportion().getB());
+        course.setThreePointPercentage(courseDetail.getCourseProportion().getA());
+        courseService.updateCourseByCourseId(course.getId(),course);
+    }
+
+
+    @ResponseStatus(value= HttpStatus.NO_CONTENT)
+    @RequestMapping(value="/course/{courseId}",method = RequestMethod.DELETE)
+    public   void registerSecond(@PathVariable("courseId") Integer courseId)
+    {
+        courseService.deleteCourseByCourseId(new BigInteger(courseId.toString()));
+    }
+
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value = "/course/{courseId}/class",method = RequestMethod.GET)
+    @ResponseBody
+    public ArrayList<IdAndNameVO> Classes(@PathVariable("courseId") Integer courseId) throws CourseNotFoundException{
+        List<ClassInfo> classInfo = classService.listClassByCourseId(new BigInteger(courseId.toString());
+        ArrayList<IdAndNameVO> idAndNameVOArrayList = new ArrayList<>();
+        for(ClassInfo item :classInfo){
+            idAndNameVOArrayList.add(new IdAndNameVO(item.getId(),item.getName()));
+        }
+        return idAndNameVOArrayList;
+    }
+
+    @ResponseStatus(value= HttpStatus.CREATED)
+    @RequestMapping(value = "/course/{courseId}/class",method = RequestMethod.POST)
+    @ResponseBody
+    public ClassVO NewClass(@PathVariable("courseId") Integer courseId,@RequestBody ClassDTO newClass) {
+
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value = "/course/{courseId}/seminars",method = RequestMethod.GET)
+    @ResponseBody
+    public ArrayList<IdAndNameDTO> Seminars(@PathVariable("courseId") Integer courseId) {
+        return null;
+    }
+
+
+
+
+
+
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/course/{courseID}/grade",method = RequestMethod.GET)
@@ -63,54 +158,11 @@ public class CourseController {
         return courseGradeList;
     }
 
-    @ResponseStatus(value= HttpStatus.NO_CONTENT)
-    @RequestMapping(value="/course/{courseId}",method = RequestMethod.PUT)
-    public void NewCourse1(@PathVariable("courseId") Integer courseId,@RequestBody CourseDTO newCourse)
-    {
-        CoursesListVO course=new CoursesListVO(1004,newCourse.getName(),0,60,"2017-12-6","2017-12-6");
-    }
 
-    @ResponseStatus(value= HttpStatus.NO_CONTENT)
-    @RequestMapping(value="/course/{courseId}",method = RequestMethod.DELETE)
-    public   void registerSecond(@PathVariable("courseId") Integer courseId)
-    {
-        for(CoursesListVO item:ex.courses)
-            if(item.getId()==courseId)
-            {ex.courses.remove(item); break;  }
-    }
 
-    @ResponseStatus(value= HttpStatus.OK)
-    @RequestMapping(value = "/course/{courseId}",method = RequestMethod.GET)
-    @ResponseBody
-    public CourseDescriptionVO CourseDescription(@PathVariable("courseId") Integer courseId) {
 
-        CourseDescriptionVO courseDescription = new CourseDescriptionVO(12,"OOAD",
-                "面向对象过程与设计","邱明","mingqiu@xmu.edu.cn");
-        System.out.print("11");
-        return courseDescription;
-    }
 
-    @ResponseStatus(value= HttpStatus.OK)
-    @RequestMapping(value = "/course/{courseId}/class",method = RequestMethod.GET)
-    @ResponseBody
-    public ArrayList<IdAndNameDTO> Classes(@PathVariable("courseId") Integer courseId) {
-        return null;
-    }
 
-    @ResponseStatus(value= HttpStatus.OK)
-    @RequestMapping(value = "/course/{courseId}/seminars",method = RequestMethod.GET)
-    @ResponseBody
-    public ArrayList<IdAndNameDTO> Seminars(@PathVariable("courseId") Integer courseId) {
-        return null;
-    }
-
-    @ResponseStatus(value= HttpStatus.CREATED)
-    @RequestMapping(value = "/course/{courseId}/class",method = RequestMethod.POST)
-    @ResponseBody
-    public ClassVO NewClass(@PathVariable("courseId") Integer courseId,@RequestBody ClassDTO newClass) {
-
-        return null;
-    }
 
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/class/{classId}",method = RequestMethod.DELETE)
