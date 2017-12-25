@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import xmu.crms.dao.SeminarDao;
 import xmu.crms.entity.Seminar;
+import xmu.crms.service.impl.SeminarImpl;
 
 import java.math.BigInteger;
 
@@ -16,18 +17,29 @@ import java.math.BigInteger;
 public class SeminarImplTest {
 
     @Autowired
-    private SeminarDao seminarDao;
+    private SeminarImpl seminarImpl;
 
     @Test
     public void testListSeminarByCourseId()
     {
-        seminarDao.listSeminarByCourseId(new BigInteger("2"));
+        try {
+            seminarImpl.listSeminarByCourseId(new BigInteger("2"));
+        }catch(Exception e)
+        {
+
+        }
+
     }
 
     @Test
     public void testDeleteSeminarByCourseId()
     {
-        seminarDao.deleteSeminarByCourseId(new BigInteger("2"));
+        try {
+            seminarImpl.deleteSeminarByCourseId(new BigInteger("2"));
+        }catch (Exception e)
+        {
+
+        }
     }
 
     @Test
@@ -35,7 +47,7 @@ public class SeminarImplTest {
     {
         try
         {
-        seminarDao.getSeminarBySeminarId(new BigInteger("5"));}
+        seminarImpl.getSeminarBySeminarId(new BigInteger("5"));}
         catch (Exception e)
         {
 
@@ -49,7 +61,7 @@ public class SeminarImplTest {
         {
             Seminar s=new Seminar();
             s.setId(new BigInteger("2"));
-            seminarDao.updateSeminarBySeminarId(s);}
+            seminarImpl.updateSeminarBySeminarId(new BigInteger("2"),s);}
         catch (Exception e)
         {
 
@@ -61,7 +73,7 @@ public class SeminarImplTest {
     {
         try
         {
-            seminarDao.deleteSeminarBySeminarId(new BigInteger("2"));}
+            seminarImpl.deleteSeminarBySeminarId(new BigInteger("2"));}
         catch (Exception e)
         {
 
@@ -75,7 +87,7 @@ public class SeminarImplTest {
         {
             Seminar s=new Seminar();
             s.setId(new BigInteger("2"));
-            seminarDao.insertSeminarByCourseId(s);}
+            seminarImpl.insertSeminarByCourseId(new BigInteger("2"),s);}
         catch (Exception e)
         {
 
