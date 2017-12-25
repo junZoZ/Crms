@@ -31,7 +31,7 @@
         WHERE id=#{id}
     </update>
 
-    <resultMap id="ExecutableEvents" type="Event">
+    <resultMap id="ExecutableEvents" type="xmu.crms.entity.Event">
         <id column="id" property="id" javaType="java.math.BigInteger"/>
         <result column="time" property="time" javaType="java.util.Date"/>
         <result column="bean_name" property="beanName"/>

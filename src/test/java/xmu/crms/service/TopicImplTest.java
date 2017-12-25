@@ -6,11 +6,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import xmu.crms.dao.TopicDao;
 import xmu.crms.entity.Seminar;
-import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
-import xmu.crms.service.impl.TopicImpl;
 
 import java.math.BigInteger;
 
@@ -19,7 +16,7 @@ import java.math.BigInteger;
 public class TopicImplTest {
 
     @Autowired
-    private TopicImpl topicImpl;
+    private TopicService topicImpl;
 
     @Test
     public void testGetTopicByTopicId()
@@ -67,11 +64,13 @@ public class TopicImplTest {
     public void testInsertTopicBySeminarId()
     {
         Topic topic=new Topic();
-        topic.setId(new BigInteger("3"));
+        topic.setId(new BigInteger("5"));
         topic.setName("话题1");
+        topic.setSerial("A");
         topic.setDescription("xxx");
         topic.setGroupNumberLimit(new Integer(5));
         topic.setGroupStudentLimit(new Integer(5));
+        topic.setSerial("A");
         Seminar s=new Seminar();
         s.setId(new BigInteger("3"));
         topic.setSeminar(s);

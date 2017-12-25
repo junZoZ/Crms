@@ -8,7 +8,7 @@
     </delete>
 
     <delete id="deleteSeminarGroupMemberById" parameterType="SeminarGroupMember" >
-        DELETE FROM seminar_group_member WHERE seminar_group_id=#{seminarGroup.id} AND student_id=#{user.id}
+        DELETE FROM seminar_group_member WHERE seminar_group_id=#{seminarGroup.id} AND student_id=#{student.id}
     </delete>
 
     <insert id="insertSeminarGroupMemberById" parameterType="SeminarGroupMember" useGeneratedKeys="true" keyProperty="id">

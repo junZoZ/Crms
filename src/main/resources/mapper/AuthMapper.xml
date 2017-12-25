@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xmu.crms.mapper.AuthMapper">
+
+    <resultMap id="User" type="xmu.crms.entity.User" autoMapping="true">
+        <association property="school" column="school_id" select="getSchoolBySchoolId"/>
+    </resultMap>
+
+    <select id="getSchoolBySchoolId" resultType="xmu.crms.entity.School">
+        SELECT
+            id,
+            name,
+            province,
+            city
+        FROM
+            school
+        WHERE
+            id = #{schoolId}
+    </select>
+
+    <select id="getUserByOpenId" resultMap="User">
+        SELECT
+            id,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            name,
+            school_id,
+            gender,
+            type,
+            number,
+            education,
+            title,
+            email
+        FROM
+            user_info
+        WHERE
+            openid = #{openId}
+    </select>
+</mapper>

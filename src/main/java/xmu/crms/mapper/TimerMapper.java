@@ -6,12 +6,11 @@ import org.springframework.stereotype.Component;
 import xmu.crms.entity.Event;
 
 import java.math.BigInteger;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Mapper
 @Component
+
 /**
  * @author zzj
  * */

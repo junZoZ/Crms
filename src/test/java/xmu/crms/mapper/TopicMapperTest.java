@@ -70,6 +70,7 @@ public class TopicMapperTest {
         topic.setGroupNumberLimit(5);
         topic.setGroupStudentLimit(5);
         topic.setSeminar(seminar);
+        topic.setSerial("A");
         topicMapper.insertTopicBySeminarId(topic);
     }
 
@@ -100,9 +101,9 @@ public class TopicMapperTest {
     {
         SeminarGroupTopic  seminarGroupTopic = new SeminarGroupTopic();
         Topic topic = new Topic();
-        topic.setId(new BigInteger("2"));
+        topic.setId(new BigInteger("3"));
         SeminarGroup seminarGroup = new SeminarGroup();
-        seminarGroup.setId(new BigInteger("1"));
+        seminarGroup.setId(new BigInteger("19"));
         seminarGroupTopic.setTopic(topic);
         seminarGroupTopic.setSeminarGroup(seminarGroup);
         SeminarGroupTopic  seminarGroupTopic1 = topicMapper.getSeminarGroupTopicById(seminarGroupTopic);

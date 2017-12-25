@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class TimerImpl implements TimerService {
+public class TimerServiceImpl implements TimerService {
 
    @Autowired
    private TimerDao timerDao;

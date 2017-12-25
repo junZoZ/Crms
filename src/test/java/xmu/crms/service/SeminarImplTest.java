@@ -6,9 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import xmu.crms.dao.SeminarDao;
 import xmu.crms.entity.Seminar;
-import xmu.crms.service.impl.SeminarImpl;
 
 import java.math.BigInteger;
 
@@ -17,7 +15,7 @@ import java.math.BigInteger;
 public class SeminarImplTest {
 
     @Autowired
-    private SeminarImpl seminarImpl;
+    private SeminarService seminarImpl;
 
     @Test
     public void testListSeminarByCourseId()

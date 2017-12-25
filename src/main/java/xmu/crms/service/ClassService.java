@@ -3,8 +3,14 @@ package xmu.crms.service;
 import java.math.BigInteger;
 import java.util.List;
 
-import xmu.crms.entity.*;
-import xmu.crms.exception.*;
+import xmu.crms.entity.ClassInfo;
+import xmu.crms.entity.Location;
+import xmu.crms.entity.User;
+import xmu.crms.exception.ClassesNotFoundException;
+import xmu.crms.exception.CourseNotFoundException;
+import xmu.crms.exception.InvalidOperationException;
+import xmu.crms.exception.SeminarNotFoundException;
+import xmu.crms.exception.UserNotFoundException;
 
 /**
  * @author aixing
@@ -19,23 +25,7 @@ public interface ClassService {
      */
     void deleteClassSelectionByClassId(BigInteger classId);
 
-    /**
-     * 按课程名称和教师名称获取班级列表.
-     * <p>
-     * 根据课程名和教师名获取课程ID，通过课程ID获取班级列表;若课程名和班级名均不为空，取交集<br>
-     *
-     * @param courseName  课程名称
-     * @param teacherName 教师名称
-     * @return List 班级列表
-     * @throws UserNotFoundException   无此姓名的教师
-     * @throws CourseNotFoundException 无此名称的课程
-     * @author yexiaona
-     * @see CourseService #listClassByCourseName(String courseName)
-     * @see CourseService #listClassByTeacherName(String teacherName)
-     */
-    List<ClassInfo> listClassByName(String courseName, String teacherName) throws
-            UserNotFoundException, CourseNotFoundException;
-
+ 
     /**
      * 根据课程ID获得班级列表.
      *
@@ -49,8 +39,7 @@ public interface ClassService {
 
     /**
      * 按班级id获取班级详情.
-     * <p>
-     * 根据班级id获取班级<br>
+     * <p>根据班级id获取班级<br>
      *
      * @param classId 班级ID
      * @return ClassBO 班级
@@ -100,7 +89,7 @@ public interface ClassService {
      * @throws ClassesNotFoundException 无此Id的班级
      * @author yexiaona
      */
-    Integer insertCourseSelectionById(BigInteger userId, BigInteger classId) throws
+    BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId) throws
             UserNotFoundException, ClassesNotFoundException;
 
     /**
@@ -160,68 +149,34 @@ public interface ClassService {
     void deleteClassByCourseId(BigInteger courseId) throws
             CourseNotFoundException;
 
-    /**
-     * 按classId删除ScoreRule.
-     *
-     * @param classId 班级Id
-     * @throws ClassesNotFoundException 无此Id的班级
-     * @author zhouzhongjun
-     */
-    void deleteScoreRuleById(BigInteger classId) throws ClassesNotFoundException;
-
-    /**
-     * 查询评分规则.
-     * <p>
-     * 按id查询指定的评分规则<br>
-     *
-     * @param classId 班级id
-     * @return ProportionBO 返回评分规则，若未找到对应评分规则返回空（null)
-     * @throws ClassesNotFoundException 无此Id的班级
-     * @author YeHongjie
-     */
-    ClassInfo getScoreRule(BigInteger classId) throws ClassesNotFoundException;
-
-    /**
-     * 新增评分规则.
-     * <p>
-     * 新增评分规则<br>
-     *
-     * @param classId     班级Id
-     * @param proportions 评分规则
-     * @return scoreRuleId 若创建成功则返回该评分规则的id，失败则返回-1
-     * @throws InvalidOperationException 班级信息不合法
-     * @throws ClassesNotFoundException    无此Id的班级
-     * @author YeHongjie
-     */
-    BigInteger insertScoreRule(BigInteger classId, ClassInfo proportions)
-            throws InvalidOperationException, ClassesNotFoundException;
-
-    /**
-     * 修改评分规则.
-     * <p>
-     * 修改指定的评分规则<br>
-     *
-     * @param classId     班级id
-     * @param proportions 评分规则
-     * @throws InvalidOperationException 班级信息不合法
-     * @throws ClassesNotFoundException    无此Id的班级
-     * @author YeHongjie
-     */
-    void updateScoreRule(BigInteger classId, ClassInfo proportions)
-            throws InvalidOperationException, ClassesNotFoundException;
-
+   
     /**
      * 老师发起签到.
      * <p>往location表插入一条当前讨论课班级的签到状态<br>
-     *
+     * 
      * @param location 当前讨论课班级的签到状态记录
      * @return 返回location表的新记录的id
      * @throws SeminarNotFoundException 讨论课没有找到
      * @throws ClassesNotFoundException   无此Id的班级
      */
-    BigInteger CallInRollById(Location location)
+   BigInteger callInRollById(Location location)
             throws SeminarNotFoundException, ClassesNotFoundException;
 
+    /**
+     * 新增老师结束签到.
+     * <p>老师结束签到,修改当前讨论课班级的签到状态为已结束<br>
+     * 
+     * @author qinlingyun
+     * @param seminarId 讨论课Id
+     * @param classId 班级Id
+     * @throws SeminarNotFoundException 讨论课没有找到
+     * @throws ClassesNotFoundException   无此Id的班级
+     */
+   /* void endCallRollById(BigInteger seminarId, BigInteger classId)
+            throws SeminarNotFoundException, ClassesNotFoundException;*/
+    
+    
+    
     /**
      * 根据学生ID获取班级列表.
      * <p>根据学生ID获取班级列表<br>

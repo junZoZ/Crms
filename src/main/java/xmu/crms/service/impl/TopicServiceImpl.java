@@ -17,7 +17,7 @@ import java.util.List;
  * @author zhouzhongjun
  **/
 @Service
-public class TopicImpl implements TopicService{
+public class TopicServiceImpl implements TopicService{
 
    @Autowired
     private TopicDao topicDao;

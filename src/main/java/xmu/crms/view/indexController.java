@@ -1,6 +1,5 @@
 package xmu.crms.view;
 
-import xmu.crms.dto.*;
 import xmu.crms.vo.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

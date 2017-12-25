@@ -36,7 +36,6 @@ public interface SeminarService {
 	 * @see SeminarService #listSemiarByCourseId(BigInteger courseId)
 	 * @see TopicService   #deleteTopicBySeminarId(BigInteger seminarId)
 	 * @see SeminarGroupService  #deleteSeminarGroupBySeminarId(BigInteger seminarId)
-	 * @return true删除成功 false删除失败
 	 * @exception IllegalArgumentException CourseId 格式错误时抛出
 	 * @exception CourseNotFoundException 该课程不存在时抛出
 	 */
@@ -63,7 +62,6 @@ public interface SeminarService {
 	 * @author CaoXingmei
 	 * @param seminarId 讨论课的id
 	 * @param seminar 讨论课信息
-	 * @return true(修改成功), false(修改失败)
 	 * @exception IllegalArgumentException SeminarId 格式错误时抛出
 	 * @exception SeminarNotFoundException 该讨论课不存在时抛出
 	 */
@@ -76,7 +74,6 @@ public interface SeminarService {
 	 * <p>用户（老师）通过seminarId删除讨论课<br>(包括删除讨论课包含的topic信息和小组信息).
 	 * @author CaoXingmei
 	 * @param seminarId 讨论课的id
-	 * @return true(删除成功), false(删除失败)
 	 * @see SeminarGroupService #deleteSeminarGroupBySeminarId(BigInteger seminarId)
 	 * @see TopicService#deleteTopicBySeminarId(BigInteger seminarId)
 	 * @exception IllegalArgumentException SeminarId 格式错误时抛出

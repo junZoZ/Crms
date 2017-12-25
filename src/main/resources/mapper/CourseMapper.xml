@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace用来指定该xml文件对应的interface  -->
+<!-- 默认idea对于该xml文件是几乎没有任何提示的，需要装一个叫 mybatis free plugins 的插件 -->
+<mapper namespace="xmu.crms.mapper.CourseMapper">
+    <!-- id 就是方法名称 -->
+    <!-- resultType 指定返回的类型，如果返回多个，一样只要指定这个类型,mybatis会自动生成一个list-->
+    <!-- #{xxx}是参数的名称，参数会被填到这个位置 -->
+    <resultMap id="listCourseByUserIdResultMap" type="xmu.crms.entity.Course">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="description" column="description"/>
+        <result property="reportPercentage" column="report_percentage"/>
+        <result property="presentationPercentage" column="presentation_percentage"/>
+        <result property="fivePointPercentage" column="five_point_percentage"/>
+        <result property="fourPointPercentage" column="four_point_percentage"/>
+        <result property="threePointPercentage" column="three_point_percentage"/>
+        <association property="teacher" column="teacher_id"  select="xmu.crms.mapper.UserMapper.getUserByUserIdBigInteger"/>
+    </resultMap>
+    <select id="listCourseByUserId" resultMap="listCourseByUserIdResultMap">
+        SELECT
+        id,
+        name,
+        start_date,
+        end_date,
+        teacher_id,
+        description,
+        report_percentage,
+        presentation_percentage,
+        five_point_percentage,
+        four_point_percentage,
+        three_point_percentage
+        FROM course
+        WHERE  teacher_id=#{userId};
+    </select>
+
+    <!--parameterType="BigInteger,xmu.crms.entity.Course"-->
+    <insert id="insertCourseByUserId" keyColumn="id" keyProperty="course.id" useGeneratedKeys="true">
+        INSERT INTO course(
+        name,
+        start_date,
+        end_date,
+        teacher_id,
+        description,
+        report_percentage,
+        presentation_percentage,
+        five_point_percentage,
+        four_point_percentage,
+        three_point_percentage
+        )
+        VALUES (#{course.name},
+        #{course.startDate},
+        #{course.endDate},
+        #{userId},
+        #{course.description},
+        #{course.reportPercentage},
+        #{course.presentationPercentage},
+        #{course.fivePointPercentage},
+        #{course.fourPointPercentage},
+        #{course.threePointPercentage}
+        );
+    </insert>
+
+    <resultMap id="getCourseByCourseIdResultMap" type="xmu.crms.entity.Course">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+
+        <result property="description" column="description"/>
+        <result property="reportPercentage" column="report_percentage"/>
+        <result property="presentationPercentage" column="presentation_percentage"/>
+        <result property="fivePointPercentage" column="five_point_percentage"/>
+        <result property="fourPointPercentage" column="four_point_percentage"/>
+        <result property="threePointPercentage" column="three_point_percentage"/>
+        <association property="teacher" column="teacher_id" select="xmu.crms.mapper.UserMapper.getUserByUserIdBigInteger"/>
+    </resultMap>
+
+    <select id="getCourseByCourseId" resultMap="getCourseByCourseIdResultMap">
+        SELECT
+        id,
+        name,
+        start_date,
+        end_date,
+        teacher_id,
+        description,
+        report_percentage,
+        presentation_percentage,
+        five_point_percentage,
+        four_point_percentage,
+        three_point_percentage
+        FROM course
+        WHERE  id=#{courseId};
+    </select>
+
+    <!-- parameterType="BigInteger,xmu.crms.entity.Course"-->
+    <update id="updateCourseByCourseId">
+        update course
+        <set>
+            <if test="course.name!= null">
+                name = #{course.name},
+            </if>
+            <if test="course.startDate != null">
+                start_date = #{course.startDate},
+            </if>
+            <if test="course.endDate!= null">
+                end_date = #{course.endDate},
+            </if>
+            <if test="course.teacher.id!= null">
+                teacher_id = #{course.teacher.id},
+            </if>
+            <if test="course.description!= null">
+                description  = #{course.description},
+            </if>
+            <if test="course.reportPercentage!= null">
+                report_percentage  = #{course.reportPercentage},
+            </if>
+            <if test="course.presentationPercentage!= null">
+                presentation_percentage  = #{course.presentationPercentage},
+            </if>
+            <if test="course.fivePointPercentage!= null">
+                five_point_percentage  = #{course.fivePointPercentage},
+            </if>
+            <if test="course.fourPointPercentage!= null">
+                four_point_percentage  = #{course.fourPointPercentage},
+            </if>
+            <if test="course.threePointPercentage!= null">
+                three_point_percentage  = #{course.threePointPercentage},
+            </if>
+        </set>
+        where id=#{courseId}
+    </update>
+
+    <delete id="deleteCourseByCourseId" parameterType="java.math.BigInteger">
+        delete from course
+        where id=#{courseId}
+    </delete>
+
+    <select id="listCourseByCourseName" resultMap="listCourseByUserIdResultMap">
+        SELECT
+        id,
+        name,
+        start_date,
+        end_date,
+        teacher_id,
+        description,
+        report_percentage,
+        presentation_percentage,
+        five_point_percentage,
+        four_point_percentage,
+        three_point_percentage
+        FROM course
+        WHERE  name=#{courseName};
+    </select>
+
+
+</mapper>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace用来指定该xml文件对应的interface  -->
+<!-- 默认idea对于该xml文件是几乎没有任何提示的，需要装一个叫 mybatis free plugins 的插件 -->
+<mapper namespace="xmu.crms.mapper.FixGroupMapper">
+    <insert id="insertFixGroupByClassId" parameterType="xmu.crms.entity.FixGroup" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO fix_group (class_id, leader_id)
+        VALUES (#{classInfo.id}, #{leader.id})
+    </insert>
+    <insert id="insertFixGroupMemberById" parameterType="xmu.crms.entity.FixGroupMember" keyProperty="fixGroupMember.id"
+            useGeneratedKeys="true">
+        INSERT INTO fix_group_member (fix_group_id, student_id)
+        VALUES (#{fixGroupMember.fixGroup.id}, #{fixGroupMember.student.id})
+    </insert>
+    <insert id="insertSeminarGroup" useGeneratedKeys="true" keyProperty="seminarGroup.id">
+        INSERT INTO
+            seminar_group (seminar_id, class_id, leader_id)
+        VALUES (#{seminarGroup.seminar.id}, #{seminarGroup.classInfo.id}, #{seminarGroup.leader.id})
+    </insert>
+    <insert id="insertSeminarGroupMember" keyProperty="seminarGroupMember.id" useGeneratedKeys="true">
+        INSERT INTO
+            seminar_group_member (seminar_group_id, student_id)
+        VALUES (#{seminarGroupMember.seminarGroup.id}, #{seminarGroupMember.student.id})
+    </insert>
+    <insert id="insertSeminarGroupTopic" keyProperty="seminarGroupTopic.id" useGeneratedKeys="true">
+        INSERT INTO
+            seminar_group_topic (topic_id, seminar_group_id)
+        VALUES (#{seminarGroupTopic.topic.id}, #{seminarGroupTopic.seminarGroup.id})
+    </insert>
+
+
+    <update id="updateFixGroupByGroupId">
+        UPDATE fix_group
+        SET class_id = #{fixGroupBO.classInfo.id}, leader_id = #{fixGroupBO.leader.id}
+        WHERE id = #{groupId}
+    </update>
+    <update id="updateSeminarGroupById">
+        UPDATE seminar_group
+        SET seminar_id         = #{group.seminar.id}, report_grade = #{group.reportGrade},
+            presentation_grade = #{group.presentationGrade}, final_grade = #{group.finalGrade},
+            report             = #{group.report}, class_id = #{group.classInfo.id}, leader_id = #{group.leader.id}
+        WHERE id = #{groupId}
+    </update>
+
+    <delete id="deleteFixGroupMemberByFixGroupId">
+        DELETE
+        FROM fix_group_member
+        WHERE fix_group_id = #{fixGroupId}
+    </delete>
+    <delete id="deleteFixGroupUserById">
+        DELETE
+        FROM fix_group_member
+        WHERE fix_group_id = #{fixGroupId} AND student_id = #{userId}
+    </delete>
+    <delete id="deleteFixGroupByClassId">
+        DELETE
+        FROM fix_group
+        WHERE class_id = #{classId}
+    </delete>
+    <delete id="deleteFixGroupById">
+        DELETE
+        FROM fix_group
+        WHERE id = #{groupId}
+    </delete>
+    <delete id="deleteFixGroupTopicByGroupId">
+        DELETE
+        FROM fix_group_topic
+        WHERE fix_group_id = #{groupId}
+    </delete>
+
+    <select id="listFixGroupByClassId" resultMap="getFixGroup">
+        SELECT
+            id,
+            class_id,
+            leader_id
+        FROM fix_group
+        WHERE class_id = #{classId}
+    </select>
+    <select id="listFixGroupMemberByGroupId" resultMap="getFixGroupMember">
+        SELECT
+            id,
+            fix_group_id,
+            student_id
+        FROM fix_group_member
+        WHERE fix_group_id = #{fixGroupId}
+    </select>
+    <select id="listFixGroupMemberByUserId" resultMap="getFixGroupMember">
+        SELECT
+            id,
+            fix_group_id,
+            student_id
+        FROM fix_group_member
+        WHERE student_id = #{userId}
+    </select>
+    <select id="listFixGroupMemberByGroupIdUserId" resultMap="getFixGroupMember">
+        SELECT
+            id,
+            fix_group_id,
+            student_id
+        FROM fix_group_member
+        WHERE student_id = #{userId} AND fix_group_id = #{groupId}
+    </select>
+    <select id="listSeminarBySeminarId" resultType="java.lang.Integer">
+        SELECT id
+        FROM seminar
+        WHERE id = #{seminarId}
+    </select>
+    <select id="listFixGroupById" resultMap="getFixGroup">
+        SELECT
+            id,
+            class_id,
+            leader_id
+        FROM fix_group
+        WHERE id = #{groupId}
+    </select>
+    <select id="selectFixGroupTopicByGroupId" resultMap="getFixGroupTopic">
+        SELECT
+            id,
+            fix_group_id,
+            topic_id
+        FROM fix_group_topic
+        WHERE fix_group_id = #{groupId}
+    </select>
+    <select id="listUsersById" resultType="xmu.crms.entity.User">
+        SELECT
+            id,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            name,
+            school_id,
+            gender,
+            type,
+            number,
+            education,
+            title,
+            email
+        FROM user_info
+        WHERE id = #{id}
+    </select>
+    <select id="listClassById" resultMap="getClassInfo">
+        SELECT
+            id,
+            name,
+            course_id,
+            site,
+            class_time,
+            report_percentage,
+            presentation_percentage,
+            five_point_percentage,
+            four_point_percentage,
+            three_point_percentage
+        FROM
+            class_info
+        WHERE
+            course_id = #{courseId}
+    </select>
+
+
+    <resultMap id="getFixGroupMember" type="xmu.crms.entity.FixGroupMember">
+        <id property="id" column="id"/>
+        <result property="fixGroup.id" column="fix_group_id"/>
+        <result property="student.id" column="student_id"/>
+    </resultMap>
+    <resultMap id="getFixGroup" type="xmu.crms.entity.FixGroup">
+        <id property="id" column="id"/>
+        <result property="classInfo.id" column="class_id"/>
+        <result property="leader.id" column="leader_id"/>
+    </resultMap>
+    <resultMap id="getFixGroupTopic" type="xmu.crms.entity.FixGroupTopic">
+        <id property="id" column="id"/>
+        <result property="fixGroup.id" column="fix_group_id"/>
+        <result property="topic.id" column="topic_id"/>
+    </resultMap>
+    <resultMap id="getUser" type="xmu.crms.entity.User">
+        <id column="id" property="id"/>
+        <result property="phone" column="phone"/>
+        <result property="wechatId" column="wechat_id"/>
+        <result property="openid" column="open_id"/>
+        <result property="avatar" column="avatar"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="school.id" column="school_id"/>
+        <result property="gender" column="gender"/>
+        <result property="type" column="type"/>
+        <result property="number" column="number"/>
+        <result property="education" column="education"/>
+        <result property="title" column="title"/>
+        <result property="email" column="email"/>
+    </resultMap>
+    <resultMap id="getClassInfo" type="xmu.crms.entity.ClassInfo">
+        <id column="id" property="id"/>
+        <result property="classTime" column="class_time"/>
+        <result property="course.id" column="course_id"/>
+        <result property="description" column="description"/>
+        <result property="fivePointPercentage" column="five_point_percentage"/>
+        <result property="fourPointPercentage" column="four_point_percentage"/>
+        <result property="presentationPercentage" column="presentation_percentage"/>
+        <result property="reportPercentage" column="report_percentage"/>
+        <result property="threePointPercentage" column="three_point_percentage"/>
+        <result property="site" column="cite"/>
+    </resultMap>
+</mapper>

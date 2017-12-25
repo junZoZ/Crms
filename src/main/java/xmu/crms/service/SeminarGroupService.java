@@ -86,8 +86,7 @@ public interface SeminarGroupService {
 	 * 按seminarId获取SeminarGroup.
 	 * <p>按seminarId获取SeminarGroup<br>
 	 * @author zhouzhongjun
-	 * @param seminarId 课程Id
-	 * @return 讨论课小组列表
+	 * @param seminarId 课程Id	 * @return 讨论课小组列表
 	 * @exception IllegalArgumentException 信息不合法，id格式错误
 	 * @exception SeminarNotFoundException 未找到讨论课
 	 */
@@ -112,6 +111,7 @@ public interface SeminarGroupService {
 	 * <p>在指定讨论课下创建讨论课小组<br>
 	 * @author YeHongjie
 	 * @param seminarId 讨论课的id
+	 * @param classId 班级id
 	 * @param seminarGroup 小组信息
 	 * @see SeminarGroupService #insertSeminarGroupMemberByGroupId(BigInteger groupId,SeminarGroupMember SeminarGroupMember)
 	 * @return BigInteger 若创建成功返回该小组的id，失败则返回-1
@@ -131,6 +131,19 @@ public interface SeminarGroupService {
                                                  SeminarGroupMember seminarGroupMember);
 
 
+	
+	/**
+	 * 删除小组成员.
+	 * <p>在指定小组成员表下删除一个小组成员信息<br>
+	 * @param seminarGroupId 小组的id
+	 * @param  userId 成员id
+	 */
+	void deleteSeminarGroupMemberById(BigInteger seminarGroupId,
+                                      BigInteger userId);
+
+
+	
+	
 	/**
 	 * 删除讨论课小组.
 	 * <p>按照id删除讨论课小组<br>
@@ -174,9 +187,8 @@ public interface SeminarGroupService {
 
 
 	/**
-	 *
 	 * 自动分组.
-	 * <p>根据讨论课id和班级id，对签到的学生进行自动分组<br>
+	 * <p>根据讨论课id和班级id，结束签到后 对签到的学生进行自动分组<br>
 	 * @author YeHongjie
 	 * @param seminarId 讨论课的id
 	 * @param classId 班级的id
@@ -192,7 +204,9 @@ public interface SeminarGroupService {
 			IllegalArgumentException,ClassesNotFoundException,SeminarNotFoundException,
 			GroupNotFoundException,UserNotFoundException,InvalidOperationException;
 
+		
 
+	
 
 	/**
 	 * 根据讨论课Id及用户id，获得该用户所在的讨论课的小组的信息.
@@ -257,15 +271,5 @@ public interface SeminarGroupService {
 	 */
 	void resignLeaderById(BigInteger groupId, BigInteger userId) throws
 			IllegalArgumentException,GroupNotFoundException,UserNotFoundException,InvalidOperationException;
-
-
-	/**
-	 * 删除小组成员.
-	 * <p>在指定小组成员表下删除一个小组成员信息<br>
-	 * @param seminarGroupId 小组的id
-	 * @param  userId 成员id
-	 */
- 	void deleteSeminarGroupMemberById(BigInteger seminarGroupId,
-                                                  BigInteger userId);
 
 }

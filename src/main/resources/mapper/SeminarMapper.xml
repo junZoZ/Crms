@@ -55,7 +55,7 @@
         (#{id}, #{name},#{description},#{course.id},#{fixed},#{startTime},#{endTime})
     </insert>
 
-    <resultMap id="SeminarResultMap" type="Seminar">
+    <resultMap id="SeminarResultMap" type="xmu.crms.entity.Seminar">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="description" column="description"/>

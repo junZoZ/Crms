@@ -3,7 +3,6 @@ package xmu.crms.service;
 import java.math.BigInteger;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 import xmu.crms.entity.Attendance;
 import xmu.crms.entity.Course;
 import xmu.crms.entity.User;
@@ -64,6 +63,19 @@ public interface UserService {
 	 */
 	User getUserByUserId(BigInteger userId) throws IllegalArgumentException,
 			UserNotFoundException;
+	
+	/**
+	 * 根据用户学（工）号获取用户的信息.
+	 * <p>根据用户学（工）号获取用户的信息<br> 
+	 * @author YeHongjie
+	 * @param userNumber 用户学（工）号
+	 * @return user 用户信息
+	 * @see SchoolService#getSchoolBySchoolId(BigInteger schoolId)
+	 * @exception IllegalArgumentException throws when 信息不合法 
+	 * @exception UserNotFoundException throws when 未找到对应用户
+	 */
+/*	User getUserByUserNumber(String userNumber) throws IllegalArgumentException,
+			UserNotFoundException;*/
 
 	/**
 	 * 根据用户名获取用户ID.
@@ -179,5 +191,6 @@ public interface UserService {
 	 * @exception CourseNotFoundException throws when 对应姓名的用户未创设任何课程 
 	 */
 	List<Course> listCourseByTeacherName(String teacherName) throws
-			UserNotFoundException,IllegalArgumentException,CourseNotFoundException;
+			UserNotFoundException,IllegalArgumentException,CourseNotFoundException;	
+
 }

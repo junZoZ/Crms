@@ -30,23 +30,7 @@ public interface SchoolService {
 	 * @return schoolId 添加的学校id
 	 */
 	 BigInteger insertSchool(School school);
-	
-	/**
-	 * 获取省份列表.
-	 * <p>获取所有省份的名称<br>
-	 * @author LiuAiqi
-	 * @return list 省份名称列表
-	 */
-	 List<String> listProvince();
-	
-	/**
-	 * 获取城市列表.
-	 * <p>根据省份名称，获取该省份所有城市名称，返回城市名称列表<br>
-	 * @author LiuAiqi
-	 * @param province 省份名称
-	 * @return list 城市名称列表
-	 */
-	 List<String> listCity(String province);
+
 	
 	/**
 	 * 获取学校信息.

@@ -65,9 +65,9 @@ public class TopicDaoTest {
     public void testInsertTopicBySeminarId()
     {
         Topic topic=new Topic();
-        topic.setId(new BigInteger("99"));
         topic.setName("话题1");
         topic.setDescription("xxx");
+        topic.setSerial("A");
         topic.setGroupNumberLimit(new Integer(5));
         topic.setGroupStudentLimit(new Integer(5));
         Seminar s=new Seminar();

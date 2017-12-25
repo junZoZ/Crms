@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间应该是对应接口的包名+类名 -->
+<mapper namespace="xmu.crms.mapper.UserMapper">
+    <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <select id="getUserByUserIdBigInteger" resultType="xmu.crms.entity.User">
+    SELECT
+    id,
+    gmt_create,
+    gmt_modified,
+    phone,
+    wechat_id,
+    openid,
+    avatar,
+    password,
+    name,
+    school_id,
+    gender,
+    type,
+    number,
+    education,
+    title,
+    email
+    FROM user_info
+    WHERE id=#{userId};
+    </select>
+    <insert id="insertAttendanceById" parameterType="xmu.crms.entity.User" keyProperty="userinfo.id"
+            useGeneratedKeys="true">
+    INSERT INTO attendance
+    (class_id,seminar_id,student_id)
+    VALUES(#{classId},#{seminarId},#{userId})
+    </insert>
+    <select id="getIdByInfo" resultType="BigInteger">
+    SELECT id
+    FROM attendance
+    WHERE class_id=#{classId} AND seminar_id=#{seminarId} AND student_id=#{userId};
+    </select>
+    <select id="listAbsenceStudent" resultType="xmu.crms.entity.User">
+    SELECT
+    id,
+    gmt_create,
+    gmt_modified,
+    phone,
+    wechat_id,
+    openid,
+    avatar,
+    password,
+    name,
+    school_id,
+    gender,
+    type,
+    number,
+    education,
+    title,
+    email
+    FROM user_info
+    WHERE id IN
+    (SELECT student_id FROM attendance WHERE class_id=#{classId} AND seminar_id=#{seminarId} AND attendance_status=2);
+    </select>
+
+    <select id="listAttendanceById" resultType="xmu.crms.entity.Attendance">
+     SELECT
+    id,
+    gmt_create,
+    gmt_modified,
+    phone,
+    wechat_id,
+    openid,
+    avatar,
+    password,
+    name,
+    school_id,
+    gender,
+    type,
+    number,
+    education,
+    title,
+    email
+    FROM user_info
+    WHERE id IN
+    (SELECT student_id FROM attendance WHERE class_id=#{classId} AND seminar_id=#{seminarId});
+    </select>
+    <select id="listCourseByTeacherName" resultType="xmu.crms.entity.Course">
+    SELECT
+    id,
+    gmt_create,
+    gmt_modified,
+    name,
+    start_date,
+    end_date,
+    teacher_id,
+    description,
+    report_percentage,
+    presentation_percentage,
+    five_point_percentage,
+    three_point_percentage
+    FROM course
+    Where teacher_id in(SELECT id FROM user_info WHERE name=#{userName}AND type=1);
+    </select>
+    <select id="listLateStudent" resultType="xmu.crms.entity.User">
+    SELECT
+    id,
+    gmt_create,
+    gmt_modified,
+    phone,
+    wechat_id,
+    openid,
+    avatar,
+    password,
+    name,
+    school_id,
+    gender,
+    type,
+    number,
+    education,
+    title,
+    email
+    FROM user_info
+    WHERE id IN
+    (SELECT student_id FROM attendance WHERE class_id=#{classId} AND seminar_id=#{seminarId} AND attendance_status=1);
+    </select>
+    <select id="listPresentStudent" resultType="xmu.crms.entity.User">
+    SELECT
+    id,
+    gmt_create,
+    gmt_modified,
+    phone,
+    wechat_id,
+    openid,
+    avatar,
+    password,
+    name,
+    school_id,
+    gender,
+    type,
+    number,
+    education,
+    title,
+    email
+    FROM user_info
+    WHERE id IN
+    (SELECT student_id FROM attendance WHERE class_id=#{classId}
+     AND seminar_id=#{seminarId} AND attendance_status=0);
+    </select>
+    <select id="listUserByClassId" resultType="xmu.crms.entity.User">
+    SELECT
+    id,
+    gmt_create,
+    gmt_modified,
+    phone,
+    wechat_id,
+    openid,
+    avatar,
+    password,
+    name,
+    school_id,
+    gender,
+    type,
+    number,
+    education,
+    title,
+    email
+    FROM user_info
+    WHERE id IN(SELECT student_id from attendance WHERE class_id=#{classId}) AND name LIKE #{nameBeginWith} AND number LIKE #{numBeginWith};
+    </select>
+    <select id="listUserByUserName" resultType="xmu.crms.entity.User">
+    SELECT
+    id,
+    gmt_create,
+    gmt_modified,
+    phone,
+    wechat_id,
+    openid,
+    avatar,
+    password,
+    name,
+    school_id,
+    gender,
+    type,
+    number,
+    education,
+    title,
+    email
+    FROM user_info
+    WHERE name=#{userName};
+    </select>
+    <select id="listUserIdByUserName" resultType="BigInteger">
+    SELECT
+    id
+    FROM user_info
+    WHERE name=#{userName};
+    </select>
+    <update id="updateUserByUserId" parameterType="xmu.crms.entity.User">
+    UPDATE user_info
+    SET
+    phone=#{user.phone},
+    wechat_id=#{user.wechatId},
+    openid=#{user.openid},
+    avatar=#{user.avatar},
+    password=#{user.password},
+    name=#{user.name},
+    school_id=#{user.school.id},
+    gender=#{user.gender},
+    type=#{user.type},
+    number=#{user.number},
+    education=#{user.education},
+    title=#{user.title},
+    email=#{user.email}
+    WHERE id=#{userId};
+    
+    </update>
+    <select id="getLongitude" resultType="decimal">
+    SELECT longitude
+    FROM location
+    WHERE class_id=#{classId} AND seminar_id=#{seminarId};
+    </select>
+    <select id="getLatitude" resultType="decimal">
+    SELECT latitude
+    FROM location
+    WHERE class_id=#{classId} AND seminar_id=#{seminarId};
+    </select>
+</mapper>

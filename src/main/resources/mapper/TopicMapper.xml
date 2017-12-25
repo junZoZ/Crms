@@ -4,14 +4,14 @@
 <mapper namespace="xmu.crms.mapper.TopicMapper">
 
 
-    <update id="updateTopicByTopicId" parameterType="Topic">
+    <update id="updateTopicByTopicId" parameterType="xmu.crms.entity.Topic">
         UPDATE  topic
         <set>
-            <if test="serial!=null">
-                serial=#{serial},
-            </if>
             <if test="name!=null">
                 name=#{name},
+            </if>
+            <if test="serial!=null">
+                serial=#{serial},
             </if>
             <if test="description!=null">
                 description=#{description},
@@ -38,7 +38,7 @@
 
 
 
-    <delete id="deleteTopicByTopicId" parameterType="Topic">
+    <delete id="deleteTopicByTopicId" parameterType="xmu.crms.entity.Topic">
         DELETE FROM topic WHERE id=#{id}
     </delete>
 
@@ -48,15 +48,15 @@
         WHERE seminar_id=#{topicId}
     </select>
 
-    <insert id="insertTopicBySeminarId" parameterType="Topic" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertTopicBySeminarId" parameterType="xmu.crms.entity.Topic" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO topic
-        (id,serial, name, description, group_number_limit, group_student_limit, seminar_id)
+        (id, name, serial,description, group_number_limit, group_student_limit, seminar_id)
         VALUES
         (#{id}, #{serial},#{name}, #{description}, #{groupNumberLimit}, #{groupStudentLimit}, #{seminar.id})
     </insert>
 
 
-    <delete id="deleteTopicById" parameterType="seminarGroupTopic">
+    <delete id="deleteTopicById" parameterType="xmu.crms.entity.SeminarGroupTopic">
         DELETE FROM seminar_group_topic WHERE topic_id=#{topic.id} AND seminar_group_id=#{seminarGroup.id}
     </delete>
 
@@ -64,13 +64,13 @@
         DELETE FROM seminar_group_topic WHERE topic_id=#{topicId}
     </delete>
 
-    <select id="getSeminarGroupTopicById" parameterType="SeminarGroupTopic" resultMap="seminarGroupTopicResultMap">
+    <select id="getSeminarGroupTopicById" parameterType="xmu.crms.entity.SeminarGroupTopic" resultMap="seminarGroupTopicResultMap">
         SELECT  id,topic_id,seminar_group_id,presentation_grade
         From seminar_group_topic
         WHERE topic_id=#{topic.id} AND seminar_group_id=#{seminarGroup.id}
     </select>
 
-    <delete id="deleteTopicBySeminarId" parameterType="Seminar">
+    <delete id="deleteTopicBySeminarId" parameterType="xmu.crms.entity.Seminar">
         DELETE FROM topic WHERE seminar_id=#{id}
     </delete>
 
@@ -81,15 +81,16 @@
         WHERE seminar_group_id=#{groupId}
     </select>
 
-    <resultMap id="seminarGroupTopicResultMap" type="SeminarGroupTopic">
+    <resultMap id="seminarGroupTopicResultMap" type="xmu.crms.entity.SeminarGroupTopic">
         <id property="id" column="id"/>
         <result property="presentationGrade" column="presentation_grade"/>
         <association property="topic"  column="topic_id" select="xmu.crms.mapper.UtilityMapper.selectTopic"/>
         <association property="seminarGroup" column="seminar_group_id" select="xmu.crms.mapper.UtilityMapper.selectSeminarGroup"/>
     </resultMap>
 
-    <resultMap id="topicResultMap" type="Topic">
+    <resultMap id="topicResultMap" type="xmu.crms.entity.Topic">
         <id property="id" column="id"/>
+        <result property="serial" column="serial"/>
         <result property="name" column="name"/>
         <result property="description" column="description"/>
         <result property="groupNumberLimit" column="group_number_limit"/>

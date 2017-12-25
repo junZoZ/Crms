@@ -11,7 +11,7 @@ import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroup;
 import xmu.crms.entity.SeminarGroupMember;
 import xmu.crms.entity.SeminarGroupTopic;
-import xmu.crms.service.impl.SeminarGroupImpl;
+import xmu.crms.exception.GroupNotFoundException;;
 
 import java.math.BigInteger;
 
@@ -20,7 +20,7 @@ import java.math.BigInteger;
 public class SeminarGroupImplTest {
 
     @Autowired
-    private SeminarGroupImpl seminarGroupImpl;
+    private SeminarGroupService seminarGroupImpl;
 
     @Test
     public void testDeleteSeminarGroupMemberBySeminarGroupId()
@@ -107,8 +107,7 @@ public class SeminarGroupImplTest {
     }
 
     @Test
-    public void testDeleteSeminarGroupByGroupId()
-    {
+    public void testDeleteSeminarGroupByGroupId() throws GroupNotFoundException {
         seminarGroupImpl.deleteSeminarGroupByGroupId(new BigInteger("2"));
     }
 

@@ -50,7 +50,7 @@ public class ClassController {
         List<ClassInfo> listClass =new ArrayList<ClassInfo>(16);
         if(courseName==null||teacherName==null) {
             try {
-                listClass = classService.listClassByName(courseName,teacherName);
+                listClass = courseService.listClassByName(courseName,teacherName);
             } catch (UserNotFoundException e) {
 
             } catch (CourseNotFoundException e) {

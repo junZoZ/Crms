@@ -16,7 +16,7 @@ import java.util.List;
  * @author zyx
  * */
 @Service
-public  class SeminarGroupImpl implements SeminarGroupService {
+public  class SeminarGroupServiceImpl implements SeminarGroupService {
 
     @Autowired
     private SeminarGroupDao seminarGroupDao;
