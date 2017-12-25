@@ -1,6 +1,5 @@
 package xmu.crms.vo;
 
-import xmu.crms.dto.ProportionsDTO;
 
 import java.math.BigInteger;
 

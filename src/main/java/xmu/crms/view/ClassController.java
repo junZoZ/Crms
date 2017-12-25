@@ -2,15 +2,8 @@ package xmu.crms.view;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import xmu.crms.dto.ClassDTO;
-
-import xmu.crms.dto.IdAndNameDTO;
-import xmu.crms.dto.TopicDTO;
 import xmu.crms.entity.*;
-import xmu.crms.exception.ClassesNotFoundException;
-import xmu.crms.exception.CourseNotFoundException;
-import xmu.crms.exception.FixGroupNotFoundException;
-import xmu.crms.exception.UserNotFoundException;
+import xmu.crms.exception.*;
 import xmu.crms.service.ClassService;
 import xmu.crms.service.CourseService;
 import xmu.crms.service.FixGroupService;
@@ -186,8 +179,11 @@ public class ClassController {
     {
 //JWT
 //
-              BigInteger userId=new BigInteger("5");
-        return classService.insertCourseSelectionById(userId,new BigInteger(classId.toString());
+        BigInteger userId=new BigInteger("5");
+        try {
+            return classService.insertCourseSelectionById(userId,new BigInteger(classId.toString())).intValue();
+        } catch (UserNotFoundException e) { } catch (ClassesNotFoundException e) { }
+        return null;
     }
 
 
@@ -237,11 +233,39 @@ public class ClassController {
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/class/{classId}/classgroup/add", method = RequestMethod.PUT)
     @ResponseBody
-    public void index4(@PathVariable("classId") Integer classId, @RequestBody Integer memberId) {
-        System.out.println(memberId);
-
+    public void insertFixGroupMember(@PathVariable("classId") Integer classId, @RequestBody Integer memberId) {
+//JWT
+//
+        BigInteger userId=new BigInteger("5");
+        FixGroup fixGroup=new FixGroup();
+        try {
+            fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
+            try {
+                fixGroupService.insertStudentIntoGroup(fixGroup.getId(),userId);
+            } catch (FixGroupNotFoundException e)
+            { }
+            catch (InvalidOperationException e) { }
+        } catch (ClassesNotFoundException e) { }
+        catch (UserNotFoundException e) { }
     }
 
+    @ResponseStatus(value= HttpStatus.NO_CONTENT)
+    @RequestMapping(value = "/class/{classId}/classgroup/remove", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteFixGroupMember(@PathVariable("classId") Integer classId, @RequestBody Integer memberId) {
+//JWT
+//
+        BigInteger userId=new BigInteger("5");
+        FixGroup fixGroup=new FixGroup();
+        try {
+            fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
+            try {
+                fixGroupService.deleteFixGroupUserById(fixGroup.getId(),userId);
+            } catch (FixGroupNotFoundException e)
+            { }
+        } catch (ClassesNotFoundException e) { }
+        catch (UserNotFoundException e) { }
+    }
 
 
 }

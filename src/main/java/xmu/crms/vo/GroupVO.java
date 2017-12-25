@@ -9,6 +9,7 @@ public class GroupVO {
   private IdAndNameVO leader;
   private ArrayList<IdAndNameVO> members;
   private ArrayList<IdAndNameVO> topics;
+  private String report;
 
     public GroupVO() {
     }
@@ -61,6 +62,14 @@ public class GroupVO {
         this.topics = topics;
     }
 
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
+    }
+
     @Override
     public String toString() {
         return "GroupVO{" +
@@ -69,6 +78,7 @@ public class GroupVO {
                 ", leader=" + leader +
                 ", members=" + members +
                 ", topics=" + topics +
+                ", report='" + report + '\'' +
                 '}';
     }
 }

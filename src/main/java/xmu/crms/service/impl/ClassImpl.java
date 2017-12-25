@@ -42,7 +42,7 @@ public class ClassImpl implements ClassService{
     }
 
     @Override
-    public BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId) throws UserNotFoundException, ClassesNotFoundException {
+    public Integer insertCourseSelectionById(BigInteger userId, BigInteger classId) throws UserNotFoundException, ClassesNotFoundException {
         return null;
     }
 

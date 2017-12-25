@@ -3,10 +3,7 @@ package xmu.crms.view;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import xmu.crms.entity.Seminar;
-import xmu.crms.entity.SeminarGroup;
-import xmu.crms.entity.SeminarGroupTopic;
-import xmu.crms.entity.Topic;
+import xmu.crms.entity.*;
 import xmu.crms.exception.GroupNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.service.*;
@@ -31,8 +28,6 @@ public class SeminarController {
     @Autowired
     private SeminarGroupService seminarGroupService;
 
-    @Autowired
-    private GradeService gradeService;
 
     @Autowired
     private  UserService userService;
@@ -100,6 +95,7 @@ public class SeminarController {
             TopicVO topicVO = new TopicVO();
             topicVO.setId(item.getId().intValue());
             topicVO.setName(item.getName());
+            topicVO.setSerial(item.getSerial());
             topicVO.setDescription(item.getDescription());
             topicVO.setGroupLimit(item.getGroupNumberLimit());
             topicVO.setGroupMemberLimit(item.getGroupNumberLimit());
@@ -158,41 +154,27 @@ public class SeminarController {
     @ResponseBody
     public GroupVO MySeminarGroup(@PathVariable("seminarId") Integer seminarId) throws GroupNotFoundException {
 //        用到jwt
+//         没有实现404尚未分组
         BigInteger userId = new BigInteger("1");
         SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupById(new BigInteger(seminarId.toString()),userId);
         GroupVO groupVO = new GroupVO();
         groupVO.setId(seminarGroup.getId().intValue());
         groupVO.setName(seminarGroup.getLeader().getName()+"的小组");
-
-
-        return group;
-
+        groupVO.setLeader(new IdAndNameVO(seminarGroup.getLeader().getId(),seminarGroup.getLeader().getName()));
+        List<User> seminarGroupMemberList = seminarGroupService.listSeminarGroupMemberByGroupId(seminarGroup.getId());
+        ArrayList<IdAndNameVO> memberList = new ArrayList<>();
+        for(User item:seminarGroupMemberList){
+            memberList.add(new IdAndNameVO(item.getId(),item.getName()));
+        }
+        groupVO.setMembers(memberList);
+        return groupVO;
     }
+//    get seminar/{seminarId}/class/{classId}/attendence
+//    get seminar/{seminarId}/class/{classId}/attendence/present
+//    get seminar/{seminarId}/class/{classId}/attendence/late
+//    get seminar/{seminarId}/class/{classId}/attendence/absent
+//    put seminar/{seminarId}/class/{classId}/attendence/{studentId}
 
-
-    {
-        "id": 28,
-            "name": 28,
-            "leader": {
-        "id": 8888,
-                "name": "张三"
-    },
-        "members": [
-        {
-            "id": 5324,
-                "name": "李四"
-        },
-        {
-            "id": 5678,
-                "name": "王五"
-        }
-  ],
-        "topics": [
-        {
-            "id": 257,
-                "name": "领域模型与模块"
-        }
-  ]
     }
 
 
@@ -224,4 +206,4 @@ public class SeminarController {
 
 
 
-}
+
