@@ -7,6 +7,9 @@
     <update id="updateTopicByTopicId" parameterType="Topic">
         UPDATE  topic
         <set>
+            <if test="serial!=null">
+                serial=#{serial},
+            </if>
             <if test="name!=null">
                 name=#{name},
             </if>
@@ -28,7 +31,7 @@
     </update>
 
     <select id="getTopicByTopicId" resultMap="topicResultMap">
-        SELECT  id,name,description,group_number_limit,group_student_limit,seminar_id
+        SELECT  id,serial,name,description,group_number_limit,group_student_limit,seminar_id
         From topic
         WHERE id=#{topicId}
     </select>
@@ -40,16 +43,16 @@
     </delete>
 
     <select id="listTopicBySeminarId" resultMap="topicResultMap">
-        SELECT  id,name,description,group_number_limit,group_student_limit,seminar_id
+        SELECT  id,serial,name,description,group_number_limit,group_student_limit,seminar_id
         From topic
         WHERE seminar_id=#{topicId}
     </select>
 
     <insert id="insertTopicBySeminarId" parameterType="Topic" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO topic
-        (id, name, description, group_number_limit, group_student_limit, seminar_id)
+        (id,serial, name, description, group_number_limit, group_student_limit, seminar_id)
         VALUES
-        (#{id}, #{name}, #{description}, #{groupNumberLimit}, #{groupStudentLimit}, #{seminar.id})
+        (#{id}, #{serial},#{name}, #{description}, #{groupNumberLimit}, #{groupStudentLimit}, #{seminar.id})
     </insert>
 
 

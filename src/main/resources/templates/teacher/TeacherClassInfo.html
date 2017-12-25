@@ -92,11 +92,11 @@
          $("#time").html(data.time);
          $("#site").html(data.site);
           roster = data.roster;
-          $("#report").html(data.classProportion.report+"%");
-          $("#presentation").html(data.classProportion.presentation+"%");
-          $("#c").html(data.classProportion.c+"%");
-          $("#b").html(data.classProportion.b+"%");
-          $("#a").html(data.classProportion.a+"%");
+          $("#report").html(data.proportions.report+"%");
+          $("#presentation").html(data.proportions.presentation+"%");
+          $("#c").html(data.proportions.c+"%");
+          $("#b").html(data.proportions.b+"%");
+          $("#a").html(data.proportions.a+"%");
          },
          error:function(data){
              alert("页面加载错误！");

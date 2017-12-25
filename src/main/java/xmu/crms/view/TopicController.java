@@ -2,9 +2,7 @@ package xmu.crms.view;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import xmu.crms.vo.SeminarAndTopicsVO;
-import xmu.crms.vo.TopicCheckVO1;
-import xmu.crms.vo.TopicVo;
+import xmu.crms.vo.TopicVO;
 
 @RestController
 public class TopicController {
@@ -21,7 +19,7 @@ public class TopicController {
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value="/topic/{topicId}",method = RequestMethod.PUT)
     @ResponseBody
-    public void index3(@PathVariable ("topicId") Integer sid,@RequestBody TopicVo a){
+    public void index3(@PathVariable ("topicId") Integer sid,@RequestBody TopicVO a){
 
     }
     @ResponseStatus(value= HttpStatus.NO_CONTENT)

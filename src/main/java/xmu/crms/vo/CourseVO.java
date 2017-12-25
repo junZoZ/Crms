@@ -12,7 +12,7 @@ public class CourseVO {
     private String description;
     private String teacherName;
     private String teacherEmail;
-    private ProportionsVO proportion;
+    private ProportionsVO proportions;
 
     public CourseVO() {
     }
@@ -98,11 +98,11 @@ public class CourseVO {
     }
 
     public ProportionsVO getProportion() {
-        return proportion;
+        return proportions;
     }
 
     public void setProportion(ProportionsVO courseProportion) {
-        this.proportion = courseProportion;
+        this.proportions = courseProportion;
     }
 
 

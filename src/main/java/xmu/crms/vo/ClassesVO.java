@@ -1,7 +1,5 @@
 package xmu.crms.vo;
 
-import xmu.crms.dto.IdAndNameDTO;
-
 import java.util.ArrayList;
 
 
