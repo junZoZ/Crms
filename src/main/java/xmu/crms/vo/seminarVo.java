@@ -1,9 +1,5 @@
 package xmu.crms.vo;
 
-import xmu.crms.dto.IdAndNameDTO;
-import xmu.crms.entity.Topic;
-
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 

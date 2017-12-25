@@ -3,9 +3,11 @@ package xmu.crms.view;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import xmu.crms.dto.IdAndNameDTO;
 import xmu.crms.entity.Seminar;
+import xmu.crms.entity.SeminarGroup;
+import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
+import xmu.crms.exception.GroupNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.service.*;
 import xmu.crms.vo.*;
@@ -113,72 +115,106 @@ public class SeminarController {
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/seminar/{seminarId}/topic",method = RequestMethod.POST)
     @ResponseBody
-    public SeminarAndTopicsVO index1(@PathVariable ("seminarId") Integer sid,@RequestBody TopicVO topicVO){
-
+    public Integer index1(@PathVariable ("seminarId") Integer seminarId,@RequestBody TopicVO topicVO)  {
         Topic topic = new Topic();
-        topic.setSeminar();
-        "serial": "A",
-                "name": "领域模型与模块",
-                "description": "Domain model与模块划分",
-                "groupLimit": 5,
-                "groupMemberLimit": 6
-        return null;
+        Seminar seminar = null;
+        try {
+            seminar = seminarService.getSeminarBySeminarId(new BigInteger(seminarId.toString()));
+        } catch (SeminarNotFoundException e) {}
+        topic.setSeminar(seminar);
+        topic.setName(topicVO.getName());
+        topic.setDescription(topicVO.getDescription());
+        topic.setGroupNumberLimit(topicVO.getGroupLimit());
+        topic.setGroupStudentLimit(topicVO.getGroupMemberLimit());
+        BigInteger topicId = topicService.insertTopicBySeminarId(seminar.getId(),topic);
+        return topicId.intValue();
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value="/seminar/{seminarId}/group",method = RequestMethod.GET)
+    @ResponseBody
+    public List<GroupVO> index4(@PathVariable ("seminarId") Integer seminarId)throws
+            IllegalArgumentException,SeminarNotFoundException{
+        List<SeminarGroup> seminarGroupList = seminarGroupList = seminarGroupService.listSeminarGroupBySeminarId(new BigInteger(seminarId.toString()));
+        List<GroupVO> seminarGroupVOList = new ArrayList<>();
+        for (SeminarGroup item : seminarGroupList){
+            GroupVO seminarGroupVO = new GroupVO();
+            seminarGroupVO.setId(item.getId().intValue());
+            seminarGroupVO.setName(item.getLeader().getName()+"的小组");
+            List<SeminarGroupTopic> topicList = topicService.listSeminarGroupTopicByGroupId(item.getId());
+            ArrayList<IdAndNameVO> topicIdAndNameVOList = new ArrayList<IdAndNameVO>();
+            for(SeminarGroupTopic seminarGroupTopic:topicList){
+                topicIdAndNameVOList.add(new IdAndNameVO(seminarGroupTopic.getId(),seminarGroupTopic.getTopic().getName()));
+            }
+            seminarGroupVO.setTopics(topicIdAndNameVOList);
+            seminarGroupVOList.add(seminarGroupVO);
+        }
+        return seminarGroupVOList;
+    }
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/seminar/{seminarId}/group/my",method = RequestMethod.GET)
     @ResponseBody
-    public GroupVO MySeminarGroup(@PathVariable("seminarId") Integer seminarId) {
-        IdAndNameDTO topic1 = new IdAndNameDTO(12,"话题A");
-        IdAndNameDTO topic2 = new IdAndNameDTO(34,"话题B");
-        ArrayList<IdAndNameDTO> topics = new  ArrayList<IdAndNameDTO>();
-        topics.add(topic1);
-        topics.add(topic2);
+    public GroupVO MySeminarGroup(@PathVariable("seminarId") Integer seminarId) throws GroupNotFoundException {
+//        用到jwt
+        BigInteger userId = new BigInteger("1");
+        SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupById(new BigInteger(seminarId.toString()),userId);
+        GroupVO groupVO = new GroupVO();
+        groupVO.setId(seminarGroup.getId().intValue());
+        groupVO.setName(seminarGroup.getLeader().getName()+"的小组");
 
-        IdAndNameDTO leader = new IdAndNameDTO(12,"王组长");
-
-        IdAndNameDTO member1 = new IdAndNameDTO(12,"张三");
-        IdAndNameDTO member2 = new IdAndNameDTO(34,"李四");
-        ArrayList<IdAndNameDTO> members = new  ArrayList<IdAndNameDTO>();
-        members.add(member1);
-        members.add(member2);
-
-        GroupVO group = new GroupVO(12,"12组",leader,members,topics);
 
         return group;
 
     }
 
-    //ScoreHome的GET
-    @ResponseStatus(value= HttpStatus.OK)
-    @RequestMapping(value="/seminar/{seminarId}/group",method = RequestMethod.GET)
-    @ResponseBody
-    public List<Integer> index4(@PathVariable ("seminarId") Integer sid){
-        return null;
+
+    {
+        "id": 28,
+            "name": 28,
+            "leader": {
+        "id": 8888,
+                "name": "张三"
+    },
+        "members": [
+        {
+            "id": 5324,
+                "name": "李四"
+        },
+        {
+            "id": 5678,
+                "name": "王五"
+        }
+  ],
+        "topics": [
+        {
+            "id": 257,
+                "name": "领域模型与模块"
+        }
+  ]
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

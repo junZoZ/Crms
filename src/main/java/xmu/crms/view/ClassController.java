@@ -2,13 +2,10 @@ package xmu.crms.view;
 
 
 import xmu.crms.dto.ClassDTO;
-import xmu.crms.dto.IdAndNameDTO;
-import xmu.crms.dto.TopicDTO;
 import xmu.crms.vo.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

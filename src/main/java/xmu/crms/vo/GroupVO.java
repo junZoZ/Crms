@@ -1,21 +1,19 @@
 package xmu.crms.vo;
 
-import xmu.crms.dto.IdAndNameDTO;
-
 import java.util.ArrayList;
 
 public class GroupVO {
 
   private Integer id;
   private String name;
-  private IdAndNameDTO leader;
-  private ArrayList<IdAndNameDTO> members;
-  private ArrayList<IdAndNameDTO> topics;
+  private IdAndNameVO leader;
+  private ArrayList<IdAndNameVO> members;
+  private ArrayList<IdAndNameVO> topics;
 
     public GroupVO() {
     }
 
-    public GroupVO(Integer id, String name, IdAndNameDTO leader, ArrayList<IdAndNameDTO> members, ArrayList<IdAndNameDTO> topics) {
+    public GroupVO(Integer id, String name, IdAndNameVO leader, ArrayList<IdAndNameVO> members, ArrayList<IdAndNameVO> topics) {
         this.id = id;
         this.name = name;
         this.leader = leader;
@@ -39,27 +37,27 @@ public class GroupVO {
         this.name = name;
     }
 
-    public IdAndNameDTO getLeader() {
+    public IdAndNameVO getLeader() {
         return leader;
     }
 
-    public void setLeader(IdAndNameDTO leader) {
+    public void setLeader(IdAndNameVO leader) {
         this.leader = leader;
     }
 
-    public ArrayList<IdAndNameDTO> getMembers() {
+    public ArrayList<IdAndNameVO> getMembers() {
         return members;
     }
 
-    public void setMembers(ArrayList<IdAndNameDTO> members) {
+    public void setMembers(ArrayList<IdAndNameVO> members) {
         this.members = members;
     }
 
-    public ArrayList<IdAndNameDTO> getTopics() {
+    public ArrayList<IdAndNameVO> getTopics() {
         return topics;
     }
 
-    public void setTopics(ArrayList<IdAndNameDTO> topics) {
+    public void setTopics(ArrayList<IdAndNameVO> topics) {
         this.topics = topics;
     }
 
