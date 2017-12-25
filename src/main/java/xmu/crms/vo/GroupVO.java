@@ -62,11 +62,11 @@ public class GroupVO {
         this.topics = topics;
     }
 
-    public Stirng getReport() {
+    public String getReport() {
         return report;
     }
 
-    public void setReport(Stirng report) {
+    public void setReport(String report) {
         this.report = report;
     }
 
@@ -78,6 +78,7 @@ public class GroupVO {
                 ", leader=" + leader +
                 ", members=" + members +
                 ", topics=" + topics +
+                ", report='" + report + '\'' +
                 '}';
     }
 }
