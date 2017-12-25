@@ -64,11 +64,11 @@ $(function() {
           $("#startTime").val(data.startTime);
            $("#endTime").val(data.endTime);
 
-           $('#report').val(data.seminarProportion.report);
-           $('#presentation').val(data.seminarProportion.presentation);
-           $('#c').val(data.seminarProportion.c);
-           $('#b').val(data.seminarProportion.b);
-           $('#a').val(data.seminarProportion.a);
+           $('#report').val(data.proportions.report);
+           $('#presentation').val(data.proportions.presentation);
+           $('#c').val(data.proportions.c);
+           $('#b').val(data.proportion.b);
+           $('#a').val(data.proportions.a);
 
          },
          error:function(data){
@@ -108,7 +108,7 @@ function submit()
                                 "startTime": $('#startTime').val(),
                                 "endTime": $('#endTime').val(),
                                 "groupingMethod" : s,
-                                "seminarProportion": {
+                                "proportions": {
                                     "report": $('#report').val(),
                                     "presentation": $('#presentation').val(),
                                     "c": $('#c').val(),

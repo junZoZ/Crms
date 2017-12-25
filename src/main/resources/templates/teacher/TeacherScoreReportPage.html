@@ -78,7 +78,7 @@
                if(data)
                    {
                         $('#name').text("讨论课"+sid);
-                        $('#groupname').text(data.groupname);
+                        $('#groupname').text(data.name);
                         $('#leader').text(data.leader.name);
                         $('.body').media({width:1000, height:800,autoplay: true,src: data.report,});
                    }
@@ -89,14 +89,14 @@
       });
     });
     function sscore(){
-    var a=$('#score').val();
+    var a=$('#reportGrade').val();
     if(a)
     {
     if(a=="3"||a=="4"||a=="5")
     {
           $.ajax({
              type:"PUT", //请求方式
-             url:"/group/"+id+"/grade", //请求路径
+             url:"/group/"+id+"/grade/report", //请求路径
              cache: false,
              contentType : "application/json",
              data:JSON.stringify(a),
@@ -131,7 +131,7 @@
 	</div>
 	<div class="item2">
 		<label class="itemName">评分:</label>
-		<input type="text" placeholder="3-5" id="score">
+		<input type="text" placeholder="3-5" id="reportGrade">
 		<button class="itemName" onclick="sscore()">确认打分</button>
 	</div>
 </div>

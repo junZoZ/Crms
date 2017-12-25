@@ -37,10 +37,10 @@ $(function() {
              success:function(data){
                if(data)
                    {
-                    $.each(data,function(i,item1){
+                    $.each(data,function(i,item){
                     $.ajax({
                     type:"GET", //请求方式
-                   url:"/group/"+item1, //请求路径
+                   url:"/group/"+item.id, //请求路径
                   cache: false,
                  contentType : "application/json",
                     dataType: 'json',   //返回值类型

@@ -97,11 +97,11 @@
          $("#site").val(data.site);
          $("#courseDescription").val(data.description);
           roster = data.roster;
-          $("#report").val(data.classProportion.report);
-          $("#presentation").val(data.classProportion.presentation);
-          $("#c").val(data.classProportion.c);
-          $("#b").val(data.classProportion.b);
-          $("#a").val(data.classProportion.a);
+          $("#report").val(data.Proportions.report);
+          $("#presentation").val(data.proportions.presentation);
+          $("#c").val(data.proportions.c);
+          $("#b").val(data.proportions.b);
+          $("#a").val(data.proportions.a);
 
 
          //处理时间
@@ -230,7 +230,7 @@
                  var modifyClass ={"name": $('#name').val(),
                                "site": $('#site').val(),
                                "time": s,
-                                "classProportion": {
+                                "proportions": {
                                     "report": $('#report').val(),
                                     "presentation": $('#presentation').val(),
                                     "c": $('#c').val(),
