@@ -1,20 +1,36 @@
 package xmu.crms.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
-import xmu.crms.entity.*;
-
 import java.math.BigInteger;
 import java.util.List;
 
-/**
- * @author LiuXin
- * @date 2017/12/22 16:54
- */
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
+
+import xmu.crms.entity.ClassInfo;
+import xmu.crms.entity.FixGroup;
+import xmu.crms.entity.FixGroupMember;
+import xmu.crms.entity.FixGroupTopic;
+import xmu.crms.entity.SeminarGroup;
+import xmu.crms.entity.SeminarGroupMember;
+import xmu.crms.entity.SeminarGroupTopic;
+import xmu.crms.entity.User;
+
 @Mapper
 @Component
+/**
+ *
+ * @author Administrator
+ *
+ */
+
 public interface FixGroupMapper {
+    /**
+     * 根据组Id获取固定小组对象
+     * @param groupId
+     * @return
+     */
+    FixGroup getFixGroupByGroupId(@Param("groupId") BigInteger groupId);
     /**
      * 按班级Id添加固定分组.
      * @param group 固定分组entity
@@ -165,4 +181,5 @@ public interface FixGroupMapper {
      * @return 查询结果
      */
     List<ClassInfo> listClassById(BigInteger classId);
+
 }
