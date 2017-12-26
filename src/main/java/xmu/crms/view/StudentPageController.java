@@ -28,8 +28,8 @@ public class StudentPageController {
     @RequestMapping(value="/StudentSeminarPage(fixed)")
     public String studentSeminarPageFixed() { return"student/StudentSeminarPage(fixed)"; }
 
-    @RequestMapping(value="/StudentSeminarPage")
-    public String studentSeminarPage() { return"student/StudentSeminarPage"; }
+    @RequestMapping(value="/StudentSeminarPage(random)")
+    public String studentSeminarPage() { return"student/StudentSeminarPage(random)"; }
 
 
     @RequestMapping(value="/StudentViewGradePage")

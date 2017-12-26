@@ -155,7 +155,7 @@ public class SeminarController {
     public GroupVO MySeminarGroup(@PathVariable("seminarId") Integer seminarId) throws GroupNotFoundException {
 //        用到jwt
 //         没有实现404尚未分组
-        BigInteger userId = new BigInteger("1");
+        BigInteger userId = new BigInteger("27");
         SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupById(new BigInteger(seminarId.toString()),userId);
         GroupVO groupVO = new GroupVO();
         groupVO.setId(seminarGroup.getId().intValue());
@@ -166,6 +166,12 @@ public class SeminarController {
         for(User item:seminarGroupMemberList){
             memberList.add(new IdAndNameVO(item.getId(),item.getName()));
         }
+        List<SeminarGroupTopic> topicList = topicService.listSeminarGroupTopicByGroupId(seminarGroup.getId());
+        ArrayList<IdAndNameVO> topics = new ArrayList<>();
+        for(SeminarGroupTopic item:topicList){
+            topics.add(new IdAndNameVO(item.getTopic().getId(),item.getTopic().getName()));
+        }
+        groupVO.setTopics(topics);
         groupVO.setMembers(memberList);
         return groupVO;
     }
