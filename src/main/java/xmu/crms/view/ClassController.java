@@ -218,15 +218,16 @@ public class ClassController {
                  BigInteger groupId=fixGroup.getId();
                  List<User> listUsers=fixGroupService.listFixGroupMemberByGroupId(groupId);
                  ArrayList<UserVO>  listUserVO=new ArrayList<UserVO>();
-                 System.out.println(listUsers.size());
                 for(User item:listUsers)
                 {
-                    UserVO uservos=new UserVO();
-                    uservos.setId(item.getId().intValue());
-                    uservos.setName(item.getName());
-                    uservos.setNumber(item.getNumber());
-                    listUserVO.add(uservos);
-                    //System.out.println(item.getId());
+                    if(item.getId().intValue()!=uservo.getId()) {
+                        UserVO uservos = new UserVO();
+                        uservos.setId(item.getId().intValue());
+                        uservos.setName(item.getName());
+                        uservos.setNumber(item.getNumber());
+                        listUserVO.add(uservos);
+                        //System.out.println(item.getId());
+                    }
                 }
                 fixedGroupVO.setUser(listUserVO);
         return fixedGroupVO;
