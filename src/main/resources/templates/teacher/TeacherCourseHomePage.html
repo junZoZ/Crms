@@ -3,16 +3,18 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>教师主页</title>
-   <link href="../../static/css/teacher/TeacherCourseHomePage.css" rel="stylesheet" type="text/css"/>
-    <script src="../../static/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/js/jquery.js"></script>
-    <script src="../../static/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.isotope.min.js"></script>
-    <script src="../../static/js/jquery.inview.min.js"></script>
-    <script src="../../static/js/cookie3.js"></script>
+   <link href="/css/teacher/TeacherCourseHomePage.css" rel="stylesheet" type="text/css"/>
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/jquery.inview.min.js"></script>
+    <script src="/js/cookie3.js"></script>
 
     <link rel="stylesheet" type="text/css" href="http://sandbox.runjs.cn/uploads/rs/55/sjckzedf/lanrenzhijia.css">
     <script>
+    setCookie("useId","1");
+
     function mody(id)
     {
        jQuery(document).ready(function($) {
@@ -24,6 +26,8 @@
 	})
     })
   }
+
+
 </script>
 
 
@@ -50,6 +54,8 @@
     </style>
 
     <script type="text/javascript">
+
+
     function del(id)
     {
     var bool=confirm("是否要删除此课程!");
@@ -63,7 +69,7 @@
         contentType : "application/json",
         dataType: 'json',   //返回值类型
         success:function(data){
-                     window.location.href="TeacherCourseHomePage.html";
+                     window.location.href="/teacher/TeacherCourseHomePage";
          },
          error:function(data){
          }
@@ -91,7 +97,13 @@
         dataType: 'json',   //返回值类型
         success:function(data){
         $.each(data,function(i,item){
-        tr=tr+" <div class=\"main_box_right_content\"><h3 class=\"classtitle\">"+item.name+"<button  onclick=\"del(\'"+item.id+"\')\">删除课程</button><button  onclick=\"mody(\'"+item.id+"\')\">修改课程</button></h3><hr/>"
+        tr=tr+" <div class=\"main_box_right_content\"><h3 class=\"classtitle\">"+item.name
+
++"<button  onclick=\"del(\'"+item.id
+
++"\')\">删除课程</button><button  onclick=\"mody(\'"+item.id
+
++"\')\">修改课程</button></h3><hr/>"
               +"<div class=\"classinfo\" ><a  href=\"TeacherCourseInformation.html"+"\" style=\"color:black;text-decoration:none\" ><table class=\"table\"><tr><td class=\"tabletext\">班级数："+item.numClass+"</td>  <td class=\"tabletext\">学生人数："+item.numStudent+"</td></tr>"
                +"<tr><td class=\"tabletext\">开始时间："+item.startTime+"</td>  <td class=\"tabletext\">结束时间:"+item.endTime+"</td></tr></table></a></div></div><br/>";
                     }),
@@ -103,8 +115,9 @@
          });
     }
     function add(){
-       window.location.href="TeacherCreateCoursePage.html";
+       window.location.href="/teacher/TeacherCreateCoursePage";
     }
+
      </script>
 
 
@@ -116,9 +129,9 @@
         		课堂管理系统
         	</div>
         	<div class="icon">
-                <a href="TeacherCourseHomePage.html"><img src="../../static/images/home.png">首页</a>
-                <img src="../../static/images/help.png">帮助
-                <a href="../common/WechatLoginPage.html"><img src="../../static/images/exit.png">退出</a>
+                <a href="/teacher/TeacherCourseHomePage"><img src="/images/home.png">首页</a>
+                <img src="/images/help.png">帮助
+                <a href="/common/WechatLoginPage"><img src="/images/exit.png">退出</a>
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -127,9 +140,9 @@
                 <div class="title">导航</div>
                 <div class="line"></div>
                 <div class="courseIntroduction">
-                    <a class="guidefont" href="TeacherHomePage.html">基本信息</a>
-                    <a class="guidefont" href="TeacherCourseHomePage.html">课程信息</a>
-                    <a class="guidefont" href="TeacherCreateCoursePage.html">新建课程</a>
+                    <a class="guidefont" href="/teacher/TeacherHomePage">基本信息</a>
+                    <a class="guidefont" href="/teacher/TeacherCourseHomePage">课程信息</a>
+                    <a class="guidefont" href="/teacher/TeacherCreateCoursePage">新建课程</a>
                 </div>
             </div>
             <div class="content" id="course">
@@ -144,16 +157,16 @@
         <div class="theme-popover">
             <div class="theme-poptit">
                 <a href="javascript:;" title="关闭" class="close">×</a>
-                <h3 align="center">创建课程</h3>
+                <h3 align="center">修改课程</h3>
             </div>
             <div class="theme-popbod dform">
                 <form class="theme-signin" name="loginform" >
                     <ol>
 
-                        <li><strong>课程名称：</strong><input class="myipt1" type="text"  value="OOAD"  /></li>
-                        <li><strong>开始时间：</strong><input class="myipt2" type="date"  value="2017-9-1"  /></li>
-                        <li><strong>结束时间：</strong><input class="myipt2" type="date"  value="2018-1-1"  /></li>
-                        <li><strong>课程介绍：</strong><input class="myipt3" type="text"  value="xxxxx"  /></li>
+                        <li><strong>课程名称：</strong><input class="myipt1" type="text"  id="courseName"   /></li>
+                        <li><strong>开始时间：</strong><input class="myipt2" type="date"  id="startTime"    /></li>
+                        <li><strong>结束时间：</strong><input class="myipt2" type="date"  id="endTime"   /></li>
+                        <li><strong>课程介绍：</strong><input class="myipt3" type="text"  id="description"  /></li>
 
                         <div class="dd" >
                             <li><input class="btn btn-primary" type="submit" name="submit" value=" 提 交 " onclick="modify()"/></li>
