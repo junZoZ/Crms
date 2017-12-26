@@ -17,7 +17,7 @@ public class ClassVO {
     private String time;
     private String site;
     private Integer calling;
-    private ProportionsVO proportion;
+    private ProportionsVO proportions;
     private String courseName;
     private String courseTeacher;
 
@@ -85,12 +85,12 @@ public class ClassVO {
         this.calling = calling;
     }
 
-    public ProportionsVO getProportion() {
-        return proportion;
+    public ProportionsVO getProportions() {
+        return proportions;
     }
 
-    public void setProportion(ProportionsVO proportion) {
-        this.proportion = proportion;
+    public void setProportions(ProportionsVO proportion) {
+        this.proportions = proportion;
     }
 
     public String getCourseName() {

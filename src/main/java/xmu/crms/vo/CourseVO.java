@@ -25,6 +25,14 @@ public class CourseVO {
         this.endTime = endTime;
     }
 
+    public CourseVO(String name, Date startTime, Date endTime, String description, ProportionsVO proportions) {
+        this.name = name;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.description = description;
+        this.proportions = proportions;
+    }
+
     public CourseVO(BigInteger id, String name, String description, String teacherName, String teacherEmail) {
         this.id = id;
         this.name = name;
@@ -97,11 +105,11 @@ public class CourseVO {
         this.teacherEmail = teacherEmail;
     }
 
-    public ProportionsVO getProportion() {
+    public ProportionsVO getProportions() {
         return proportions;
     }
 
-    public void setProportion(ProportionsVO courseProportion) {
+    public void setProportions(ProportionsVO courseProportion) {
         this.proportions = courseProportion;
     }
 

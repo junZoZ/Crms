@@ -1,15 +1,12 @@
 package xmu.crms.hander;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xmu.crms.entity.FixGroup;
 import xmu.crms.entity.Seminar;
 import xmu.crms.exception.*;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = "xmu.crms.view")
 @RestController
 public class GlobalExceptionHandler {
 
@@ -69,6 +66,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = InvalidOperationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionResponse InvalidOperationExceptionHandler(InvalidOperationException es)
+    {
+        String mes=es.getMessage();
+        ExceptionResponse response=new  ExceptionResponse("非法的操作！",mes);
+        return response;
+    }
+
+    @ExceptionHandler(value = InfoIllegalException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse InfoIllegalExceptionHandler(InfoIllegalException es)
     {
         String mes=es.getMessage();
         ExceptionResponse response=new  ExceptionResponse("非法的操作！",mes);

@@ -117,7 +117,7 @@ public class ClassController {
         pro.setA(classInfo.getFivePointPercentage());
         pro.setB(classInfo.getFourPointPercentage());
         pro.setC(classInfo.getThreePointPercentage());
-        classvo.setProportion(pro);
+        classvo.setProportions(pro);
         classvo.setCalling(-1);
         return classvo;
     }
@@ -130,11 +130,11 @@ public class ClassController {
     public void ModifyClass(@PathVariable("classId") Integer classId,@RequestBody ClassVO modifyClass) throws ClassesNotFoundException {
           ClassInfo classInfo=new ClassInfo();
           classInfo.setClassTime(modifyClass.getTime());
-          classInfo.setFivePointPercentage(modifyClass.getProportion().getA());
-          classInfo.setFourPointPercentage(modifyClass.getProportion().getB());
-          classInfo.setThreePointPercentage(modifyClass.getProportion().getC());
-          classInfo.setPresentationPercentage(modifyClass.getProportion().getPresentation());
-          classInfo.setReportPercentage(modifyClass.getProportion().getReport());
+          classInfo.setFivePointPercentage(modifyClass.getProportions().getA());
+          classInfo.setFourPointPercentage(modifyClass.getProportions().getB());
+          classInfo.setThreePointPercentage(modifyClass.getProportions().getC());
+          classInfo.setPresentationPercentage(modifyClass.getProportions().getPresentation());
+          classInfo.setReportPercentage(modifyClass.getProportions().getReport());
           classInfo.setSite(classInfo.getSite());
           classInfo.setName(classInfo.getName());
           classService.updateClassByClassId(new BigInteger(classId.toString()),classInfo);

@@ -61,7 +61,7 @@ public class CourseServiceImpl implements CourseService {
         Course course=courseMapper.getCourseByCourseId(courseId);
         if(course==null){
             throw new CourseNotFoundException("course cannot be founded with id :"+String.valueOf(courseId));
-        }
+    }
         return course;
     }
 

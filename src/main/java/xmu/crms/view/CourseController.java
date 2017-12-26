@@ -1,5 +1,6 @@
 package xmu.crms.view;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Course;
@@ -56,6 +57,7 @@ public class CourseController {
        return  null;
     }
 
+    @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/course",method = RequestMethod.POST)
     public Integer NewCourse(@RequestBody CourseVO newCourseVO)
@@ -67,11 +69,11 @@ public class CourseController {
         course.setDescription(newCourseVO.getDescription());
         course.setStartDate(newCourseVO.getStartTime());
         course.setEndDate(newCourseVO.getEndTime());
-        course.setPresentationPercentage(newCourseVO.getProportion().getPresentation());
-        course.setReportPercentage(newCourseVO.getProportion().getReport());
-        course.setFivePointPercentage(newCourseVO.getProportion().getA());
-        course.setFourPointPercentage(newCourseVO.getProportion().getB());
-        course.setThreePointPercentage(newCourseVO.getProportion().getC());
+        course.setPresentationPercentage(newCourseVO.getProportions().getPresentation());
+        course.setReportPercentage(newCourseVO.getProportions().getReport());
+        course.setFivePointPercentage(newCourseVO.getProportions().getA());
+        course.setFourPointPercentage(newCourseVO.getProportions().getB());
+        course.setThreePointPercentage(newCourseVO.getProportions().getC());
         BigInteger courseId  = courseService.insertCourseByUserId(userId,course);
         return courseId.intValue();
     }
@@ -81,7 +83,7 @@ public class CourseController {
     @ResponseBody
     public CourseVO CourseDescription(@PathVariable("courseId") Integer courseId)
             throws IllegalArgumentException,CourseNotFoundException {
-
+//      courseNotFound报500错误
         Course course = courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
         CourseVO courseVO = new CourseVO(course.getId(),course.getName(),
                 course.getDescription(),course.getTeacher().getName(),course.getTeacher().getEmail());
@@ -102,11 +104,11 @@ public class CourseController {
         course.setDescription(courseDetail.getDescription());
         course.setStartDate(courseDetail.getStartTime());
         course.setEndDate(courseDetail.getEndTime());
-        course.setPresentationPercentage(courseDetail.getProportion().getPresentation());
-        course.setReportPercentage(courseDetail.getProportion().getReport());
-        course.setFivePointPercentage(courseDetail.getProportion().getA());
-        course.setFourPointPercentage(courseDetail.getProportion().getB());
-        course.setThreePointPercentage(courseDetail.getProportion().getC());
+        course.setPresentationPercentage(courseDetail.getProportions().getPresentation());
+        course.setReportPercentage(courseDetail.getProportions().getReport());
+        course.setFivePointPercentage(courseDetail.getProportions().getA());
+        course.setFourPointPercentage(courseDetail.getProportions().getB());
+        course.setThreePointPercentage(courseDetail.getProportions().getC());
         courseService.updateCourseByCourseId(course.getId(),course);
     }
 
@@ -121,6 +123,7 @@ public class CourseController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/course/{courseId}/class",method = RequestMethod.GET)
     @ResponseBody
+//    500错误
     public ArrayList<IdAndNameVO> Classes(@PathVariable("courseId") Integer courseId) throws CourseNotFoundException{
         List<ClassInfo> classInfo = classService.listClassByCourseId(new BigInteger(courseId.toString()));
         ArrayList<IdAndNameVO> idAndNameVOArrayList = new ArrayList<>();
@@ -130,6 +133,7 @@ public class CourseController {
         return idAndNameVOArrayList;
     }
 
+    @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value = "/course/{courseId}/class",method = RequestMethod.POST)
     @ResponseBody
@@ -141,11 +145,11 @@ public class CourseController {
         classInfo.setName(newClass.getName());
         classInfo.setDescription(newClass.getSite());
         classInfo.setClassTime(newClass.getTime());
-        classInfo.setReportPercentage(newClass.getProportion().getReport());
-        classInfo.setPresentationPercentage(newClass.getProportion().getPresentation());
-        classInfo.setThreePointPercentage(newClass.getProportion().getC());
-        classInfo.setFourPointPercentage(newClass.getProportion().getB());
-        classInfo.setFivePointPercentage(newClass.getProportion().getA());
+        classInfo.setReportPercentage(newClass.getProportions().getReport());
+        classInfo.setPresentationPercentage(newClass.getProportions().getPresentation());
+        classInfo.setThreePointPercentage(newClass.getProportions().getC());
+        classInfo.setFourPointPercentage(newClass.getProportions().getB());
+        classInfo.setFivePointPercentage(newClass.getProportions().getA());
         BigInteger id=classService.insertClassById(new BigInteger(courseId.toString()),classInfo);
         return id.intValue();
     }
