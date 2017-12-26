@@ -13,10 +13,14 @@ public class ClassVO {
 
     private Integer id;
     private String name;
+    private String roster;
     private Integer numStudent;
     private String time;
     private String site;
     private Integer calling;
+
+
+
     private ProportionsVO proportions;
     private String courseName;
     private String courseTeacher;
@@ -107,5 +111,29 @@ public class ClassVO {
 
     public void setCourseTeacher(String courseTeacher) {
         this.courseTeacher = courseTeacher;
+    }
+
+    public String getRoster() {
+        return roster;
+    }
+
+    public void setRoster(String roster) {
+        this.roster = roster;
+    }
+
+    @Override
+    public String toString() {
+        return "ClassVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", roster='" + roster + '\'' +
+                ", numStudent=" + numStudent +
+                ", time='" + time + '\'' +
+                ", site='" + site + '\'' +
+                ", calling=" + calling +
+                ", proportions=" + proportions +
+                ", courseName='" + courseName + '\'' +
+                ", courseTeacher='" + courseTeacher + '\'' +
+                '}';
     }
 }

@@ -1,6 +1,7 @@
 package xmu.crms.view;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import xmu.crms.entity.*;
 import xmu.crms.exception.*;
@@ -45,14 +46,12 @@ public class ClassController {
 //userID JWT
 
         BigInteger userId=new BigInteger("5");
-        System.out.println("3333333333");
         System.out.println(courseName);
         List<ClassVO> listClassVO = new ArrayList<ClassVO>(16);
         List<ClassInfo> listClass =new ArrayList<ClassInfo>(16);
         if(courseName!=null||teacherName!=null) {
             try {
                 listClass = courseService.listClassByName(courseName,teacherName);
-                System.out.println("222222222");
             } catch (UserNotFoundException e) {
 
             } catch (CourseNotFoundException e) {
@@ -62,11 +61,8 @@ public class ClassController {
         {
             try {
                 listClass = classService.listClassByUserId(userId);
-                System.out.println("1111111111");
-                System.out.println(listClass.get(0));
-
             } catch (ClassesNotFoundException e) {
-                System.out.println("11111111112");
+
             }
         }
         for (ClassInfo item : listClass) {
@@ -100,12 +96,16 @@ public class ClassController {
 
     }
 
+
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/class/{classId}",method = RequestMethod.GET)
     @ResponseBody
     public ClassVO classInfo(@PathVariable("classId") Integer cid) throws ClassesNotFoundException {
+//        有错误
+//          roster没处理，也就是说，没有上传分组名单的变化
         ClassVO classvo=new ClassVO();
-        ClassInfo classInfo=classService.getClassByClassId(new BigInteger(cid.toString()));
+        ClassInfo classInfo = classService.getClassByClassId(new BigInteger(cid.toString()));
+        System.out.println(classInfo);
         classvo.setId(classInfo.getId().intValue());
         classvo.setName(classInfo.getName());
         try {
@@ -127,21 +127,21 @@ public class ClassController {
         return classvo;
     }
 
-
-
+    @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/class/{classId}",method = RequestMethod.PUT)
     @ResponseBody
     public void ModifyClass(@PathVariable("classId") Integer classId,@RequestBody ClassVO modifyClass) throws ClassesNotFoundException {
-          ClassInfo classInfo=new ClassInfo();
+          ClassInfo classInfo= classService.getClassByClassId(new BigInteger(classId.toString()));
           classInfo.setClassTime(modifyClass.getTime());
           classInfo.setFivePointPercentage(modifyClass.getProportions().getA());
           classInfo.setFourPointPercentage(modifyClass.getProportions().getB());
           classInfo.setThreePointPercentage(modifyClass.getProportions().getC());
           classInfo.setPresentationPercentage(modifyClass.getProportions().getPresentation());
           classInfo.setReportPercentage(modifyClass.getProportions().getReport());
-          classInfo.setSite(classInfo.getSite());
-          classInfo.setName(classInfo.getName());
+          classInfo.setSite(modifyClass.getSite());
+          classInfo.setName(modifyClass.getName());
+//          roster没处理，也就是说，没有上传分组名单的变化
           classService.updateClassByClassId(new BigInteger(classId.toString()),classInfo);
     }
 
