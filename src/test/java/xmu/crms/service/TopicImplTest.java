@@ -64,7 +64,7 @@ public class TopicImplTest {
     public void testInsertTopicBySeminarId()
     {
         Topic topic=new Topic();
-        topic.setId(new BigInteger("5"));
+        topic.setId(new BigInteger("4"));
         topic.setName("话题1");
         topic.setSerial("A");
         topic.setDescription("xxx");
