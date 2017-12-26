@@ -160,6 +160,7 @@ public class CourseController {
     public ArrayList<SeminarVO> ListSeminars(@PathVariable("courseId") Integer courseId,@RequestParam(value="embedGrade",required = false) boolean embedGrades) throws CourseNotFoundException{
 //        和小程序有交集
 //        需要用到jwt
+//        有一个属性用不到
         BigInteger userId=new BigInteger("233");
         List<Seminar> seminar = seminarService.listSeminarByCourseId(new BigInteger(courseId.toString()));
         ArrayList<SeminarVO> seminarVO=new ArrayList<SeminarVO>(16);
@@ -212,14 +213,13 @@ public class CourseController {
         return id.intValue();
     }
 
-
 //小程序的url: get /course/{courseID}/seminar/current
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/course/{courseID}/grade",method = RequestMethod.GET)
     public   ArrayList<CourseGradeVO> courseGrade(@PathVariable("courseID") Integer courseId) throws IllegalArgumentException{
 //        需要用到jwt
-        BigInteger userId = new BigInteger("1");
+        BigInteger userId = new BigInteger("3");
 
         List<SeminarGroup> courseGradeList = gradeService.listSeminarGradeByCourseId(userId,new BigInteger(courseId.toString()));
         ArrayList<CourseGradeVO> courseGradeVOArrayList = new ArrayList<CourseGradeVO>();
@@ -236,12 +236,6 @@ public class CourseController {
 
         return courseGradeVOArrayList;
     }
-
-
-
-
-
-
 
 
 
