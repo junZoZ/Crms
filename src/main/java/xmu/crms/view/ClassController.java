@@ -158,23 +158,33 @@ public class ClassController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "class/{classId}/student", method = RequestMethod.GET)
     @ResponseBody
-    public List<UserVO> index3(@PathVariable("classId") Integer classid,@RequestParam("nameWith") String name,
-                               @RequestParam("noWith") String no) throws ClassesNotFoundException {
-
+    public List<UserVO> index3(@PathVariable("classId") Integer classId,@RequestParam("nameWith") String name,
+                               @RequestParam("noWith") String no) throws ClassesNotFoundException, UserNotFoundException, FixGroupNotFoundException {
+        //jwt
+        BigInteger userId=new BigInteger("5");
         List<UserVO> listUserVO=new ArrayList<UserVO>(16);
+        FixGroup fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
+        BigInteger groupId=fixGroup.getId();
+        List<User> listUsers=fixGroupService.listFixGroupMemberByGroupId(groupId);
         try {
-           List<User> listUser=userService.listUserByClassId(new BigInteger(classid.toString()),name,no);
+           List<User> listUser=userService.listUserByClassId(new BigInteger(classId.toString()),name,no);
             for(User item:listUser)
             {
                 UserVO uservo=new UserVO();
                 uservo.setId(item.getId().intValue());
                 uservo.setName(item.getName());
                 uservo.setNumber(item.getNumber());
-                listUserVO.add(uservo);
+                Boolean temp=true;
+                for(User item1:listUsers)
+                {
+                    if(item1.getId().intValue()==uservo.getId())
+                    {temp=false;}
+                }
+                if(temp==true)
+                {listUserVO.add(uservo);}
             }
 
         } catch (UserNotFoundException e) { }
-
         return listUserVO;
     }
 
