@@ -12,9 +12,9 @@
         		课堂管理系统
         	</div>
         	<div class="icon">
-        		 <a href="../../html/student/StudentCourseHome.html"><img src="../../images/home.png">首页</a>
-                                <img src="../../images/help.png">帮助
-                                <a href="../../html/common/WechatLoginPage.html"><img src="../../images/exit.png">退出</a>
+        		 <a href="StudentCourseHome"><img src="../../images/home.png">首页</a>
+                                <img src="../images/help.png">帮助
+                                <a href="WechatLoginPage"><img src="../../images/exit.png">退出</a>
         	</div>
         	<div class="clear"></div>
     	</div>
