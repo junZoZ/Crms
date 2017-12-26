@@ -3,46 +3,61 @@ package xmu.crms.view;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 @Controller
-@RequestMapping(value="/student")
+@RequestMapping(value="/teacher")
 public class TeacherPageController {
+    @RequestMapping(value="/TeacherBindPage")
+    public String teacherBindPage() { ;return"TeacherBindPage"; }
 
-    @RequestMapping(value="/StudentBindPage")
-    public String studentBindPage() { ;return"StudentBindPage"; }
+    @RequestMapping(value="/TeacherClassInfo")
+    public String teacherClassInfo() { ;return"TeacherClassInfo"; }
 
-    @RequestMapping(value="/StudentChooseCoursePage")
-    public String studentChooseCoursePage() { ;return"StudentChooseCoursePage"; }
+    @RequestMapping(value="/TeacherCourseHomePage")
+    public String teacherCourseHomePage() { ;return"TeacherCourseHomePage"; }
 
-    @RequestMapping(value="/StudentCourseHome")
-    public String studentCourseHome() { ;return"StudentCourseHome"; }
+    @RequestMapping(value="/TeacherCourseInformationPage")
+    public String teacherCourseInformationPage() { ;return"TeacherCourseInformationPage"; }
 
-    @RequestMapping(value="/StudentCourseInformation")
-    public String studentCourseInformation() { ;return"StudentCourseInformation"; }
+    @RequestMapping(value="/TeacherCreateClass")
+    public String teacherCreateClass() { ;return"TeacherCreateClass"; }
 
-    @RequestMapping(value="/StudentHomePage")
-    public String studentHomePage() { ;return"StudentHomePage"; }
+    @RequestMapping(value="/TeacherCreateCoursePage")
+    public String teacherCreateCoursePage() { ;return"TeacherCreateCoursePage"; }
 
-    @RequestMapping(value="/StudentModifyGroupPage")
-    public String studentModifyGroupPage() { ;return"StudentModifyGroupPage"; }
+    @RequestMapping(value="/TeacherCreateSchool")
+    public String teacherCreateSchool() { ;return"TeacherCreateSchool"; }
 
-    @RequestMapping(value="/StudentSeminarPage(fixed)")
-    public String studentSeminarPageFixed() { ;return"StudentSeminarPage(fixed)"; }
+    @RequestMapping(value="/TeacherCreateSeminar")
+    public String teacherCreateSeminar() { ;return"TeacherCreateSeminar"; }
 
-    @RequestMapping(value="/StudentSeminarPage")
-    public String studentSeminarPage() { ;return"StudentSeminarPage"; }
+    @RequestMapping(value="/TeacherCreateTopic")
+    public String teacherCreateTopic() { ;return"TeacherCreateTopic"; }
 
+    @RequestMapping(value="/TeacherHomePage")
+    public String teacherHomePage() { ;return"TeacherHomePage"; }
 
-    @RequestMapping(value="/StudentViewGradePage")
-    public String studentViewGradePage() { ;return"StudentViewGradePage"; }
+    @RequestMapping(value="/TeacherScoreHome")
+    public String teacherScoreHome() { ;return"TeacherScoreHome"; }
 
-    @RequestMapping(value="/StudentViewGroupPage")
-    public String studentViewGroupPage() { ;return"StudentViewGroupPage"; }
+    @RequestMapping(value="/TeacherScoreReprotPage")
+    public String teacherScoreReportPage() { ;return"TeacherScoreReportPage"; }
 
-    @RequestMapping(value="/StudentViewTopicPage(fixed)")
-    public String studentViewTopicPageFixed() { ;return"StudentViewTopicPage(fixed)"; }
+    @RequestMapping(value="/TeacherSeminarInfo")
+    public String teacherSeminarInfo() { ;return"TeacherSeminarInfo"; }
 
-    @RequestMapping(value="/StudentViewTopicPage(random)")
-    public String studentViewTopicPageRandom() { ;return"StudentViewTopicPage(random)"; }
+    @RequestMapping(value="/TeacherTopicCheck(fixed)")
+    public String teacherTopicCheckfixed() { return"TeacherTopicCheck(fixed)"; }
 
+    @RequestMapping(value="/TeacherTopicCheck")
+    public String teacherTopicCheck() { ;return"TeacherTopicCheck"; }
 
+    @RequestMapping(value="/TeacherUpdateClass")
+    public String teacherUpdateClass() { ;return"TeacherUpdateClass"; }
+
+    @RequestMapping(value="/TeacherUpdateSeminar")
+    public String teacherUpdateSeminarPage() { ;return"TeacherUpdateSeminar"; }
+
+    @RequestMapping(value="/TeacherUpdateTopic")
+    public String teacherUpdateTopic() { ;return"TeacherUpdateTopic"; }
 }

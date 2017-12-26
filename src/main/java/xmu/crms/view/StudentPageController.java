@@ -1,64 +1,48 @@
 package xmu.crms.view;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
-@RequestMapping(value="/teacher")
+@RequestMapping(value="/student")
 public class StudentPageController {
-    @RequestMapping(value="/TeacherBindPage")
-    public String TeacherBindPage() { ;return"TeacherBindPage"; }
 
-    @RequestMapping(value="/TeacherClassInfo")
-    public String TeacherClassInfo() { ;return"TeacherClassInfo"; }
+    @RequestMapping(value="/StudentBindPage")
+    public String studentBindPage() { ;return"StudentBindPage"; }
 
-    @RequestMapping(value="/TeacherCourseHomePage")
-    public String TeacherCourseHomePage() { ;return"TeacherCourseHomePage"; }
+    @RequestMapping(value="/StudentChooseCoursePage")
+    public String studentChooseCoursePage() { ;return"StudentChooseCoursePage"; }
 
-    @RequestMapping(value="/TeacherCourseInformationPage")
-    public String TeacherCourseInformationPage() { ;return"TeacherCourseInformationPage"; }
+    @RequestMapping(value="/StudentCourseHome")
+    public String studentCourseHome() { ;return"StudentCourseHome"; }
 
-    @RequestMapping(value="/TeacherCreateClass")
-    public String TeacherCreateClass() { ;return"TeacherCreateClass"; }
+    @RequestMapping(value="/StudentCourseInformation")
+    public String studentCourseInformation() { ;return"StudentCourseInformation"; }
 
-    @RequestMapping(value="/TeacherCreateCoursePage")
-    public String TeacherCreateCoursePage() { ;return"TeacherCreateCoursePage"; }
+    @RequestMapping(value="/StudentHomePage")
+    public String studentHomePage() { ;return"StudentHomePage"; }
 
-    @RequestMapping(value="/TeacherCreateSchool")
-    public String TeacherCreateSchool() { ;return"TeacherCreateSchool"; }
+    @RequestMapping(value="/StudentModifyGroupPage")
+    public String studentModifyGroupPage() { ;return"StudentModifyGroupPage"; }
 
-    @RequestMapping(value="/TeacherCreateSeminar")
-    public String TeacherCreateSeminar() { ;return"TeacherCreateSeminar"; }
+    @RequestMapping(value="/StudentSeminarPage(fixed)")
+    public String studentSeminarPageFixed() { ;return"StudentSeminarPage(fixed)"; }
 
-    @RequestMapping(value="/TeacherCreateTopic")
-    public String TeacherCreateTopic() { ;return"TeacherCreateTopic"; }
+    @RequestMapping(value="/StudentSeminarPage")
+    public String studentSeminarPage() { ;return"StudentSeminarPage"; }
 
-    @RequestMapping(value="/TeacherHomePage")
-    public String TeacherHomePage() { ;return"TeacherHomePage"; }
 
-    @RequestMapping(value="/TeacherScoreHome")
-    public String TeacherScoreHome() { ;return"TeacherScoreHome"; }
+    @RequestMapping(value="/StudentViewGradePage")
+    public String studentViewGradePage() { ;return"StudentViewGradePage"; }
 
-    @RequestMapping(value="/TeacherScoreReprotPage")
-    public String TeacherScoreReportPage() { ;return"TeacherScoreReportPage"; }
+    @RequestMapping(value="/StudentViewGroupPage")
+    public String studentViewGroupPage() { ;return"StudentViewGroupPage"; }
 
-    @RequestMapping(value="/TeacherSeminarInfo")
-    public String TeacherSeminarInfo() { ;return"TeacherSeminarInfo"; }
+    @RequestMapping(value="/StudentViewTopicPage(fixed)")
+    public String studentViewTopicPageFixed() { ;return"StudentViewTopicPage(fixed)"; }
 
-    @RequestMapping(value="/TeacherTopicCheck(fixed)")
-    public String TeacherTopicCheckfixed() { return"TeacherTopicCheck(fixed)"; }
+    @RequestMapping(value="/StudentViewTopicPage(random)")
+    public String studentViewTopicPageRandom() { ;return"StudentViewTopicPage(random)"; }
 
-    @RequestMapping(value="/TeacherTopicCheck")
-    public String TeacherTopicCheck() { ;return"TeacherTopicCheck"; }
 
-    @RequestMapping(value="/TeacherUpdateClass")
-    public String UpdateClass() { ;return"UpdateClass"; }
-
-    @RequestMapping(value="/TeacherUpdateSeminar")
-    public String UpdateSeminarPage() { ;return"TeacherUpdateSeminar"; }
-
-    @RequestMapping(value="/TeacherUpdateTopic")
-    public String TeacherUpdateTopic() { ;return"TeacherUpdateTopic"; }
 }
