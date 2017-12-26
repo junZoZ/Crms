@@ -204,34 +204,32 @@ public class ClassController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/class/{classId}/classgroup", method = RequestMethod.GET)
     @ResponseBody
-    public List<UserVO> getFixGroupById(@PathVariable("classId") Integer classId) {
+    public FixedGroupVO getFixGroupById(@PathVariable("classId") Integer classId) throws UserNotFoundException, ClassesNotFoundException, FixGroupNotFoundException {
 //JWT
 //
         BigInteger userId=new BigInteger("5");
-        List<UserVO> listUser=new ArrayList<UserVO>(16);
-        try {
+        FixedGroupVO fixedGroupVO=new FixedGroupVO();
             FixGroup fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
                  UserVO uservo=new UserVO();
                  uservo.setId(fixGroup.getLeader().getId().intValue());
                  uservo.setName(fixGroup.getLeader().getName());
                  uservo.setNumber(fixGroup.getLeader().getNumber());
-                 listUser.add(uservo);
+                 fixedGroupVO.setLeader(uservo);
                  BigInteger groupId=fixGroup.getId();
-            try {
-                List<User> listUsers=fixGroupService.listFixGroupMemberByGroupId(groupId);
+                 List<User> listUsers=fixGroupService.listFixGroupMemberByGroupId(groupId);
+                 ArrayList<UserVO>  listUserVO=new ArrayList<UserVO>();
+                 System.out.println(listUsers.size());
                 for(User item:listUsers)
                 {
                     UserVO uservos=new UserVO();
-                    uservos.setId(fixGroup.getLeader().getId().intValue());
-                    uservos.setName(fixGroup.getLeader().getName());
-                    uservos.setNumber(fixGroup.getLeader().getNumber());
-                    listUser.add(uservos);
+                    uservos.setId(item.getId().intValue());
+                    uservos.setName(item.getName());
+                    uservos.setNumber(item.getNumber());
+                    listUserVO.add(uservos);
+                    //System.out.println(item.getId());
                 }
-
-            } catch (FixGroupNotFoundException e) { }
-        } catch (ClassesNotFoundException e) { }
-        catch (UserNotFoundException e) { }
-        return listUser;
+                fixedGroupVO.setUser(listUserVO);
+        return fixedGroupVO;
     }
 
 
