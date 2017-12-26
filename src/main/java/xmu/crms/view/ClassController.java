@@ -49,20 +49,32 @@ public class ClassController {
         System.out.println(courseName);
         List<ClassVO> listClassVO = new ArrayList<ClassVO>(16);
         List<ClassInfo> listClass =new ArrayList<ClassInfo>(16);
+        List<ClassInfo> myClassInfoList = new ArrayList<ClassInfo>(16);
         if(courseName!=null||teacherName!=null) {
             try {
                 listClass = courseService.listClassByName(courseName,teacherName);
+                myClassInfoList = classService.listClassByUserId(userId);
+                //取差集
+                for(ClassInfo item1: myClassInfoList){
+                    for(ClassInfo item:listClass) {
+                        if (item1.getId().equals(item.getId())) {
+                            listClass.remove(item);
+                            break;
+                        }
+                    }
+                }
             } catch (UserNotFoundException e) {
 
             } catch (CourseNotFoundException e) {
+            } catch (ClassesNotFoundException e) {
             }
+
         }
         else
         {
             try {
                 listClass = classService.listClassByUserId(userId);
             } catch (ClassesNotFoundException e) {
-
             }
         }
         for (ClassInfo item : listClass) {
@@ -92,9 +104,10 @@ public class ClassController {
             }
             listClassVO.add(classvo);
         }
-                 return listClassVO;
+        return listClassVO;
 
     }
+
 
 
     @ResponseStatus(value= HttpStatus.OK)
@@ -167,7 +180,7 @@ public class ClassController {
         BigInteger groupId=fixGroup.getId();
         List<User> listUsers=fixGroupService.listFixGroupMemberByGroupId(groupId);
         try {
-           List<User> listUser=userService.listUserByClassId(new BigInteger(classId.toString()),name,no);
+           List<User> listUser=userService.listUserByClassId(new BigInteger(classId.toString()),no,name);
             for(User item:listUser)
             {
                 UserVO uservo=new UserVO();
@@ -251,34 +264,32 @@ public class ClassController {
 //JWT
 //
         BigInteger userId=new BigInteger("5");
-        FixGroup fixGroup=new FixGroup();
         try {
-            fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
+            FixGroup fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
             try {
-                fixGroupService.insertStudentIntoGroup(fixGroup.getId(),userId);
-            } catch (FixGroupNotFoundException e)
-            { }
-            catch (InvalidOperationException e) { }
+                fixGroupService.insertStudentIntoGroup(new BigInteger(memberId.toString()),fixGroup.getId());
+        } catch (FixGroupNotFoundException e)
+        { }
+        catch (InvalidOperationException e) { }
         } catch (ClassesNotFoundException e) { }
         catch (UserNotFoundException e) { }
     }
 
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
-    @RequestMapping(value = "/class/{classId}/classgroup/remove", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/class/{classId}/classgroup/remove", method = RequestMethod.PUT)
     @ResponseBody
     public void deleteFixGroupMember(@PathVariable("classId") Integer classId, @RequestBody Integer memberId) {
 //JWT
 //
         BigInteger userId=new BigInteger("5");
-        FixGroup fixGroup=new FixGroup();
         try {
-            fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
+            FixGroup fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
             try {
-                fixGroupService.deleteFixGroupUserById(fixGroup.getId(),userId);
+                fixGroupService.deleteFixGroupUserById(fixGroup.getId(),new BigInteger(memberId.toString()));
             } catch (FixGroupNotFoundException e)
-            { }
-        } catch (ClassesNotFoundException e) { }
-        catch (UserNotFoundException e) { }
+            { System.out.println("123");}
+        } catch (ClassesNotFoundException e) { System.out.println("123");}
+        catch (UserNotFoundException e) { System.out.println("123");}
     }
 
 

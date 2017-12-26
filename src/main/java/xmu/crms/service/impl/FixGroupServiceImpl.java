@@ -155,18 +155,6 @@ public class FixGroupServiceImpl implements FixGroupService {
 
     @Override
     public BigInteger insertStudentIntoGroup(BigInteger userId, BigInteger groupId) throws IllegalArgumentException, FixGroupNotFoundException, UserNotFoundException, InvalidOperationException {
-        if(userId.intValue()<=0 || groupId.intValue()<=0){
-            throw new IllegalArgumentException();
-        }
-        if(fixGroupMapper.listFixGroupMemberByGroupId(groupId).isEmpty()){
-            throw new FixGroupNotFoundException();
-        }
-        if(fixGroupMapper.listFixGroupMemberByUserId(userId).isEmpty()){
-            throw new UserNotFoundException("");
-        }
-        if(!fixGroupMapper.listFixGroupMemberByGroupIdUserId(groupId,userId).isEmpty()){
-            throw new InvalidOperationException("");
-        }
         FixGroupMember fixGroupMember=new FixGroupMember();
         User user=new User();
         user.setId(userId);
@@ -175,6 +163,7 @@ public class FixGroupServiceImpl implements FixGroupService {
         fixGroupMember.setStudent(user);
         fixGroupMember.setFixGroup(fixGroup);
         Boolean res=fixGroupMapper.insertFixGroupMemberById(fixGroupMember);
+        System.out.println(res);
         if(res){
             return fixGroupMember.getId();
         }else{
@@ -200,6 +189,7 @@ public class FixGroupServiceImpl implements FixGroupService {
                 fixGroup.setClassInfo(classInfo.get(0));
                 List<User> leader = fixGroupMapper.listUsersById(temp.getLeader().getId());
                 fixGroup.setLeader(leader.get(0));
+                fixGroup.setId(temp.getId());
                 return fixGroup;
             }
         }
