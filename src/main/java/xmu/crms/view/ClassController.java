@@ -43,25 +43,30 @@ public class ClassController {
     public List<ClassVO> classCheck(@RequestParam(value = "courseName",required = false) String courseName, @RequestParam(value = "teacherName",required = false) String teacherName)
     {
 //userID JWT
-//
-        BigInteger userId=new BigInteger("5");
 
+        BigInteger userId=new BigInteger("5");
+        System.out.println("3333333333");
+        System.out.println(courseName);
         List<ClassVO> listClassVO = new ArrayList<ClassVO>(16);
         List<ClassInfo> listClass =new ArrayList<ClassInfo>(16);
-        if(courseName==null||teacherName==null) {
+        if(courseName!=null||teacherName!=null) {
             try {
                 listClass = courseService.listClassByName(courseName,teacherName);
+                System.out.println("222222222");
             } catch (UserNotFoundException e) {
 
             } catch (CourseNotFoundException e) {
             }
-
         }
         else
         {
             try {
                 listClass = classService.listClassByUserId(userId);
+                System.out.println("1111111111");
+                System.out.println(listClass.get(0));
+
             } catch (ClassesNotFoundException e) {
+                System.out.println("11111111112");
             }
         }
         for (ClassInfo item : listClass) {

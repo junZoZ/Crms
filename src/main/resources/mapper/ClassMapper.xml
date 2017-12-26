@@ -348,23 +348,28 @@
 
     <select id="listClassByUserId" resultMap="ClassInfo">
         SELECT
-            class_info.id,
-            class_info.name,
-            course_id,
-            site,
-            class_time,
-            class_info.report_percentage,
-            class_info.presentation_percentage,
-            class_info.five_point_percentage,
-            class_info.four_point_percentage,
-            class_info.three_point_percentage
+        class_info.id
+
+        ,
+        class_info.name
+
+        ,
+        course_id,
+        site,
+        class_time,
+        class_info.report_percentage,
+        class_info.presentation_percentage,
+        class_info.five_point_percentage,
+        class_info.four_point_percentage,
+        class_info.three_point_percentage
         FROM
-            class_info, course
+        class_info, course_selection
         WHERE
-            course.teacher_id = #{userId}
-            AND
-            course.id = class_info.course_id
+        course_selection.student_id = #{userId}
+        AND
+        course_selection.class_id = class_info.id ;
     </select>
+
 
     <select id="countUserByUserId" resultType="java.lang.Integer">
         SELECT COUNT(*)
