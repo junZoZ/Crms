@@ -3,10 +3,7 @@ package xmu.crms.view;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import xmu.crms.vo.SchoolVO;
-import xmu.crms.vo.UserVO;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 @RequestMapping(value="/teacher")
@@ -29,6 +26,39 @@ public class StudentPageController {
     @RequestMapping(value="/TeacherCreateCoursePage")
     public String TeacherCreateCoursePage() { ;return"TeacherCreateCoursePage"; }
 
+    @RequestMapping(value="/TeacherCreateSchool")
+    public String TeacherCreateSchool() { ;return"TeacherCreateSchool"; }
 
+    @RequestMapping(value="/TeacherCreateSeminar")
+    public String TeacherCreateSeminar() { ;return"TeacherCreateSeminar"; }
 
+    @RequestMapping(value="/TeacherCreateTopic")
+    public String TeacherCreateTopic() { ;return"TeacherCreateTopic"; }
+
+    @RequestMapping(value="/TeacherHomePage")
+    public String TeacherHomePage() { ;return"TeacherHomePage"; }
+
+    @RequestMapping(value="/TeacherScoreHome")
+    public String TeacherScoreHome() { ;return"TeacherScoreHome"; }
+
+    @RequestMapping(value="/TeacherScoreReprotPage")
+    public String TeacherScoreReportPage() { ;return"TeacherScoreReportPage"; }
+
+    @RequestMapping(value="/TeacherSeminarInfo")
+    public String TeacherSeminarInfo() { ;return"TeacherSeminarInfo"; }
+
+    @RequestMapping(value="/TeacherTopicCheck(fixed)")
+    public String TeacherTopicCheckfixed() { return"TeacherTopicCheck(fixed)"; }
+
+    @RequestMapping(value="/TeacherTopicCheck")
+    public String TeacherTopicCheck() { ;return"TeacherTopicCheck"; }
+
+    @RequestMapping(value="/TeacherUpdateClass")
+    public String UpdateClass() { ;return"UpdateClass"; }
+
+    @RequestMapping(value="/TeacherUpdateSeminar")
+    public String UpdateSeminarPage() { ;return"TeacherUpdateSeminar"; }
+
+    @RequestMapping(value="/TeacherUpdateTopic")
+    public String TeacherUpdateTopic() { ;return"TeacherUpdateTopic"; }
 }
