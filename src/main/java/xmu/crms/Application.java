@@ -3,6 +3,7 @@ package xmu.crms;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +17,7 @@ import javax.servlet.MultipartConfigElement;
 import java.text.SimpleDateFormat;
 
 @SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
-@ComponentScan(basePackages={"xmu.crms.view","xmu.crms.service.impl","xmu.crms.dao","xmu.crms.service"})
+@MapperScan(basePackages = "xmu.crms.mapper")
 @EnableScheduling
 public class Application {
 
