@@ -3,26 +3,23 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>学生主页</title>
-    <link href="../../static/css/student/StudentCourseHomePage.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/student/StudentCourseHomePage.css" rel="stylesheet" type="text/css"/>
 
-    <script src="../../static/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/js/jquery.js"></script>
-    <script src="../../static/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.isotope.min.js"></script>
-    <script src="../../static/js/jquery.inview.min.js"></script>
-    <script src="../../static/js/cookie3.js"></script>
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/jquery.inview.min.js"></script>
+    <script src="/js/cookie3.js"></script>
     <script>
 
     window.onload=function(){
     getClass();
-
     }
 
 
-  //得到讨论课的概要信息
 function getClass()
 {
-
 	$.ajax({
 		     type:"GET", //请求方式
 			 url: "/class?courseName=&teacherName=",
@@ -60,7 +57,7 @@ function Del(id)
              contentType : "application/json",
              dataType: 'json',   //返回值类型
              success:function(data){
-                window.location.href="StudentCourseHome.html";
+                window.location.href="/student/StudentCourseHome";
                  },
 
                 error:function(result){
@@ -76,9 +73,9 @@ function Del(id)
         课堂管理系统
     </div>
     <div class="icon">
-        <a href="StudentCourseHome.html"><img src="../../static/images/home.png">首页</a>
-        <img src="../../static/images/help.png">帮助
-        <a href="../common/WechatLoginPage.html"><img src="../../static/images/exit.png">退出</a>
+        <a href="/student/StudentCourseHome"><img src="/images/home.png">首页</a>
+        <img src="/images/help.png">帮助
+        <a href="../common/WechatLoginPage.html"><img src="/images/exit.png">退出</a>
     </div>
     <div class="clear"></div>
 </div>
@@ -86,9 +83,9 @@ function Del(id)
     <div class="navigation">
         <div class="title">导航</div>
         <div class="line"></div>
-        <div class="courseIntroduction"><a class="guidefont" href="StudentHomePage.html">基本信息</a>
-            <a class="guidefont" href="StudentCourseHome.html">课程信息</a>
-            <a class="guidefont" href="StudentChooseCoursePage.html">选择课程</a></div>
+        <div class="courseIntroduction"><a class="guidefont" href="/student/StudentHomePage">基本信息</a>
+            <a class="guidefont" href="/student/StudentCourseHome">课程信息</a>
+            <a class="guidefont" href="/student/StudentChooseCoursePage">选择课程</a></div>
     </div>
     <div class="content">
         <div class="title">课程信息</div>

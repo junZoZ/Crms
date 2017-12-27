@@ -8,13 +8,13 @@
                                      maximum-scale=1.0,
                                      user-scalable=no">
     <title>ClassManage</title>
- <link href="../../static/css/student/StudentBindPage.css" rel="stylesheet" type="text/css"/>
-    <script src="../../static/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/js/jquery.js"></script>
-    <script src="../../static/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.isotope.min.js"></script>
-    <script src="../../static/js/jquery.inview.min.js"></script>
-    <script src="../../static/js/cookie3.js"></script>
+ <link href="/css/student/StudentBindPage.css" rel="stylesheet" type="text/css"/>
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/jquery.inview.min.js"></script>
+    <script src="/js/cookie3.js"></script>
     <script type="text/javascript">
    function setSelectUserNo(radioObj){
 
@@ -91,11 +91,16 @@ city.options[0].text = "请选择市区";
     <script type="text/javascript">
     function sub()
     {
+    var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
     if(($("#male").val()==0&&$("#female").val()==0)||
     ($("#male").val()==1&&$("#female").val()==1)||
     !$("#name").val()||!$("#email").val()||!$("#number").val()
     ||!$("#name").val()||!$("#name").val()||$('#province').val()=="请选择省份"||$('#city').val()=="请选择市区"||$('#school').val() =="无"
     ) alert("请填写全部资料！");
+    else if(!reg.test($("#email").val()))
+        {
+            alert("邮箱格式不正确，请重新输入！");
+        }
     else
     {
     var gender="male";
@@ -120,7 +125,7 @@ city.options[0].text = "请选择市区";
         contentType :"application/json",
         data:JSON.stringify(bind),
         success:function(data){
-         location.href='StudentHomePage.html';
+         location.href='/student/StudentHomePage';
          },
          error:function(data){
          }
@@ -135,9 +140,8 @@ city.options[0].text = "请选择市区";
 <div class="titleBackground"></div>
 <div class="title">课程管理系统</div>
 <div class="icon">
-    <a href="StudentCourseHome.html"><img src="../../static/images/home.png">首页</a>
-    <img src="../../static/images/help.png">帮助
-    <a href="../common/WechatLoginPage.html"><img src="../../static/images/exit.png">退出</a>
+    <img src="/images/help.png">帮助
+    <a href="WechatLoginPage"><img src="/images/exit.png">退出</a>
 </div>
 <div class="phoneNum">手机号:<input type="text" name="phoneNum"/></div>
 <div class="password">密码:<input type="text" name="password"/></div>

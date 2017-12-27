@@ -6,19 +6,17 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>查看话题（固定分组）</title>
-   <link href="../../static/css/student/content.css" rel="stylesheet" type="text/css"/>
-    <script src="../../static/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/js/jquery.js"></script>
-    <script src="../../static/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.isotope.min.js"></script>
-    <script src="../../static/js/jquery.inview.min.js"></script>
-    <script src="../../static/js/cookie3.js"></script>
+   <link href="/css/student/content.css" rel="stylesheet" type="text/css"/>
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/jquery.inview.min.js"></script>
+    <script src="/js/cookie3.js"></script>
     <script>
-        //var courseID = ${sessionScope.courseID};
-          var courseID = 12;
-          var topicID = 12;
-
+          var courseID = getCookie("courseId");
+          var topicID = getCookie("topicId");
          window.onload=function(){
          getCourseInformation(courseID);
          getTopicInformation(topicID);
@@ -49,13 +47,13 @@
     }
 
     //小组选题
-     function chooseTopicInformation(groupid,topicid)
+     function chooseTopicInformation()
     {
 
-       var tid=topicid;
+       var tid=topicID;
         $.ajax({
         type:"POST", //请求方式
-        url: "/group/"+groupid+"/topic",
+        url: "/group/"+groupID+"/topic",
         cache: true,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
@@ -82,9 +80,7 @@
         success:function(data){
 
 
-
-
-         $("#serial").html(data.serial);
+         $("#serial").html("话题"+data.serial);
          $("#name").html(data.name);
          $("#description").html(data.description);
 
@@ -114,9 +110,9 @@ function checkGrade()
             课堂管理系统
           </div>
           <div class="icon">
-              <a href="StudentCourseHome.html"><img src="../../static/images/home.png">首页</a>
-              <img src="../../static/images/help.png">帮助
-              <a href="../common/WechatLoginPage.html"><img src="../../static/images/exit.png">退出</a>
+              <a href="/student/StudentCourseHome"><img src="/images/home.png">首页</a>
+              <img src="/images/help.png">帮助
+              <a href="../common/WechatLoginPage.html"><img src="/images/exit.png">退出</a>
           </div>
           <div class="clear"></div>
         </div>
@@ -149,7 +145,7 @@ function checkGrade()
                           <label class="itemName" id="groupMemberLimit"></label>
                         </div>
 						<div class="item">
-						   <button class="modifyButton" onclick="chooseTopicInformation(5,5)"> 选择话题 </button>
+						   <button class="modifyButton" onclick="chooseTopicInformation()"> 选择话题 </button>
 						</div>
 					</div>
                 </div>
