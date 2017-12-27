@@ -158,8 +158,8 @@
             <if test="newClass.reportPercentage != null">
                 report_percentage = #{newClass.reportPercentage},
             </if>
-            <if test="newClass.presentation != null">
-                presentation_percentage = #{newClass.presentation},
+            <if test="newClass.presentationPercentage != null">
+                presentation_percentage = #{newClass.presentationPercentage},
             </if>
             <if test="newClass.fivePointPercentage != null">
                 five_point_percentage = #{newClass.fivePointPercentage},
