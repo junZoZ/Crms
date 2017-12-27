@@ -104,7 +104,7 @@
 +"\')\">删除课程</button><button  onclick=\"mody(\'"+item.id
 
 +"\')\">修改课程</button></h3><hr/>"
-              +"<div class=\"classinfo\" ><a  href=\"TeacherCourseInformation.html"+"\" style=\"color:black;text-decoration:none\" ><table class=\"table\"><tr><td class=\"tabletext\">班级数："+item.numClass+"</td>  <td class=\"tabletext\">学生人数："+item.numStudent+"</td></tr>"
+              +"<div class=\"classinfo\" ><a  onclick=\"goto("+item.id+")"+"\" style=\"color:black;text-decoration:none\" ><table class=\"table\"><tr><td class=\"tabletext\">班级数："+item.numClass+"</td>  <td class=\"tabletext\">学生人数："+item.numStudent+"</td></tr>"
                +"<tr><td class=\"tabletext\">开始时间："+item.startTime+"</td>  <td class=\"tabletext\">结束时间:"+item.endTime+"</td></tr></table></a></div></div><br/>";
                     }),
                     tr=tr+"<div class=\"main_box_right_content\" onclick=\"add()\"><img class=\"addcourse\" src=\"../../images/add.png\"></div>"
@@ -116,6 +116,11 @@
     }
     function add(){
        window.location.href="/teacher/TeacherCreateCoursePage";
+    }
+    function goto(id){
+       setCookie("courseId",id);
+       window.location.href="/teacher/TeacherCourseInformation";
+
     }
 
      </script>

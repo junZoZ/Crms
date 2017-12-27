@@ -114,7 +114,6 @@ public class ClassController {
     @RequestMapping(value = "/class/{classId}",method = RequestMethod.GET)
     @ResponseBody
     public ClassVO classInfo(@PathVariable("classId") Integer cid) throws ClassesNotFoundException {
-//        有错误
 //          roster没处理，也就是说，没有上传分组名单的变化
         ClassVO classvo=new ClassVO();
         ClassInfo classInfo = classService.getClassByClassId(new BigInteger(cid.toString()));
