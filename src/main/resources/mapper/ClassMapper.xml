@@ -158,6 +158,9 @@
             <if test="newClass.reportPercentage != null">
                 report_percentage = #{newClass.reportPercentage},
             </if>
+            <if test="newClass.presentationPercentage != null">
+                presentation_percentage = #{newClass.presentationPercentage},
+            </if>
             <if test="newClass.fivePointPercentage != null">
                 five_point_percentage = #{newClass.fivePointPercentage},
             </if>
@@ -321,7 +324,7 @@
         FROM
             course
         WHERE
-            name = #{courseName}
+            name = LIKE #{courseName}
     </select>
 
     <select id="listUserByUsername" resultMap="User">
@@ -343,7 +346,7 @@
         FROM
             user_info
         WHERE
-            name = #{username}
+            name =LIKE #{username}
     </select>
 
     <select id="listClassByUserId" resultMap="ClassInfo">
