@@ -13,7 +13,7 @@
         	</div>
         	<div class="icon">
         		 <a href="StudentCourseHome"><img src="../../images/home.png">首页</a>
-                                <img src="../images/help.png">帮助
+                                <img src="../../images/help.png">帮助
                                 <a href="WechatLoginPage"><img src="../../images/exit.png">退出</a>
         	</div>
         	<div class="clear"></div>
@@ -22,9 +22,9 @@
            <div class="navigation">
                 <div class="title">导航</div>
                 <div class="line"></div>
-                <div class="courseIntroduction"><a class="guidefont" href="/html/student/StudentHomePage.html">基本信息</a>
-                                                                    <a class="guidefont" href="/html/student/StudentCourseHome.html">课程信息</a>
-                                                                    <a class="guidefont" href="/html/student/StudentChooseCoursePage.html">选择课程</a>
+                <div class="courseIntroduction"><a class="guidefont" href="/student/StudentHomePage.html">基本信息</a>
+                                                                    <a class="guidefont" href="/student/StudentCourseHome.html">课程信息</a>
+                                                                    <a class="guidefont" href="/student/StudentChooseCoursePage.html">选择课程</a>
                 </div>
             </div>
                     <div enctype="multipart/form-data">
@@ -61,7 +61,7 @@
         <br/>
         <br/>
      <div >
-                <a href="../../html/student/StudentHomePage.html"> <input class="button" type="button" name="submit" value="提交"></input></a>
+                <a href="/student/StudentHomePage.html"> <input class="button" type="button" name="submit" value="提交"></input></a>
              </div>
            </div>
         </div>

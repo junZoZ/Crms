@@ -1,47 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,
                                      initial-scale=1.0,
                                      maximum-scale=1.0,
                                      user-scalable=no">
     <title>ClassManage</title>
-    <!-- ×îĞÂ°æ±¾µÄ Bootstrap ºËĞÄ CSS ÎÄ¼ş -->
+    <!-- æœ€æ–°ç‰ˆæœ¬çš„ Bootstrap æ ¸å¿ƒ CSS æ–‡ä»¶ -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <!-- ¿ÉÑ¡µÄ Bootstrap Ö÷ÌâÎÄ¼ş£¨Ò»°ã²»ÓÃÒıÈë£© -->
+    <!-- å¯é€‰çš„ Bootstrap ä¸»é¢˜æ–‡ä»¶ï¼ˆä¸€èˆ¬ä¸ç”¨å¼•å…¥ï¼‰ -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-    <!-- ×îĞÂµÄ Bootstrap ºËĞÄ JavaScript ÎÄ¼ş -->
+    <!-- æœ€æ–°çš„ Bootstrap æ ¸å¿ƒ JavaScript æ–‡ä»¶ -->
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-    <link href="../../static/css/common/WechatLoginPage.css" rel="stylesheet" type="text/css"/>
-    <style>
-    body {background-image:url("../../static/images/back.png");
-    background-repeat:no-repeat;
-    background-size:100%!important;
-    overflow: hidden;
-    position: fixed;
-    width:100%;
-    height:100%;
-    font-size:100%;
-    }
-    </style>
+    <link href="/css/common/AccountLoginPage.css" rel="stylesheet" type="text/css"/>
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/jquery.inview.min.js"></script>
+    <script src="/js/cookie3.js"></script>
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 <body>
 <div class="GreyPanel"></div>
-<div class="ClassManage">¿ÎÌÃ¹ÜÀíÏµÍ³</div>
-<div class="LoginWayOne"> <a href="AccountLoginPage.html">ÕËºÅÃÜÂëµÇÂ¼</a></div>
-<div class="LoginWayTwo"> <a href="WecharLoginPage.html">Î¢ĞÅµÇÂ¼</a></div>
-<div class="WechatText">Ê¹ÓÃÎ¢ĞÅÉ¨Ò»É¨</div>
+<div class="ClassManage">è¯¾å ‚ç®¡ç†ç³»ç»Ÿ</div>
+<div class="LoginWayOne"> <a href="AccountLoginPage">è´¦å·å¯†ç ç™»å½•</a></div>
+<div class="LoginWayTwo"> <a href="WecharLoginPage.html">å¾®ä¿¡ç™»å½•</a></div>
+<div class="WechatText">ä½¿ç”¨å¾®ä¿¡æ‰«ä¸€æ‰«</div>
 <Identity>
-<input id="man" type="radio" checked="checked" name="1" />ÀÏÊ¦<input id="woman" type="radio"  name="1"/>Ñ§Éú
+<input id="man" type="radio" checked="checked" name="1" />è€å¸ˆ<input id="woman" type="radio"  name="1"/>å­¦ç”Ÿ
 </Identity>
-<img src="../../static/images/qrcode.png" class="QRCode">
+<img src="/images/qrcode.png" class="QRCode">
 </body>
 </html>
