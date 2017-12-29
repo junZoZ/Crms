@@ -48,7 +48,7 @@ public class TopicController {
         topicVO.setName(topic.getName());
         topicVO.setDescription(topic.getDescription());
         topicVO.setGroupLimit(topic.getGroupNumberLimit());
-        topicVO.setGroupMemberLimit(topic.getGroupNumberLimit());
+        topicVO.setGroupMemberLimit(topic.getGroupStudentLimit());
         //获取选topic的小组
         Integer number = seminarGroupService.listGroupByTopicId(topic.getId()).size();
         topicVO.setGroupLeft(topic.getGroupNumberLimit()-number);

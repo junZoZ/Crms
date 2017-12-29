@@ -85,11 +85,19 @@ public class GroupController {
 //    @ResponseStatus(value= HttpStatus.OK)
 //    @RequestMapping(value="/group/{groupId}/grade",method = RequestMethod.GET)
 //    @ResponseBody
-//    public void index6(@PathVariable ("groupId") Integer sid, @RequestBody Integer a) {
-//        for(groupscoreVo item:form.list)
-//            if(item.getId()==sid)
-//            {item.setReportScore(a); }
+//    public GroupVO index7(@PathVariable ("groupId") Integer groupId) throws GroupNotFoundException {
+//       SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupByGroupId(new BigInteger(groupId.toString()));
+//       GroupVO groupVO = new GroupVO();
+//       groupVO.setId(seminarGroup.getId());
+//
+//
 //    }
+//    private Integer id;
+//    private String name;
+//    private IdAndNameVO leader;
+//    private ArrayList<IdAndNameVO> members;
+//    private ArrayList<IdAndNameVO> topics;
+//    private String report;
 
 
     @ResponseStatus(value= HttpStatus.NO_CONTENT)

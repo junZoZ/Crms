@@ -57,6 +57,10 @@ public class SeminarController {
         seminarVO.setStartTime(seminar.getStartTime());
         seminarVO.setEndTime(seminar.getEndTime());
         seminarVO.setTopics(topicIdAndNameList);
+        //记录分组情况
+        if(seminar.getFixed().booleanValue()){
+        seminarVO.setGroupingMethod("fixed");}
+        else{seminarVO.setGroupingMethod("random");}
         return seminarVO;
     }
 

@@ -16,8 +16,8 @@ public class TeacherPageController {
     @RequestMapping(value="/TeacherCourseHomePage")
     public String teacherCourseHomePage() { return "teacher/TeacherCourseHomePage"; }
 
-    @RequestMapping(value="/TeacherCourseInformationPage")
-    public String teacherCourseInformationPage() { return "teacher/TeacherCourseInformationPage"; }
+    @RequestMapping(value="/TeacherCourseInformation")
+    public String teacherCourseInformationPage() { return "teacher/TeacherCourseInformation"; }
 
     @RequestMapping(value="/TeacherCreateClass")
     public String teacherCreateClass() { return "teacher/TeacherCreateClass"; }
@@ -46,8 +46,8 @@ public class TeacherPageController {
     @RequestMapping(value="/TeacherSeminarInfo")
     public String teacherSeminarInfo() { return "teacher/TeacherSeminarInfo"; }
 
-    @RequestMapping(value="/TeacherTopicCheck(fixed)")
-    public String teacherTopicCheckfixed() { return "teacher/TeacherTopicCheck(fixed)"; }
+    @RequestMapping(value="/TeacherTopicCheck(after)")
+    public String teacherTopicCheckfixed() { return "teacher/TeacherTopicCheck(after)"; }
 
     @RequestMapping(value="/TeacherTopicCheck")
     public String teacherTopicCheck() { return "teacher/TeacherTopicCheck"; }

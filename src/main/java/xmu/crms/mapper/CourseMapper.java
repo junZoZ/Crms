@@ -86,6 +86,6 @@ public interface CourseMapper {
      * @exception InfoIllegalException courseId格式错误时抛出
      * @exception CourseNotFoundException 未找到课程
      */
-    List<Course> listCourseByCourseName(String courseName);
+    List<Course> listCourseByCourseName(@Param("courseName") String courseName);
 
 }

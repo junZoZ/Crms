@@ -61,7 +61,7 @@ public class CourseServiceImpl implements CourseService {
         Course course=courseMapper.getCourseByCourseId(courseId);
         if(course==null){
             throw new CourseNotFoundException("course cannot be founded with id :"+String.valueOf(courseId));
-    }
+        }
         return course;
     }
 
@@ -139,17 +139,18 @@ public class CourseServiceImpl implements CourseService {
         if(users.isEmpty()){
             throw new UserNotFoundException("user not found");
         }
-        List<ClassInfo> classes=new LinkedList<ClassInfo>();
+        List<ClassInfo> classes = new LinkedList<ClassInfo>();
         List<ClassInfo> classesByCourseName=listClassByCourseName(courseName);
         List<ClassInfo> classesByteacherName;
         try {
-             classesByteacherName = listClassByTeacherName(teacherName);
+            classesByteacherName = listClassByTeacherName(teacherName);
         }catch(ClassesNotFoundException e){
             throw new CourseNotFoundException("course not found");
         }
         if(classesByCourseName.isEmpty()||classesByteacherName.isEmpty()) {
             throw new CourseNotFoundException("course not found");
         }
+
         //id相等则符合两个条件
         for(ClassInfo each:classesByCourseName){
             for(ClassInfo every:classesByteacherName){

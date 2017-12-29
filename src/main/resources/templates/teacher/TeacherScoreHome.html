@@ -6,29 +6,43 @@
     <meta name="viewport"
           content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>打分</title>
-    <link rel="stylesheet" href="../../static/css/common/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/teacher/content.css">
+    <link rel="stylesheet" href="/css/common/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/teacher/content.css">
 </head>
-<script src="../../static/js/jquery.js"></script>
-<script src="../../static/js/bootstrap.min.js"></script>
-<script src="../../static/js/jquery.isotope.min.js"></script>
-<script src="../../static/js/jquery.inview.min.js"></script>
-<script src="../../static/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
-<script src="../../static/js/jquery.params.js"></script>
-<script src="../../static/js/cookie3.js"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.params.js"></script>
+<script src="/js/cookie3.js"></script>
 <script type="text/javascript">
-var seminarID;
-$(function() {
-     seminarID = $.query.get("seminarid");
-    });
-   window.onload=function(){
-   scoreLoad(5);
-   }
-   function back()
-   {
-   window.location.href="TeacherSeminarInfo.html?seminarid="+seminarID;
-   }
-    function scoreLoad(id){
+ var seminarID = getCookie("seminarId");
+ var courseID = getCookie("courseId");
+       window.onload=function(){
+       getCourseInformation(courseID);
+       scoreLoad(seminarID);
+    }
+//得到课程的基本信息
+    function getCourseInformation(courseID)
+    {
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+courseID,
+        cache: true,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+        success:function(data){
+
+         $("#courseName").html(data.name);
+         $("#courseDescription").html(data.description);
+         },
+         error:function(data){
+         }
+         });
+    }
+     function scoreLoad(id){
       $.ajax({
              type:"GET", //请求方式
              url:"/seminar/"+id+"/group", //请求路径
@@ -41,12 +55,12 @@ $(function() {
                     $.each(data,function(i,item){
                     $.ajax({
                     type:"GET", //请求方式
-                   url:"/group/"+item.id, //请求路径
+                   url:"/group/"+item.id+"/grade", //请求路径
                   cache: false,
                  contentType : "application/json",
                     dataType: 'json',   //返回值类型
-                    success:function(data){
-                    if(data)
+                    success:function(data1){
+                    if(data1)
                     {
                       var html = '<tbody class="tableContent"><tr><td>'+data.topic+'</td><td>'+data.groupname+'</td><td>'+data.leader.name+'</td><td>'+data.discussionScore+'</td><td>'+ data.is_submit+'</td><td>'+data.reportScore+'</td><td>'+data.score+'</td><td><a href="TeacherScoreReportPage.html?seminarid='+seminarID+'&groupid='+data.id+'"</a><img src="../../Img/view.png" alt="预览"> <a download="../../abc.rar" href="../../abc.rar"> <img src="../../images/download.png" alt="下载"></a></td></tr></tbody>';
 
@@ -62,6 +76,12 @@ $(function() {
              error:function(result){
              }
       }); }
+
+   function back()
+   {
+         window.location.href="/teacher/TeacherSeminarInfo";
+   }
+
 </script>
 <body>
 <div class="top">
@@ -69,17 +89,17 @@ $(function() {
         课堂管理系统
     </div>
     <div class="icon">
-        <a href="TeacherCourseHomePage.html"><img src="../../static/images/home.png">首页</a>
-        <img src="../../static/images/help.png">帮助
-        <a href="../common/WechatLoginPage.html"><img src="../../static/images/exit.png">退出</a>
+        <a href="/teacher/TeacherCourseHomePage"><img src="/images/home.png">首页</a>
+        <img src="/images/help.png">帮助
+        <a href="/common/WechatLoginPage"><img src="/images/exit.png">退出</a>
     </div>
     <div class="clear"></div>
 </div>
 <div class="body">
     <div class="navigation">
-        <div class="courseName">OOAD</div>
+        <div class="courseName" id="courseName"></div>
         <div class="line"></div>
-        <div class="courseIntroduction">ooad is xxx</div>
+        <div class="courseIntroduction" id="courseDescription"></div>
     </div>
     <div class="content">
     <div class="contentBlock">

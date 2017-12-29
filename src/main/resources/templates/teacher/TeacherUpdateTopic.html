@@ -3,44 +3,64 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>话题修改</title>
-    <link rel="stylesheet" href="../static/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/teacher/content.css">
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/teacher/content.css">
 </head>
-<script src="../../static/js/jquery.js"></script>
-<script src="../../static/js/bootstrap.min.js"></script>
-<script src="../../static/js/jquery.isotope.min.js"></script>
-<script src="../../static/js/jquery.inview.min.js"></script>
-<script src="../../static/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
-<script src="../../static/js/jquery.params.js"></script>
-<script src="../../static/js/cookie3.js"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.params.js"></script>
+<script src="/js/cookie3.js"></script>
 <script type="text/javascript">
-var id;
-$(function() {
-     id= $.query.get("topicid");
-    });
- function black(){
-   document.getElementById("name").value="";
-   document.getElementById("description").value="";
-   document.getElementById("groupLimit").value="";
-   document.getElementById("limit").value="";
-    };
+   var topicID = getCookie("topicId");
+   var courseID = getCookie("courseId");
+
    window.onload=function(){
-   topicLoad();
+    getCourseInformation(courseID);
+    topicLoad();
 }
+function black(){
+var bool=confirm("确定要重置吗？");
+       if(bool){topicLoad();}
+
+    }
+
+   //得到课程的基本信息
+    function getCourseInformation(courseID)
+    {
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+courseID,
+        cache: true,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+
+         $("#courseName").html(data.name);
+         $("#courseDescription").html(data.description);
+
+         },
+         error:function(data){
+         }
+         });
+    }
+
   function topicLoad(){
    $.ajax({
              type:"GET", //请求方式
-             url:"/topic/"+id, //请求路径
+             url:"/topic/"+topicID, //请求路径
              cache: false,
              contentType : "application/json",
              dataType: 'json',   //返回值类型
              success:function(data){
                if(data)
                    {
-    document.getElementById("name").value=data.name;
-   document.getElementById("description").value=data.description;
-   document.getElementById("groupLimit").value=data.groupLimit;
-   document.getElementById("limit").value=data.groupMemberLimit;
+                        document.getElementById("name").value=data.name;
+                        document.getElementById("description").value=data.description;
+                        document.getElementById("groupLimit").value=data.groupLimit;
+                        document.getElementById("limit").value=data.groupMemberLimit;
                    }
              },
              error:function(result){
@@ -62,16 +82,17 @@ $(function() {
   {
   $.ajax({
              type:"PUT", //请求方式
-             url:"/topic/"+id, //请求路径
+             url:"/topic/"+topicID, //请求路径
              cache: false,
              contentType : "application/json",
              data:JSON.stringify(a),
              dataType: 'json',   //返回值类型
              success:function(data){
                          alert("提交成功！");
-                         window.location.href="TeacherTopicCheck.html?topicid="+id;
+                         window.location.href="/teacher/TeacherTopicCheck";
              },
              error:function(result){
+                alert("修改失败！请检查数据格式！");
              }
       });
   }
@@ -79,8 +100,9 @@ $(function() {
 
       function goback()
          {
-            window.location.href="TeacherTopicCheck(fixed).html";
+            window.location.href="/teacher/TeacherTopicCheck";
          }
+
 </script>
 <body>
 <div class="top">
@@ -88,17 +110,17 @@ $(function() {
         课堂管理系统
     </div>
     <div class="icon">
-        <a href="TeacherCourseHomePage.html"><img src="../../static/images/home.png">首页</a>
-        <img src="../../static/images/help.png">帮助
-        <a href="../common/WechatLoginPage.html"><img src="../../static/images/exit.png">退出</a>
+        <a href="/teacher/TeacherCourseHomePage"><img src="/images/home.png">首页</a>
+        <img src="/images/help.png">帮助
+        <a href="/common/WechatLoginPage.html"><img src="/images/exit.png">退出</a>
     </div>
     <div class="clear"></div>
 </div>
 <div class="body">
     <div class="navigation">
-        <div class="courseName">OOAD</div>
+        <div class="courseName" id="courseName"></div>
         <div class="line"></div>
-        <div class="courseIntroduction">ooad is xxx</div>
+        <div class="courseIntroduction" id="courseDescription"></div>
     </div>
     <div class="content">
         <div class="block">

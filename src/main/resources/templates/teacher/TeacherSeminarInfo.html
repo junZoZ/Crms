@@ -16,21 +16,18 @@
     <script src="/js/jquery.params.js"></script>
     <script src="/js/cookie3.js"></script>
     <script>
-      var seminarID= getCookie("seminarId");
-      var courseID=getCookie("courseId");
+      var seminarID = getCookie("seminarId");
+      var courseID = getCookie("courseId");
 
-        window.onload=function(){
-
-         getCourseInformation(courseID);
+       window.onload=function(){
+       getCourseInformation(courseID);
        getSeminarInformation(seminarID);
 
     }
 
-
- //得到课程的基本信息
+//得到课程的基本信息
     function getCourseInformation(courseID)
     {
-
         $.ajax({
         type:"GET", //请求方式
         url: "/course/"+courseID,
@@ -49,6 +46,7 @@
          });
     }
 
+
    function getSeminarInformation(seminarID)
    {
        $.ajax({
@@ -57,59 +55,46 @@
         cache: false,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
-
-
         success:function(data){
-
          $("#name").html(data.name);
          $("#description").html(data.description);
-
          if(data.groupingMethod == "fixed")
          { $('#groupingMethod').html("固定分组");}
          else{$('#groupingMethod').html("随机分组");}
-
           $("#startTime").html(data.startTime);
            $("#endTime").html(data.endTime);
-           Date date = new Date();
-           if(data < new Date()(data.endTime)){
-               $("changeButton").val("查看选题");
+
+           var date = new Date();
+           var nowDate = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();//获取当前实际日期
+           if(nowDate < data.endTime){
+               $("#changeButton").html("查看选题");
            }
-           else {$("changeButton").val("评分");}
+           else {$("#changeButton").html("评分");
+                 $("#modify").attr("disabled", true);
+           }
 
-       var startdate=new Date()(($("#startDate()").val()).replace(/-/g,"/"));
-                 var enddate=new Date()(($("#endDate").val()).replace(/-/g,"/"));
-                 var date = new Date();
-
-                    if(startdate<date)
            str="";
          $.each(data.topics,function(i,item){
-             //标签是老师查看某个班级信息 a href =".thml?courseID="" "
-                  str=str+"<a onclick=("+item.id+")" + " " + " \" class=\"topicBlock\"> <div class=\"topicBlockFont\" id=\" " + item.id + " \" >"+ item.name +"</div></a> "
+
+                  str=str+"<a onclick=gotoTopic("+item.id+")" + " " + " \" class=\"topicBlock\"> <div class=\"topicBlockFont\" id=\" " + item.id + " \" >"+ item.name +"</div></a> "
 			            });
-
-
         str= str+" <a href=\"TeacherCreateTopic.html?seminarid="+seminarID+"\""+" "+"\" class=\"topicBlock\"> <img class=\"addImg\" src=\"/images/smalladd.png\" alt=\"添加\"> </a> ";
-
 	     $("#topicBlockBody").html(str);
-
-
          },
          error:function(data){
          }
          });
-
-
    }
-
 
         function gotoScore()
         {
-           window.location.href="TeacherScoreHome.html?seminarid="+seminarID;
+           if($("#changeButton").html()=="查看选题"){}
+           else{window.location.href="/teacher/TeacherScoreHome";}
         }
          //修改实现
         function gotoModify()
         {
-           window.location.href="TeacherUpdateSeminar.html?seminarid="+seminarID;
+           window.location.href="/teacher/TeacherUpdateSeminar";
         }
 
          //删除实现
@@ -127,7 +112,7 @@
 
                      success:function(data){
                               alert("已删除！");
-                              window.location.href="TeacherCourseInformation.html";
+                              window.location.href="/teacher/TeacherCourseInformation";
                         },
                      error:function(data){
                             alert("页面加载错误！");
@@ -135,11 +120,13 @@
                          });
            }
         }
-       function goto(topicId)
+       function gotoTopic(topicID)
        {
-
+            setCookie("topicId",topicID);
+            if($("#changeButton").html()=="评分"){
+                window.location.href="/teacher/TeacherTopicCheck(after)";
+            }else{window.location.href="/teacher/TeacherTopicCheck";}
        }
-
     </script>
 </head>
 <body>
@@ -151,7 +138,7 @@
         课堂管理系统
     </div>
     <div class="icon">
-        <a href="teacher/TeacherCourseHomePage"><img src="/images/home.png">首页</a>
+        <a href="/teacher/TeacherCourseHomePage"><img src="/images/home.png">首页</a>
         <img src="/images/help.png">帮助
         <a href="/common/WechatLoginPage.html"><img src="/images/exit.png">退出</a>
     </div>
@@ -166,7 +153,7 @@
     <div class="content">
         <div class="block">
             <div class="title" >讨论课信息</div>
-            <a href="TeacherCourseInformation.html" ><div class="returnButton">返回上一页</div></a>
+            <a href="/teacher/TeacherCourseInformation" ><div class="returnButton">返回上一页</div></a>
             <div class="line"></div>
             <div class="itemBody">
 
@@ -182,8 +169,8 @@
                     <label class="itemName">结束时间：</label>
                     <label class="itemName" id="endTime"></label><br/>
 
-                    <button class="leftButton" onclick="gotoScore()" id="changeButton">评分</button>
-                    <button class="middleButton" onclick="gotoModify()">修改</button>
+                    <button class="leftButton" onclick="gotoScore()" id="changeButton"></button>
+                    <button class="middleButton" onclick="gotoModify()" id="modify">修改</button>
                     <button class="rightButton" onclick="Del()">删除讨论课</button>
                 </div>
 

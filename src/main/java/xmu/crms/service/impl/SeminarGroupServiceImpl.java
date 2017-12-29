@@ -240,7 +240,7 @@ public  class SeminarGroupServiceImpl implements SeminarGroupService {
         { throw new IllegalArgumentException(); }
         User student = userSerive.getUserByUserId(userId);
         SeminarGroup seminarGroup = getSeminarGroupByGroupId(groupId);
-        if(seminarGroup.getLeader() == null){
+        if(seminarGroup.getLeader() != null){
             throw new InvalidOperationException();
         }
         seminarGroup.setLeader(student);
@@ -255,7 +255,7 @@ public  class SeminarGroupServiceImpl implements SeminarGroupService {
         User student = userSerive.getUserByUserId(userId);
         SeminarGroup seminarGroup = getSeminarGroupByGroupId(groupId);
         //组长不存在或者这个人不是组长
-        if(seminarGroup.getLeader() == null || userId.equals(seminarGroup.getLeader().getId())){
+        if(seminarGroup.getLeader() == null || !userId.equals(seminarGroup.getLeader().getId())){
             throw new InvalidOperationException();
         }
         seminarGroupDao.resignLeaderById(groupId);
