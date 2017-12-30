@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import xmu.crms.entity.SeminarGroup;
+import xmu.crms.entity.SeminarGroupTopic;
+import xmu.crms.entity.Topic;
 import xmu.crms.entity.User;
 import xmu.crms.exception.FixGroupNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
@@ -13,6 +15,7 @@ import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.service.*;
 import xmu.crms.vo.GroupVO;
 import xmu.crms.vo.IdAndNameVO;
+import xmu.crms.vo.SeminarGroupGradeVO;
 
 
 import java.math.BigInteger;
@@ -82,22 +85,33 @@ public class GroupController {
 
 //    delete  /group/{groupId}/topic/{topicId}
 
-//    @ResponseStatus(value= HttpStatus.OK)
-//    @RequestMapping(value="/group/{groupId}/grade",method = RequestMethod.GET)
-//    @ResponseBody
-//    public GroupVO index7(@PathVariable ("groupId") Integer groupId) throws GroupNotFoundException {
-//       SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupByGroupId(new BigInteger(groupId.toString()));
-//       GroupVO groupVO = new GroupVO();
-//       groupVO.setId(seminarGroup.getId());
-//
-//
-//    }
-//    private Integer id;
-//    private String name;
-//    private IdAndNameVO leader;
-//    private ArrayList<IdAndNameVO> members;
-//    private ArrayList<IdAndNameVO> topics;
-//    private String report;
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value="/group/{groupId}/grade",method = RequestMethod.GET)
+    @ResponseBody
+    public SeminarGroupGradeVO index7(@PathVariable ("groupId") Integer groupId) throws GroupNotFoundException {
+       SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupByGroupId(new BigInteger(groupId.toString()));
+       SeminarGroupGradeVO seminarGroupGradeVO = new SeminarGroupGradeVO();
+       seminarGroupGradeVO.setGroupName(seminarGroup.getLeader().getName()+"的小组");
+       seminarGroupGradeVO.setLeaderName(seminarGroup.getLeader().getName());
+       seminarGroupGradeVO.setPresentationGrade(seminarGroup.getPresentationGrade());
+       seminarGroupGradeVO.setReportGrade(seminarGroup.getReportGrade());
+       seminarGroupGradeVO.setFinalGrade(seminarGroup.getFinalGrade());
+       seminarGroupGradeVO.setReport(seminarGroup.getReport());
+       if(seminarGroup.getReport() != null){seminarGroupGradeVO.setSubmit("已提交");}
+       else{seminarGroupGradeVO.setSubmit("未提交");}
+       //处理小组的topic
+        String topicSerial = "";
+        List<SeminarGroupTopic> seminarGroupTopicList = topicService.listSeminarGroupTopicByGroupId(seminarGroup.getId());
+        for(SeminarGroupTopic item:seminarGroupTopicList){
+            topicSerial += item.getTopic().getSerial();
+            topicSerial += ",";
+        }
+        topicSerial = topicSerial.substring(0,topicSerial.length()-2);
+        seminarGroupGradeVO.setTopicSerial(topicSerial);
+        return seminarGroupGradeVO;
+
+    }
+
 
 
     @ResponseStatus(value= HttpStatus.NO_CONTENT)

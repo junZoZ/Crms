@@ -64,8 +64,9 @@
 	<script src="/js/jquery.params.js"></script>
 	<script src="/js/cookie3.js"></script>
 	<script type="text/javascript">
-    var id;
-    var sid;
+   var seminarID = getCookie("seminarId");
+   var groupID = getCookie("courseId");
+
     $(function() {
          id = $.query.get("groupid");
          sid=$.query.get("seminarid");
