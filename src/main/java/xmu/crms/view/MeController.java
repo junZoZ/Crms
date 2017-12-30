@@ -6,16 +6,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import xmu.crms.entity.User;
 import xmu.crms.exception.UserNotFoundException;
+import xmu.crms.security.auth.JwtService;
+import xmu.crms.service.LoginService;
 import xmu.crms.service.impl.UserServiceImpl;
+import xmu.crms.vo.LoginSuccessVO;
 import xmu.crms.vo.SchoolVO;
 import xmu.crms.vo.UserVO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @RestController
 public class MeController {
     @Autowired
     private UserServiceImpl userSeviceImpl;
+
+    @Autowired
+    private LoginService loginService;
+
+    @Autowired
+    private JwtService jwtService;
     /**
      * 获得当前用户
      * @return User deleteNumber
@@ -53,20 +65,7 @@ public class MeController {
     @RequestMapping(value="/me", method=RequestMethod.PUT)
     @ResponseStatus(value=HttpStatus.NO_CONTENT)
     public void updateUser(@RequestBody User user) throws UserNotFoundException {
-        userServiceImpl.updateUserByUserId(user.getId(), user);
-    }
-    /**
-     * 手机号登录，返回用户基本信息
-     * @param phone
-     * @param password
-     * @return
-     * @throws UserNotFoundException 用户不存在或密码不正确
-     */
-    @RequestMapping(value="/signin", method=RequestMethod.POST)
-    public User signinByPhone(@RequestBody User user) throws UserNotFoundException{
 
-        System.out.println(user);
-        return user;
     }
 
     /**
@@ -75,10 +74,17 @@ public class MeController {
      * @return
      * @throws UserNotFoundException
      */
-    @RequestMapping(value="/registerByPhone", method=RequestMethod.POST)
+    @RequestMapping(value="/register", method=RequestMethod.POST)
     @ResponseStatus(value=HttpStatus.NO_CONTENT)
-    public void registerByPhone(@RequestBody User user) throws UserNotFoundException{
-        loginServiceImpl. signUpPhone(user) ;
+    public LoginSuccessVO registerByPhone(@RequestBody User user) throws UserNotFoundException{
+
+        System.out.println(user);
+        try {
+            user.setPassword(md5Hex(user.getPassword())); //加密
+        } catch (NoSuchAlgorithmException e) { }
+        loginService.signUpPhone(user);
+        String jwt = jwtService.generateJwt(user);
+        return new LoginSuccessVO(user.getId(), user.getType() == 0 ? "student" : "teacher", user.getName(), jwt);
     }
     /**
      * 微信登录，返回用户基本信息
@@ -90,5 +96,23 @@ public class MeController {
      */
     @RequestMapping(value="/signin", method=RequestMethod.GET)
     public User signin(String code, String state, String successUrl, HttpServletResponse response){
+        return null;
+    }
+
+    private String md5Hex(String input) throws NoSuchAlgorithmException {
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        byte[] res = md5.digest(input.getBytes());
+        return toHex(res);
+    }
+
+    private String toHex(byte[] bytes) {
+
+        final char[] HEX_DIGITS = "0123456789ABCDEF".toCharArray();
+        StringBuilder ret = new StringBuilder(bytes.length * 2);
+        for (int i = 0; i < bytes.length; i++) {
+            ret.append(HEX_DIGITS[(bytes[i] >> 4) & 0x0f]);
+            ret.append(HEX_DIGITS[bytes[i] & 0x0f]);
+        }
+        return ret.toString();
     }
 }

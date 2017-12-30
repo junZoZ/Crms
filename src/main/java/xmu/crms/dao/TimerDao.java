@@ -42,12 +42,13 @@ public class TimerDao {
         catch (Exception e){}
     }
 
-    public void  getEventByEventId(BigInteger eventId)
+    public Event  getEventByEventId(BigInteger eventId)
     {
         try {
-            timerMapper.getEventByEventId(eventId);
+            return timerMapper.getEventByEventId(eventId);
         }
         catch (Exception e){}
+        return null;
     }
 
     public List<Event> listExecutableEvents()
