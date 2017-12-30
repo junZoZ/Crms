@@ -59,11 +59,11 @@
                   cache: false,
                  contentType : "application/json",
                     dataType: 'json',   //返回值类型
-                    success:function(data1){
-                    if(data1)
+                    success:function(data){
+                    if(data)
                     {
-                      var html = '<tbody class="tableContent"><tr><td>'+data.topic+'</td><td>'+data.groupname+'</td><td>'+data.leader.name+'</td><td>'+data.discussionScore+'</td><td>'+ data.is_submit+'</td><td>'+data.reportScore+'</td><td>'+data.score+'</td><td><a href="TeacherScoreReportPage.html?seminarid='+seminarID+'&groupid='+data.id+'"</a><img src="../../Img/view.png" alt="预览"> <a download="../../abc.rar" href="../../abc.rar"> <img src="../../images/download.png" alt="下载"></a></td></tr></tbody>';
-
+                      setCookie("groupId",item.id);
+                      var html = '<tbody class="tableContent"><tr><td>'+data.topicSerial+'</td><td>'+data.groupName+'</td><td>'+data.leaderName+'</td><td>'+data.presentationGrade+'</td><td>'+ data.submit+'</td><td>'+data.reportGrade+'</td><td>'+data.finalGrade+'</td><td><a href="/teacher/TeacherScoreReportPage" </a><img src="/Img/view.png" alt="预览"> <a download="/abc.rar" href="/abc.rar"> <img src="/images/download.png" alt="下载"></a></td></tr></tbody>';
                           $('#scoreTable').append(html);
                     }
                     },
