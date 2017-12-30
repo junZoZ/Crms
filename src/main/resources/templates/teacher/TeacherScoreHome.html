@@ -62,13 +62,21 @@
                     success:function(data){
                     if(data)
                     {
-                      setCookie("groupId",item.id);
-                      var html = '<tbody class="tableContent"><tr><td>'+data.topicSerial+'</td><td>'+data.groupName+'</td><td>'+data.leaderName+'</td><td>'+data.presentationGrade+'</td><td>'+ data.submit+'</td><td>'+data.reportGrade+'</td><td>'+data.finalGrade+'</td><td><a href="/teacher/TeacherScoreReportPage" </a><img src="/Img/view.png" alt="预览"> <a download="/abc.rar" href="/abc.rar"> <img src="/images/download.png" alt="下载"></a></td></tr></tbody>';
+                      var presentationGrade = data.presentationGrade;
+                      var reportGrade = data.reportGrade;
+                      var finalGrade = data.finalGrade;
+                      if(presentationGrade == null)
+                      { presentationGrade = "暂无";}
+                      if(reportGrade == null)
+                      { reportGrade = "暂无";}
+                      if(finalGrade == null)
+                      { finalGrade = "暂无";}
+                      var html = '<tbody class="tableContent"><tr><td>'+data.topicSerial+'</td><td>'+data.groupName+'</td><td>'+data.leaderName+'</td><td>'+presentationGrade+'</td><td>'+ data.submit+'</td><td>'+reportGrade+'</td><td>'+finalGrade+'</td><td><a onclick=preview('+item.id+')><img src="/Img/view.png" alt="预览"> </a><a download="/abc.rar" href="/abc.rar"> <img src="/images/download.png" alt="下载"></a></td></tr></tbody>';
                           $('#scoreTable').append(html);
                     }
                     },
                     error:function(result){
-                alert();}
+                }
                     });
                     })
                    }
@@ -80,6 +88,11 @@
    function back()
    {
          window.location.href="/teacher/TeacherSeminarInfo";
+   }
+   function preview(id)
+   {
+         setCookie("groupId",id);
+         window.location.href="/teacher/TeacherScoreReportPage";
    }
 
 </script>

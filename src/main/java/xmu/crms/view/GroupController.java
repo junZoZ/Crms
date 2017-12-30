@@ -12,6 +12,7 @@ import xmu.crms.entity.User;
 import xmu.crms.exception.FixGroupNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
+import xmu.crms.mapper.GradeMapper;
 import xmu.crms.service.*;
 import xmu.crms.vo.GroupVO;
 import xmu.crms.vo.IdAndNameVO;
@@ -49,6 +50,8 @@ public class GroupController {
     @Autowired
     private  GradeService gradeService;
 
+    @Autowired
+    private GradeMapper gradeMapper;
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/group/{groupId}",method = RequestMethod.GET)
     @ResponseBody
@@ -97,8 +100,9 @@ public class GroupController {
        seminarGroupGradeVO.setReportGrade(seminarGroup.getReportGrade());
        seminarGroupGradeVO.setFinalGrade(seminarGroup.getFinalGrade());
        seminarGroupGradeVO.setReport(seminarGroup.getReport());
-       if(seminarGroup.getReport() != null){seminarGroupGradeVO.setSubmit("已提交");}
-       else{seminarGroupGradeVO.setSubmit("未提交");}
+
+       if(seminarGroup.getReport().equals("")){seminarGroupGradeVO.setSubmit("未提交");}
+       else{seminarGroupGradeVO.setSubmit("已提交");}
        //处理小组的topic
         String topicSerial = "";
         List<SeminarGroupTopic> seminarGroupTopicList = topicService.listSeminarGroupTopicByGroupId(seminarGroup.getId());
@@ -106,19 +110,22 @@ public class GroupController {
             topicSerial += item.getTopic().getSerial();
             topicSerial += ",";
         }
-        topicSerial = topicSerial.substring(0,topicSerial.length()-2);
+        topicSerial = topicSerial.substring(0,topicSerial.length()-1);
         seminarGroupGradeVO.setTopicSerial(topicSerial);
         return seminarGroupGradeVO;
 
     }
 
 
-
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value="/group/{groupId}/grade/report",method = RequestMethod.PUT)
     @ResponseBody
-    public void index6(@PathVariable ("groupId") Integer groupId, @RequestBody Integer grade) throws IllegalArgumentException,GroupNotFoundException {
+    public void index6(@PathVariable ("groupId") Integer groupId,@RequestBody Integer grade) throws IllegalArgumentException,GroupNotFoundException {
+        System.out.println("jinlaile");
+        System.out.println(grade);
         gradeService.updateGroupByGroupId(new BigInteger(groupId.toString()),new BigInteger(grade.toString()));
+        SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupByGroupId(new BigInteger(groupId.toString()));
+        gradeService.countGroupGradeBySeminarId(seminarGroup.getSeminar().getId());
     }
 //    put  /group/{groupId}/grade/presentation/
 }

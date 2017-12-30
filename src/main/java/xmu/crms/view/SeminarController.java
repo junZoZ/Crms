@@ -1,5 +1,6 @@
 package xmu.crms.view;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -112,6 +113,7 @@ public class SeminarController {
     }
 
     //创建话题POST
+    @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/seminar/{seminarId}/topic",method = RequestMethod.POST)
     @ResponseBody
@@ -121,11 +123,13 @@ public class SeminarController {
         try {
             seminar = seminarService.getSeminarBySeminarId(new BigInteger(seminarId.toString()));
         } catch (SeminarNotFoundException e) {}
+
         topic.setSeminar(seminar);
         topic.setName(topicVO.getName());
         topic.setDescription(topicVO.getDescription());
         topic.setGroupNumberLimit(topicVO.getGroupLimit());
         topic.setGroupStudentLimit(topicVO.getGroupMemberLimit());
+        System.out.println(topic);
         BigInteger topicId = topicService.insertTopicBySeminarId(seminar.getId(),topic);
         return topicId.intValue();
     }

@@ -7,11 +7,11 @@
         DELETE FROM seminar_group_member WHERE seminar_group_id=#{seminarGroupId}
     </delete>
 
-    <delete id="deleteSeminarGroupMemberById" parameterType="SeminarGroupMember" >
+    <delete id="deleteSeminarGroupMemberById" parameterType="xmu.crms.entity.SeminarGroupMember" >
         DELETE FROM seminar_group_member WHERE seminar_group_id=#{seminarGroup.id} AND student_id=#{student.id}
     </delete>
 
-    <insert id="insertSeminarGroupMemberById" parameterType="SeminarGroupMember" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSeminarGroupMemberById" parameterType="xmu.crms.entity.SeminarGroupMember" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO seminar_group_member
         (id,seminar_group_id,student_id)
         VALUES
@@ -56,7 +56,7 @@
         DELETE FROM seminar_group WHERE seminar_id=#{seminarId}
     </delete>
 
-    <insert id="insertSeminarGroupBySeminarId" parameterType="SeminarGroup" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSeminarGroupBySeminarId" parameterType="xmu.crms.entity.SeminarGroup" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO seminar_group
         (id,seminar_id,report_grade,presentation_grade,final_grade,class_id,leader_id)
         VALUES
@@ -70,7 +70,7 @@
 
 
 
-    <insert id="insertSeminarGroupMemberByGroupId" parameterType="SeminarGroupMember" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSeminarGroupMemberByGroupId" parameterType="xmu.crms.entity.SeminarGroupMember" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO seminar_group_member
         (id,seminar_group_id,student_id)
         VALUES
@@ -87,7 +87,7 @@
         WHERE id = #{groupId}
     </select>
 
-    <select id="getSeminarGroupById" parameterType="SeminarGroupMember" resultMap="seminarGroupResultMap">
+    <select id="getSeminarGroupById" parameterType="xmu.crms.entity.SeminarGroupMember" resultMap="seminarGroupResultMap">
         SELECT  seminar_group.id,seminar_group.seminar_id,seminar_group.report_grade,seminar_group.presentation_grade,
         seminar_group.final_grade,seminar_group.report,seminar_group.class_id,seminar_group.leader_id
         From seminar_group_member,seminar_group
@@ -102,14 +102,14 @@
         WHERE seminar_group_topic.topic_id = #{topicId} AND seminar_group_topic.seminar_group_id = seminar_group.id
     </select>
 
-    <insert id="insertTopicByGroupId" parameterType="SeminarGroupTopic" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertTopicByGroupId" parameterType="xmu.crms.entity.SeminarGroupTopic" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO seminar_group_topic
         (id,topic_id,seminar_group_id,presentation_grade)
         VALUES
         (#{id}, #{topic.id}, #{seminarGroup.id}, #{presentationGrade})
     </insert>
 
-    <update id="assignLeaderById"  parameterType="SeminarGroup" >
+    <update id="assignLeaderById"  parameterType="xmu.crms.entity.SeminarGroup" >
         UPDATE  seminar_group
         <set>
             leader_id = #{leader.id},
@@ -125,7 +125,7 @@
         WHERE id = #{seminarGroupId}
     </update>
 
-    <resultMap id="seminarGroupResultMap" type="SeminarGroup">
+    <resultMap id="seminarGroupResultMap" type="xmu.crms.entity.SeminarGroup">
         <id property="id" column="id"/>
         <result property="report" column="report"/>
         <result property="reportGrade" column="report_grade"/>
@@ -136,7 +136,7 @@
         <association property="leader" column="leader_id" select="xmu.crms.mapper.UtilityMapper.selectUser"/>
     </resultMap>
 
-    <resultMap id="userResultMap" type="User">
+    <resultMap id="userResultMap" type="xmu.crms.entity.User">
         <id property="id" column="id"/>
         <result property="phone" column="phone"/>
         <result property="wechatId" column="wechat_id"/>

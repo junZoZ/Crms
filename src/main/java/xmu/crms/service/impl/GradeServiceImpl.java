@@ -7,6 +7,7 @@ import xmu.crms.exception.GroupNotFoundException;
 import xmu.crms.mapper.GradeMapper;
 import xmu.crms.service.GradeService;
 
+import javax.validation.constraints.Null;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -162,57 +163,66 @@ public class GradeServiceImpl implements GradeService {
     @Override
     public void countGroupGradeBySeminarId(BigInteger seminarId) throws IllegalArgumentException {
         //获得百分比
-        BigInteger courseId=gradeMapper.getCourseIdBySeminarId(seminarId);
-        int fivePointPercentage=gradeMapper.getFivePercentageByCourseId(courseId);
-        int fourPointPercentage=gradeMapper.getFourPercentageByCourseId(courseId);
-        int threePointPercentage=gradeMapper.getThreePercentageByCourseId(courseId);
+        BigInteger courseId = gradeMapper.getCourseIdBySeminarId(seminarId);
+        System.out.println(courseId);
+        int fivePointPercentage = gradeMapper.getFivePercentageByCourseId(courseId);
+        int fourPointPercentage = gradeMapper.getFourPercentageByCourseId(courseId);
+        int threePointPercentage = gradeMapper.getThreePercentageByCourseId(courseId);
         //获取所有group的分数
-        List<BigInteger> seminarGroupId=gradeMapper.getSeminarGroupIdBySeminarId(seminarId);
-        int []groupGrade=new int[seminarGroupId.size()];
-        BigInteger []seminarGroupIdArray=new BigInteger[seminarGroupId.size()];
-        int count=0;
+        List<BigInteger> seminarGroupId = gradeMapper.getSeminarGroupIdBySeminarId(seminarId);
+        int[] groupGrade = new int[seminarGroupId.size()];
+        BigInteger[] seminarGroupIdArray = new BigInteger[seminarGroupId.size()];
+        int count = 0;
         for(BigInteger x:seminarGroupId){
-            seminarGroupIdArray[count]=x;
+            if(gradeMapper.getReportGradeBySeminarGroupId(x)==null){
+                return;
+            }
+        }
+        for (BigInteger x : seminarGroupId) {
+            seminarGroupIdArray[count] = x;
             count++;
         }
-        count=0;
-        for (BigInteger x:seminarGroupId){
-            int presentageGrade=gradeMapper.getPresentationGradeBySeminarGroupId(x);
-            int reportGrade=gradeMapper.getReportGradeBySeminarGroupId(x);
-            groupGrade[count]=presentageGrade+reportGrade;
-            count++;
+        count = 0;
+        if (seminarGroupId.size() <= 0) {
+            return ;
         }
-        //冒泡排序分数和seminarGroupId
-        for(int i=0;i<seminarGroupId.size();i++){
-            for (int j=i+1;j<seminarGroupId.size();j++){
-                if(groupGrade[i]<groupGrade[j]){
-                    int temp=groupGrade[i];
-                    groupGrade[i]=groupGrade[j];
-                    groupGrade[j]=temp;
-                    BigInteger temp2=seminarGroupIdArray[i];
-                    seminarGroupIdArray[i]=seminarGroupIdArray[j];
-                    seminarGroupIdArray[j]=temp2;
+        else {
+            for (BigInteger x : seminarGroupId) {
+                int presentageGrade = gradeMapper.getPresentationGradeBySeminarGroupId(x);
+                int reportGrade = gradeMapper.getReportGradeBySeminarGroupId(x);
+                groupGrade[count] = presentageGrade + reportGrade;
+                count++;
+            }
+            //冒泡排序分数和seminarGroupId
+            for (int i = 0; i < seminarGroupId.size(); i++) {
+                for (int j = i + 1; j < seminarGroupId.size(); j++) {
+                    if (groupGrade[i] < groupGrade[j]) {
+                        int temp = groupGrade[i];
+                        groupGrade[i] = groupGrade[j];
+                        groupGrade[j] = temp;
+                        BigInteger temp2 = seminarGroupIdArray[i];
+                        seminarGroupIdArray[i] = seminarGroupIdArray[j];
+                        seminarGroupIdArray[j] = temp2;
+                    }
                 }
             }
-        }
-        int fiveGroup=(int)Math.floor(fivePointPercentage*1.0/100*seminarGroupId.size());
-        int fourGroup=(int)Math.floor(fourPointPercentage*1.0/100*seminarGroupId.size());
-        int threeGroup=seminarGroupId.size()-fiveGroup-fourGroup;
-        fourGroup=fourGroup+fiveGroup;
-        for(int i=0;i<seminarGroupId.size();i++){
-            if(i<fiveGroup){
-                groupGrade[i]=5;
+            int fiveGroup = (int) Math.floor(fivePointPercentage * 1.0 / 100 * seminarGroupId.size());
+            int fourGroup = (int) Math.floor(fourPointPercentage * 1.0 / 100 * seminarGroupId.size());
+            int threeGroup = seminarGroupId.size() - fiveGroup - fourGroup;
+            fourGroup = fourGroup + fiveGroup;
+            for (int i = 0; i < seminarGroupId.size(); i++) {
+                if (i < fiveGroup) {
+                    groupGrade[i] = 5;
+                } else if (i >= fiveGroup && i < fourGroup) {
+                    groupGrade[i] = 4;
+                } else {
+                    groupGrade[i] = 3;
+                }
             }
-            else if(i>=fiveGroup&&i<fourGroup){
-                groupGrade[i]=4;
+            //更新成绩
+            for (int i = 0; i < seminarGroupId.size(); i++) {
+                gradeMapper.updateFinalGradeBySeminarGroupId(seminarGroupIdArray[i], groupGrade[i]);
             }
-            else{
-                groupGrade[i]=3;
-            }
-        }
-        //更新成绩
-        for(int i=0;i<seminarGroupId.size();i++){
-            gradeMapper.updateFinalGradeBySeminarGroupId(seminarGroupIdArray[i],groupGrade[i]);
         }
     }
 }

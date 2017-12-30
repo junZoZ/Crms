@@ -52,7 +52,7 @@
         INSERT INTO topic
         (id, name, serial,description, group_number_limit, group_student_limit, seminar_id)
         VALUES
-        (#{id}, #{serial},#{name}, #{description}, #{groupNumberLimit}, #{groupStudentLimit}, #{seminar.id})
+        (#{id},#{name},#{serial}， #{description}, #{groupNumberLimit}, #{groupStudentLimit}, #{seminar.id})
     </insert>
 
 

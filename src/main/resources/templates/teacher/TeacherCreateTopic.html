@@ -2,28 +2,51 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>创建话题</title>
-    <link rel="stylesheet" href="./bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/teacher/content.css">
-    <link rel="stylesheet" href="../../static/css/teacher/frame.css">
-    <script src="../../static/js/jquery.js"></script>
-    <script src="../../static/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.isotope.min.js"></script>
-    <script src="../../static/js/jquery.inview.min.js"></script>
-    <script src="../../static/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/js/jquery.params.js"></script>
-    <script src="../../static/js/cookie3.js"></script>
-    <script type="text/javascript">
-var seminarid;
-$(function() {
-     seminarid = $.query.get("seminarid");
-    });
- function black(){
-   document.getElementById("name").value="";
-   document.getElementById("description").value="";
-   document.getElementById("groupLimit").value="";
-   document.getElementById("limit").value="";
-    };
+    <title>话题新建</title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/teacher/content.css">
+</head>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.isotope.min.js"></script>
+<script src="/js/jquery.inview.min.js"></script>
+<script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery.params.js"></script>
+<script src="/js/cookie3.js"></script>
+<script type="text/javascript">
+   var courseID = getCookie("courseId");
+   var seminarID = getCookie("seminarId");
+   window.onload=function(){
+    getCourseInformation(courseID);
+     alert(seminarID);
+}
+function black(){
+var bool=confirm("确定要重置吗？");
+       if(bool){topicLoad();}
+
+    }
+
+   //得到课程的基本信息
+    function getCourseInformation(courseID)
+    {
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+courseID,
+        cache: true,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+
+         $("#courseName").html(data.name);
+         $("#courseDescription").html(data.description);
+
+         },
+         error:function(data){
+         }
+         });
+    }
+
+
   function submit(){
    var a={
    "name":$('#name').val(),
@@ -31,7 +54,7 @@ $(function() {
    "groupLimit":$('#groupLimit').val(),
    "groupMemberLimit":$('#limit').val()
   };
-  if(!$('#name').val()||(document.getElementById("description").value=="")||!$('#groupLimit').val()||!$('#groupMemberLimit').val())
+  if(!$('#name').val()||(document.getElementById("description").value=="")||!$('#groupLimit').val()||!$('#limit').val())
   {
   alert("信息未填写完整！");
   }
@@ -39,7 +62,7 @@ $(function() {
   {
   $.ajax({
              type:"POST", //请求方式
-             url:"/seminar/"+seminarid+"/topic", //请求路径
+             url:"/seminar/"+seminarID+"/topic", //请求路径
              cache: false,
              contentType : "application/json",
              data:JSON.stringify(a),
@@ -47,12 +70,12 @@ $(function() {
              success:function(data){
                if(data)
                    {
-                        alert("success!");
-                        window.location.href="TeacherSeminarInfo.html?seminarid="+seminarid;
+                        alert("创建成功!");
+                        window.location.href="/teacher/TeacherTopicCheck";
                    }
              },
              error:function(result){
-                alert();
+                alert("新建失败！请检查数据类型和范围！");
              }
       });
   }
@@ -60,59 +83,59 @@ $(function() {
 
       function goback()
          {
-            window.location.href("TeacherSeminarInfo.html");
+            window.location.href="/teacher/TeacherSeminarInfo";
          }
+
 </script>
-</head>
 <body>
-        <div class="top">
-          <div class="font">
-            课堂管理系统
-          </div>
-          <div class="icon">
-              <a href="TeacherCourseHomePage.html"><img src="../../static/images/home.png">首页</a>
-              <img src="../../static/images/help.png">帮助
-              <a href="../common/WechatLoginPage.html"><img src="../../static/images/exit.png">退出</a>
-          </div>
-          <div class="clear"></div>
-        </div>
-        <div class="body">
-            <div class="navigation">
-                <div class="courseName">OOAD</div>
-                <div class="line"></div>
-                <div class="courseIntroduction">ooad is xxx</div>
-            </div>
-            <div class="content">
-                <div class="block">
-                    <div class="title">讨论课</div>
-                    <div class="returnButton" onclick="goback()">返回上一页</div>
-                    <div class="line"></div>
-                    <div class="itemBody">
-                        <div class="item">
-                          <label class="itemName">题   目 :</label>
-                          <input type="text" name="seminarName" class="bigInput" id="name">
-                        </div>
-                        <div class="item" style="height:40%;">
-                          <label class="itemName">说   明 :</label>
-                          <textarea class="textStyle" id="description" ></textarea>
-                        </div>
-                        <div class="item">
-                          <label class="itemName">组数限制: </label>
-                          <input type="text" name="groupLimit" class="middleInput" id="groupLimit">
-                        </div>
-                        <div class="item">
-                          <label class="itemName">组内人数上限: </label>
-                          <input type="text" name="groupLimit" class="middleInput"  id="limit">
-                        </div>
-                        <div class="item">
-                          <button class="submit" onclick="submit()">提 交</button>
-                          <button class="reset" onclick="black()">重 置</button>
-                          <div class="clear"></div>
-                        </div>
-                    </div>
+<div class="top">
+    <div class="font">
+        课堂管理系统
+    </div>
+    <div class="icon">
+        <a href="/teacher/TeacherCourseHomePage"><img src="/images/home.png">首页</a>
+        <img src="/images/help.png">帮助
+        <a href="/common/WechatLoginPage.html"><img src="/images/exit.png">退出</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="body">
+    <div class="navigation">
+        <div class="courseName" id="courseName"></div>
+        <div class="line"></div>
+        <div class="courseIntroduction" id="courseDescription"></div>
+    </div>
+    <div class="content">
+        <div class="block">
+            <div class="title">新建话题</div>
+            <div class="returnButton" onclick="goback()">返回上一页</div>
+            <div class="line"></div>
+            <div class="itemBody">
+                <div class="item">
+                    <label class="itemName">题   目 :</label>
+                    <input type="text" name="seminarName" class="bigInput" id="name">
+                </div>
+                <div class="item" style="height:40%;">
+                    <label class="itemName">说   明 :</label>
+                    <textarea class="textStyle" id="description" ></textarea>
+                </div>
+                <div class="item">
+                    <label class="itemName">组数限制: </label>
+                    <input type="text" name="groupLimit" class="middleInput" id="groupLimit">
+                </div>
+                <div class="item">
+                    <label class="itemName">组内人数上限: </label>
+                    <input type="text" name="groupLimit" class="middleInput"  id="limit">
+                </div>
+                <div class="item">
+                    <button class="submit" onclick="submit()">提 交</button>
+                    <button class="reset" onclick="black()">重 置</button>
+                    <div class="clear"></div>
                 </div>
             </div>
-            <div class="clear"></div>
         </div>
+    </div>
+    <div class="clear"></div>
+</div>
 </body>
 </html>

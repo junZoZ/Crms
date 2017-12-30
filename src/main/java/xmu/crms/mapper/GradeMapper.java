@@ -7,7 +7,7 @@ import xmu.crms.entity.*;
 import xmu.crms.exception.GroupNotFoundException;
 import xmu.crms.service.GradeService;
 import xmu.crms.service.SeminarGroupService;
-
+import java.lang.*;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -79,11 +79,11 @@ public interface GradeMapper {
      * <p>条件: 讨论课已结束，展示得分已算出<br>*GradeService<br>
      * @throws IllegalArgumentException seminarId或seminarGroupId格式错误
      */
-    int getPresentationGradeBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId);
-    int getReportGradeBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId);
+    Integer getPresentationGradeBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId);
+    Integer getReportGradeBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId);
     BigInteger getCourseIdBySeminarId(@Param("seminarId")BigInteger seminarId);
-    int getFivePercentageByCourseId(@Param("courseId")BigInteger courseId);
-    int getFourPercentageByCourseId(@Param("courseId")BigInteger courseId);
-    int getThreePercentageByCourseId(@Param("courseId")BigInteger courseId);
+    Integer getFivePercentageByCourseId(@Param("courseId")BigInteger courseId);
+    Integer getFourPercentageByCourseId(@Param("courseId")BigInteger courseId);
+    Integer getThreePercentageByCourseId(@Param("courseId")BigInteger courseId);
     void updateFinalGradeBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId,@Param("grade")int grade);
 }
