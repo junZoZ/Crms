@@ -22,7 +22,7 @@
 }
 function black(){
 var bool=confirm("确定要重置吗？");
-       if(bool){topicLoad();}
+       if(bool){window.location.href="/teacher/TeacherCreateTopic";}
 
     }
 
@@ -71,6 +71,7 @@ var bool=confirm("确定要重置吗？");
                if(data)
                    {
                         alert("创建成功!");
+                        setCookie("topicId",data);
                         window.location.href="/teacher/TeacherTopicCheck";
                    }
              },

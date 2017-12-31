@@ -124,6 +124,9 @@ public class SeminarController {
             seminar = seminarService.getSeminarBySeminarId(new BigInteger(seminarId.toString()));
         } catch (SeminarNotFoundException e) {}
 
+        List<Topic> seminarGroupTopicList = topicService.listTopicBySeminarId(seminar.getId());
+        char serial = (char) (seminarGroupTopicList.size() + 'A');
+        topic.setSerial(String.valueOf(serial));
         topic.setSeminar(seminar);
         topic.setName(topicVO.getName());
         topic.setDescription(topicVO.getDescription());
