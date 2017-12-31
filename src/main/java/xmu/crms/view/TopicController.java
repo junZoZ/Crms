@@ -61,8 +61,8 @@ public class TopicController {
     @ResponseBody
     public void index3(@PathVariable ("topicId") Integer topicId,@RequestBody TopicVO topicVO) throws TopicNotFoundException, IllegalArgumentException {
         Topic topic = topicService.getTopicByTopicId(new BigInteger(topicId.toString()));
-        topic.setSerial(topicVO.getSerial());
         topic.setName(topicVO.getDescription());
+        topic.setDescription(topicVO.getDescription());
         topic.setGroupNumberLimit(topicVO.getGroupLimit());
         topic.setGroupStudentLimit(topicVO.getGroupMemberLimit());
         topicService.updateTopicByTopicId(topic.getId(), topic);

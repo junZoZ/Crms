@@ -64,22 +64,22 @@
 	<script src="/js/jquery.params.js"></script>
 	<script src="/js/cookie3.js"></script>
 	<script type="text/javascript">
-   var seminarID = getCookie("seminarId");
-   var groupID = getCookie("courseId");
 
+         var groupID = getCookie("groupId");
+         var seminarID = getCookie("seminarId");
     $(function() {
-         id = $.query.get("groupid");
-         sid=$.query.get("seminarid");
+
+
           $.ajax({
              type:"GET", //请求方式
-             url:"/group/"+id, //请求路径
+             url:"/group/"+groupID, //请求路径
              cache: false,
              contentType : "application/json",
              dataType: 'json',   //返回值类型
              success:function(data){
                if(data)
                    {
-                        $('#name').text("讨论课"+sid);
+                        $('#name').text("讨论课"+seminarID);
                         $('#groupname').text(data.name);
                         $('#leader').text(data.leader.name);
                         $('.body').media({width:1000, height:800,autoplay: true,src: data.report,});
@@ -90,6 +90,7 @@
              }
       });
     });
+
     function sscore(){
     var a=$('#reportGrade').val();
     if(a)
@@ -98,16 +99,17 @@
     {
           $.ajax({
              type:"PUT", //请求方式
-             url:"/group/"+id+"/grade/report", //请求路径
+             url:"/group/"+groupID+"/grade/report", //请求路径
              cache: false,
              contentType : "application/json",
-             data:JSON.stringify(a),
+              data:JSON.stringify(a),
              dataType: 'json',   //返回值类型
              success:function(data){
-                   alert("success!");
-                   window.location.href="TeacherScoreHome.html?seminarid="+sid;
+                   alert("打分成功!");
+                   window.location.href="/teacher/TeacherScoreHome";
              },
              error:function(result){
+
              }
       });
       }
@@ -118,7 +120,7 @@
       }
       else
       {
-      alert("未填写分数！");
+        alert("未填写分数！");
       }
     }
 </script>

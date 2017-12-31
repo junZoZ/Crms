@@ -245,7 +245,7 @@
     </update>
 
 
-    <select id="getPresentationGradeBySeminarGroupId" resultType="int">
+    <select id="getPresentationGradeBySeminarGroupId" resultType="java.lang.Integer">
         SELECT
         presentation_grade
         FROM
@@ -261,7 +261,7 @@
         WHERE
         id=#{seminarId};
     </select>
-    <select id="getFivePercentageByCourseId" resultType="integer">
+    <select id="getFivePercentageByCourseId" resultType="java.lang.Integer">
         SELECT
         five_point_percentage
         FROM
@@ -269,7 +269,7 @@
         WHERE
         id=#{courseId};
     </select>
-    <select id="getFourPercentageByCourseId" resultType="integer">
+    <select id="getFourPercentageByCourseId" resultType="java.lang.Integer">
         SELECT
         four_point_percentage
         FROM
@@ -277,7 +277,7 @@
         WHERE
         id=#{courseId};
     </select>
-    <select id="getThreePercentageByCourseId" resultType="int">
+    <select id="getThreePercentageByCourseId" resultType="java.lang.Integer">
         SELECT
         three_point_percentage
         FROM
@@ -285,7 +285,7 @@
         WHERE
         id=#{courseId};
     </select>
-    <select id="getReportGradeBySeminarGroupId" resultType="int">
+    <select id="getReportGradeBySeminarGroupId" resultType="java.lang.Integer">
         SELECT
         report_grade
         FROM

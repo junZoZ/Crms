@@ -40,7 +40,7 @@ public class TeacherPageController {
     @RequestMapping(value="/TeacherScoreHome")
     public String teacherScoreHome() { return "teacher/TeacherScoreHome"; }
 
-    @RequestMapping(value="/TeacherScoreReprotPage")
+    @RequestMapping(value="/TeacherScoreReportPage")
     public String teacherScoreReportPage() { return "teacher/TeacherScoreReportPage"; }
 
     @RequestMapping(value="/TeacherSeminarInfo")
