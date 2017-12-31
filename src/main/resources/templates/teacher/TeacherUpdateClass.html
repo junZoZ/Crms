@@ -17,40 +17,12 @@
        var courseID=getCookie("courseId");
        //文件路径
         var roster ="";
-        var number = 1;
 
-
-      //为添加时间符号做准备
-      var str =       " <div class=\"item\" >" +
-                        "<label class=\"itemName\">上课时间*:&nbsp;</label> " +
-
-                         "   <select class=\"bigSelect\" id=\"classTime11\"> "+
-						 "   <option value =\"oddWeek\">单周</option> " +
-						 " 	 <option value =\"doubleWeek\">双周</option> " +
-						  "  <option value =\"bothWeek\">单双周</option> " +
-						 "   </select>				   " +
-                         "   <select class=\"smallSelect\" id=\"classTime12\"> "+
-						 "   	<option value =\"monday\">周一</option> " +
-						 " 	<option value =\"tuesday\">周二</option> " +
-						 " 	<option value =\"wednesday\">周三</option> " +
-						 " 	<option value =\"thursday\">周四</option> " +
-						 " 	<option value =\"friday\">周五</option>		 " +
-						 "  </select> " +
-                         "  <select class=\"smallSelect\" id=\"classTime13\"> "+
-						  " 	<option value =\"12\">1-2节</option> " +
-						 " <option value =\"34\">3-4节</option> " +
-						 " <option value =\"56\">5-6节</option> " +
-						 " <option value =\"78\">7-8节</option> " +
-						 " <option value =\"910\">9-10节</option> " +
-						  "  </select>" +
-						  " <button class =\"addButton\" onclick=\"addTime()\">+</button>"+
-						 " </div>";
 
        window.onload=function(){
 
-    $("#timeBlock").html(str);
-    getCourseInformation(courseID);
-    getClassInformation(classID);
+       getCourseInformation(courseID);
+       getClassInformation(classID);
     }
 
 
@@ -77,7 +49,6 @@
          });
     }
 
-
 //得到班级的基本信息
     function getClassInformation(classID)
     {
@@ -93,6 +64,7 @@
 
          $("#name").val(data.name);
          $("#site").val(data.site);
+         $("#time").val(data.time);
          $("#courseDescription").val(data.description);
           roster = data.roster;
           $("#report").val(data.proportions.report);
@@ -100,84 +72,13 @@
           $("#c").val(data.proportions.c);
           $("#b").val(data.proportions.b);
           $("#a").val(data.proportions.a);
-
-
-         //处理时间
-          var time3 = data.time.split(" ");
-
-                if(time3[0] =="单周")
-                    { $("#classTime11").val("oddWeek");}
-                 else if(time3[0] =="双周")
-                   { $("#classTime11").val("doubleWeek");}
-                 else { $("#classTime11").val("bothWeek");}
-
-
-
-                    if(time3[1] =="周一")
-                     { $("#classTime12").val("monday");}
-                    else   if(time3[1] =="周二")
-                     { $("#classTime12").val("tuesday");}
-                      else   if(time3[1] =="周三")
-                     { $("#classTime12").val("wednesday");}
-                      else   if(time3[1] =="周四")
-                     { $("#classTime12").val("thursday");}
-                      else
-                     { $("#classTime12").val("friday");}
-
-                  if(time3[2] =="1-2节")
-                     { $("#classTime13").val("12");}
-                    else  if(time3[2] =="3-4节")
-                     { $("#classTime13").val("34");}
-                    else  if(time3[2] =="5-6节")
-                     { $("#classTime13").val("56");}
-                    else  if(time3[2] =="7-8节")
-                     { $("#classTime13").val("78");}
-                    else
-                     { $("#classTime13").val("910");}
-
-
          },
          error:function(data){
              alert("页面加载错误！");
          }
          });
     }
-     //增加时间
-       //增加时间
-       function  addTime()
-        {
-
-             number = number + 1;
-
-
-                str = str + "    <div class=\"item\" > <label class=\"itemName\">上课时间*:&nbsp;</label> " +
-                         "   <select class=\"bigSelect\" id=\"classTime\"+ number+ \"1\" > "+
-						 "   	<option value =\"oddWeek\">单周</option> " +
-						 " 	    <option value =\"doubleWeek\">双周</option> " +
-						 " 	    <option value =\"bothWeek\">单双周</option> " +
-						 "   </select>				   " +
-                         "   <select class=\"smallSelect\" id=\"classTime\" + number +\"2\"> "+
-						 "   	<option value =\"monday\">周一</option> " +
-						 " 	<option value =\"tuesday\">周二</option> " +
-						 " 	<option value =\"wednesday\">周三</option> " +
-						 " 	<option value =\"thursday\">周四</option> " +
-						 " 	<option value =\"friday\">周五</option>		 " +
-						 "  </select> " +
-                         "  <select class=\"smallSelect\" id=\"classTime\" + number +\"3\"> "+
-						  " <option value =\"12\">1-2节</option> " +
-						 " <option value =\"34\">3-4节</option> " +
-						 " <option value =\"56\">5-6节</option> " +
-						 " <option value =\"78\">7-8节</option> " +
-						 " <option value =\"910\">9-10节</option> " +
-						  "  </select></div>";
-
-
-
-            $("#timeBlock").html(str);
-
-        }
-
-        function submit()
+ function submit()
         {
 
              //判断是否为空()
@@ -194,40 +95,9 @@
              }
              else
              {
-
-                  s = "";
-                  if($('#classTime11').val() =="oddWeek")
-                     { s = s + "单周";}
-                  else if($('#classTime11').val() =="doubleWeek")
-                     { s = s + "双周"; }
-                  else { s = s + "单双周"; }
-
-                   if($('#classTime12').val() =="monday")
-                     { s = s + "周一";}
-                  else if($('#classTime12').val() =="tuesday")
-                     { s = s + "周二"; }
-                  else if($('#classTime12').val() =="wednesday")
-                     { s = s + "周三"; }
-                  else if($('#classTime12').val() =="thursday")
-                     { s = s + "周四"; }
-                  else
-                     { s = s + "周五"; }
-
-                  if($('#classTime13').val() =="12")
-                     { s = s + "1-2节";}
-                  else if($('#classTime13').val() =="34")
-                     { s = s + "3-4节"; }
-                  else if($('#classTime13').val() =="56")
-                     { s = s + "5-6节"; }
-                  else if($('#classTime13').val() =="78")
-                     { s = s + "7-8节"; }
-                  else
-                     { s = s + "9-10节"; }
-
-
-                 var modifyClass ={"name": $('#name').val(),
-                               "site": $('#site').val(),
-                               "time": s,
+                var modifyClass ={"name": $('#name').val(),
+                                   "site": $('#site').val(),
+                                   "time": $('#time').val(),
                                 "proportions": {
                                     "report": $('#report').val(),
                                     "presentation": $('#presentation').val(),
@@ -236,9 +106,7 @@
                                     "a": $('#a').val()
                               }
                  };
-
-
-            $.ajax({
+                  $.ajax({
                type:"PUT",
                url:"/class/"+classID,
                cache: false,
@@ -254,10 +122,10 @@
                }
                });
 
-
         }
 
         }
+
 
         function reset()
      {
@@ -271,7 +139,7 @@
 
          function goback()
          {
-            window.location.href="TeacherClassInfo.html";
+            window.location.href="/teacher/TeacherClassInfo";
          }
     </script>
 </head>
@@ -282,9 +150,9 @@
             课堂管理系统
           </div>
           <div class="icon">
-              <a href="TeacherCourseHomePage.html"><img src="/images/home.png">首页</a>
+              <a href="/teacher/TeacherCourseHomePage"><img src="/images/home.png">首页</a>
               <img src="/images/help.png">帮助
-              <a href="/common/WechatLoginPage.html"><img src="/images/exit.png">退出</a>
+              <a href="/common/WechatLoginPage"><img src="/images/exit.png">退出</a>
           </div>
           <div class="clear"></div>
         </div>
@@ -308,10 +176,10 @@
                           <label class="itemName">上课地点*:&nbsp;</label>
                           <input type="text" id="site" class="bigInput">
                         </div>
-                       <div  id="timeBlock">
-
-
-                       </div>
+                        <div class="item">
+                            <label class="itemName">上课时间*:&nbsp;</label>
+                            <input type="text" id="time" class="bigInput">
+                        </div>
 
                         <div class="item">
                           <label class="itemName">评分规则*:&nbsp;</label>
@@ -321,19 +189,14 @@
                           <input type="text" name="seminarGrade" class="smallInput" id="report">
                         </div>
                         <div class="item" style="margin-left: 20%">
-                          <label class="itemName">5分占比</label>
+                          <label class="itemName">3分占比</label>
                           <input type="text" name="seminarGrade" class="smallInput" id="c">
                           <label class="itemName">&nbsp;&nbsp;4分占比</label>
                           <input type="text" name="seminarGrade" class="smallInput" id="b">
-                          <label class="itemName">&nbsp;&nbsp;3分占比</label>
+                          <label class="itemName">&nbsp;&nbsp;5分占比</label>
                           <input type="text" name="seminarGrade" class="smallInput" id="a">
                         </div>
-                      <div class="item">
-                          <label class="itemName">导入学生名单:</label>
 
-
-                          <button class="selectFile">选择文件</button>
-					  </div>
 
                         <div class="item">
                           <button class="submit" onclick="submit()">提交</button>

@@ -17,15 +17,9 @@
 
     function mody(id)
     {
-       jQuery(document).ready(function($) {
-		$('.theme-popover-mask').fadeIn(100);
-		$('.theme-popover').slideDown(200);
-	    $('.theme-poptit .close').click(function(){
-		$('.theme-popover-mask').fadeOut(100);
-		$('.theme-popover').slideUp(200);
-	})
-    })
-  }
+       setCookie("courseId",id);
+        window.location.href="/teacher/TeacherUpdateCourse";
+    }
 
 
 </script>
@@ -104,7 +98,7 @@
 +"\')\">删除课程</button><button  onclick=\"mody(\'"+item.id
 
 +"\')\">修改课程</button></h3><hr/>"
-              +"<div class=\"classinfo\" ><a  onclick=\"goto("+item.id+")"+"\" style=\"color:black;text-decoration:none\" ><table class=\"table\"><tr><td class=\"tabletext\">班级数："+item.numClass+"</td>  <td class=\"tabletext\">学生人数："+item.numStudent+"</td></tr>"
+              +"<div class=\"classinfo\" ><a  onclick=\"goto("+item.id+")"+"\" style=\"color:black;text-decoration:none\" ><table class=\"table\"><tr><td class=\"tabletext\">班级数："+item.numClass+"</td>  <td class=\"tabletext\"></td></tr>"
                +"<tr><td class=\"tabletext\">开始时间："+item.startTime+"</td>  <td class=\"tabletext\">结束时间:"+item.endTime+"</td></tr></table></a></div></div><br/>";
                     }),
                     tr=tr+"<div class=\"main_box_right_content\" onclick=\"add()\"><img class=\"addcourse\" src=\"../../images/add.png\"></div>"
@@ -158,31 +152,6 @@
         </div>
         </div>
 
-  <!--........ 弹窗........                                         -->
-        <div class="theme-popover">
-            <div class="theme-poptit">
-                <a href="javascript:;" title="关闭" class="close">×</a>
-                <h3 align="center">修改课程</h3>
-            </div>
-            <div class="theme-popbod dform">
-                <form class="theme-signin" name="loginform" >
-                    <ol>
 
-                        <li><strong>课程名称：</strong><input class="myipt1" type="text"  id="courseName"   /></li>
-                        <li><strong>开始时间：</strong><input class="myipt2" type="date"  id="startTime"    /></li>
-                        <li><strong>结束时间：</strong><input class="myipt2" type="date"  id="endTime"   /></li>
-                        <li><strong>课程介绍：</strong><input class="myipt3" type="text"  id="description"  /></li>
-
-                        <div class="dd" >
-                            <li><input class="btn btn-primary" type="submit" name="submit" value=" 提 交 " onclick="modify()"/></li>
-                        </div><div class="dd">
-
-                        <li><input class="btn btn-primary" type="submit" name="reset" value=" 重 置 " /></li>
-                    </div>
-                    </ol>
-                </form>
-            </div>
-        </div>
-        <div class="theme-popover-mask"></div>
 </body>
 </html>

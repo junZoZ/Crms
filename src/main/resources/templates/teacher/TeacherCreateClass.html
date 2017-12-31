@@ -3,14 +3,14 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>创建班级</title>
-    <link rel="stylesheet" href="../../static/css/teacher/content.css" type="text/css" />
+    <link rel="stylesheet" href="/css/teacher/content.css" type="text/css" />
 
-    <script src="../../static/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/js/jquery.js"></script>
-    <script src="../../static/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.isotope.min.js"></script>
-    <script src="../../static/js/jquery.inview.min.js"></script>
-    <script src="../../static/js/cookie3.js"></script>
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/jquery.inview.min.js"></script>
+    <script src="/js/cookie3.js"></script>
 
     <link rel="stylesheet" type="text/css" href="http://sandbox.runjs.cn/uploads/rs/55/sjckzedf/lanrenzhijia.css">
     <link rel="stylesheet" href="bootstrap/bootstrap.css">
@@ -91,40 +91,11 @@ jQuery(document).ready(function($) {
 
 
     <script>
-           //var courseID = ${sessionScope.courseID};
-          var courseID = 12;
-          var number = 1;
-      //为添加时间符号做准备
-        var str =       " <div class=\"item\" >" +
-                        "<label class=\"itemName\">上课时间*:&nbsp;</label> " +
-                         "   <select class=\"bigSelect\" id=\"classTime11\"> "+
-						 "   	<option value =\"oddWeek\">单周</option> " +
-						 " 	    <option value =\"doubleWeek\">双周</option> " +
-						  "     <option value =\"bothWeek\">单双周</option> " +
-						 "   </select>				   " +
-                         "   <select class=\"smallSelect\" id=\"classTime12\"> "+
-						 "   	<option value =\"monday\">周一</option> " +
-						 " 	<option value =\"tuesday\">周二</option> " +
-						 " 	<option value =\"wednesday\">周三</option> " +
-						 " 	<option value =\"thursday\">周四</option> " +
-						 " 	<option value =\"friday\">周五</option>		 " +
-						 "  </select> " +
-                         "  <select class=\"smallSelect\" id=\"classTime13\"> "+
-						  " 	<option value =\"12\">1-2节</option> " +
-						 " <option value =\"34\">3-4节</option> " +
-						 " <option value =\"56\">5-6节</option> " +
-						 " <option value =\"78\">7-8节</option> " +
-						 " <option value =\"910\">9-10节</option> " +
-						  "  </select>" +
-						  " <button class =\"addButton\" onclick=\"addTime()\">+</button>"+
-						 " </div>";
 
-
+       var courseID=getCookie("courseId");
 
 
      window.onload=function(){
-
-     $("#timeBlock").html(str);
 
     getCourseInformation(courseID);
     }
@@ -153,43 +124,11 @@ jQuery(document).ready(function($) {
     }
 
 
-      //增加时间
-       function  addTime()
-        {
-
-             number = number + 1;
-
-            str = str + "    <div class=\"item\" > <label class=\"itemName\">上课时间*:&nbsp;</label> " +
-                         "   <select class=\"bigSelect\" id=\"classTime\"+ number+ \"1\" > "+
-						 "   	<option value =\"oddWeek\">单周</option> " +
-						 " 	    <option value =\"doubleWeek\">双周</option> " +
-						 " 	    <option value =\"bothWeek\">单双周</option> " +
-						 "   </select>				   " +
-                         "   <select class=\"smallSelect\" id=\"classTime\" + number +\"2\"> "+
-						 "   	<option value =\"monday\">周一</option> " +
-						 " 	<option value =\"tuesday\">周二</option> " +
-						 " 	<option value =\"wednesday\">周三</option> " +
-						 " 	<option value =\"thursday\">周四</option> " +
-						 " 	<option value =\"friday\">周五</option>		 " +
-						 "  </select> " +
-                         "  <select class=\"smallSelect\" id=\"classTime\" + number +\"3\"> "+
-						  " 	<option value =\"12\">1-2节</option> " +
-						 " <option value =\"34\">3-4节</option> " +
-						 " <option value =\"56\">5-6节</option> " +
-						 " <option value =\"78\">7-8节</option> " +
-						 " <option value =\"910\">9-10节</option> " +
-						  "  </select></div>";
-
-
-
-            $("#timeBlock").html(str);
-
-        }
 
         function submit()
         {
              //判断是否为空()
-             if($('#name').val() == ""||$('#site').val()== ""||$('#file').val()== ""||$('#report').val()== ""|| $('#presentation').val()== ""||
+             if($('#name').val() == ""||$('#site').val()== ""||$('#time').val()== ""||$('#report').val()== ""|| $('#presentation').val()== ""||
                     $('#c').val()== ""||$('#b').val()== ""||$('#a').val()== ""){
                     alert("带*内容不能为空！");
              }
@@ -202,48 +141,15 @@ jQuery(document).ready(function($) {
              }
              else
              {
-
-
-                  s = "";
-                  if($('#classTime11').val() =="oddWeek")
-                     { s = s + "单周";}
-                  else if($('#classTime11').val() =="doubleWeek")
-                     { s = s + "双周"; }
-                  else { s = s + "单双周"; }
-
-                   if($('#classTime12').val() =="monday")
-                     { s = s + " 周一";}
-                  else if($('#classTime12').val() =="tuesday")
-                     { s = s + " 周二"; }
-                  else if($('#classTime12').val() =="wednesday")
-                     { s = s + " 周三"; }
-                  else if($('#classTime12').val() =="thursday")
-                     { s = s + " 周四"; }
-                  else
-                     { s = s + " 周五"; }
-
-                  if($('#classTime13').val() =="12")
-                     { s = s + " 1-2节";}
-                  else if($('#classTime13').val() =="34")
-                     { s = s + " 3-4节"; }
-                  else if($('#classTime13').val() =="56")
-                     { s = s + " 5-6节"; }
-                  else if($('#classTime13').val() =="78")
-                     { s = s + " 7-8节"; }
-                  else
-                     { s = s + " 9-10节"; }
-
-
-
                  var newClass ={"name": $('#name').val(),
                                "site": $('#site').val(),
-                               "time": s,
+                               "time": $('#time').val(),
                                 "proportions": {
                                     "report": $('#report').val(),
                                     "presentation": $('#presentation').val(),
-                                    "c": $('#c').val(),
+                                    "a": $('#c').val(),
                                     "b": $('#b').val(),
-                                    "a": $('#a').val()
+                                    "c": $('#a').val()
                               }
                  };
 
@@ -258,7 +164,8 @@ jQuery(document).ready(function($) {
                dataType: 'json',   //返回值类型
                success:function(data){
                     alert("提交成功！");
-                    window.location.href="TeacherCourseInformation.html";
+                    setCookie("classId",data);
+                    window.location.href="/teacher/TeacherClassInfo";
                 },
                error:function(result){
                     alert("应该跳转到失败界面！");
@@ -278,9 +185,7 @@ jQuery(document).ready(function($) {
            {
                $('#name').val("");
                $('#site').val("");
-               $('#classTime11').val("oddWeek");
-               $('#classTime12').val("monday");
-                $('#classTime13').val("12");
+               $('#time').val("");
                $('#report').val("");
                $('#presentation').val("");
                $('#c').val("");
@@ -292,7 +197,7 @@ jQuery(document).ready(function($) {
 
              function goback()
          {
-            window.location.href("TeacherCourseInformation.html");
+            window.location.href="/teacher/TeacherCourseInformation";
          }
     </script>
 </head>
@@ -303,9 +208,9 @@ jQuery(document).ready(function($) {
             课堂管理系统
           </div>
           <div class="icon">
-              <a href="TeacherCourseHomePage.html"><img src="../../static/images/home.png">首页</a>
-              <img src="../../static/images/help.png">帮助
-              <a href="../common/WechatLoginPage.html"><img src="../../static/images/exit.png">退出</a>
+              <a href="/teacher/TeacherCourseHomePage"><img src="/images/home.png">首页</a>
+              <img src="/images/help.png">帮助
+              <a href="/common/WechatLoginPage"><img src="/images/exit.png">退出</a>
           </div>
           <div class="clear"></div>
         </div>
@@ -329,8 +234,9 @@ jQuery(document).ready(function($) {
                           <label class="itemName">上课地点*:&nbsp;</label>
                           <input type="text" id="site" class="bigInput">
                         </div>
-                       <div  id="timeBlock">
-
+                       <div  class="item">
+                           <label class="itemName">上课时间*:&nbsp;</label>
+                           <input type="text" id="time" class="bigInput">
 
                        </div>
 
@@ -343,11 +249,11 @@ jQuery(document).ready(function($) {
                           <input type="text" name="seminarGrade" class="smallInput" id="report">
                         </div>
                         <div class="item" style="margin-left: 20%">
-                          <label class="itemName">5分占比</label>
+                          <label class="itemName">3分占比</label>
                           <input type="text" name="seminarGrade" class="smallInput" id="c">
                           <label class="itemName">&nbsp;&nbsp;4分占比</label>
                           <input type="text" name="seminarGrade" class="smallInput" id="b">
-                          <label class="itemName">&nbsp;&nbsp;3分占比</label>
+                          <label class="itemName">&nbsp;&nbsp;5分占比</label>
                           <input type="text" name="seminarGrade" class="smallInput" id="a">
                         </div>
                       <div class="item">

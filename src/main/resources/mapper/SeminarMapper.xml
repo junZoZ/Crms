@@ -35,7 +35,7 @@
                 is_fixed=#{fixed},
             </if>
             <if test="startTime!=null">
-                start_time=#{groupStudentLimit},
+                start_time=#{startTime},
             </if>
             <if test="endTime!=null">
                 end_time=#{endTime},

@@ -12,6 +12,38 @@
     <script src="/js/jquery.inview.min.js"></script>
     <script src="/js/cookie3.js"></script>
     <script>
+    var courseID = getCookie("courseId");
+    window.onload=function(){
+      getCourseInformation();
+    }
+//得到课程的基本信息
+    function getCourseInformation()
+    {
+
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+courseID+"/detail",
+        cache: true,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+        success:function(data){
+
+               $('#name').val(data.name);
+               $('#description').val(data.description);
+               $('#startTime').val(data.startTime);
+               $('#endTime').val(data.endTime);
+               $('#report').val(data.proportions.report);
+               $('#presentation').val(data.proportions.presentation);
+               $('#c').val(data.proportions.c);
+               $('#b').val(data.proportions.b);
+               $('#a').val(data.proportions.a);
+
+         },
+         error:function(data){
+         }
+         });
+    }
 
         function submit()
         {
@@ -43,16 +75,15 @@
                    };
 
             $.ajax({
-               type:"POST",
-               url:"/course",
+               type:"PUT",
+               url:"/course/"+courseID,
                cache: false,
                contentType : "application/json",
                data:JSON.stringify(newCourse),
                dataType: 'json',   //返回值类型
                success:function(data){//person为后台返回的数据，json格式
                     alert("提交成功！");
-                    setCookie("courseId",data);
-                    window.location.href="/teacher/TeacherCourseInformation";
+                    window.location.href="/teacher/TeacherCourseHomePage";
                 },
                error:function(result){
                }
@@ -67,15 +98,7 @@
            var msg = confirm("确认重置？");
            if( msg)
            {
-               $('#name').val("");
-               $('#description').val("");
-               $('#startTime').val("");
-               $('#endTime').val("");
-               $('#report').val("");
-               $('#presentation').val("");
-               $('#c').val("");
-               $('#b').val("");
-               $('#a').val("");
+               getCourseInformation();
            }
 
          }
@@ -105,7 +128,8 @@
     </div>
     <div class="content">
 
-        <div class="title">新建课程</div>
+        <div class="title">修改课程</div>
+        <a href="/teacher/TeacherCourseHomePage" ><div class="returnButton">返回上一页</div></a>
         <hr class="line"/>
 
         <br/>

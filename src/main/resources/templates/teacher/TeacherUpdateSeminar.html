@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>修改讨论课</title>
-    <link rel="stylesheet" href="../../static/css/teacher/content.css" type="text/css" />
+    <link rel="stylesheet" href="/css/teacher/content.css" type="text/css" />
     <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.min.js"></script>
@@ -12,7 +12,7 @@
     <script src="/js/jquery.params.js"></script>
     <script src="/js/cookie3.js"></script>
     <script>
-        var classID= getCookie("classId");
+        var seminarID= getCookie("seminarId");
        var courseID=getCookie("courseId");
 
         window.onload=function(){
@@ -112,7 +112,7 @@ function submit()
                dataType: 'json',   //返回值类型
                success:function(data){
                     alert("提交成功！");
-                    window.location.href="TeacherSeminarInfo.html?seminarid="+seminarID;
+                    window.location.href="/teacher/TeacherSeminarInfo";
                 },
                error:function(result){
                }
@@ -136,7 +136,7 @@ function submit()
 
              function goback()
          {
-            window.location.href("TeacherSeminarInfo.html");
+            window.location.href="/teacher/TeacherSeminarInfo";
          }
 
     </script>
@@ -162,7 +162,7 @@ function submit()
     </div>
     <div class="content">
         <div class="block">
-            <div class="title">创建讨论课</div>
+            <div class="title">修改讨论课</div>
             <div class="returnButton" onclick="goback()">返回上一页</div>
             <div class="line"></div>
             <div class="itemBody">

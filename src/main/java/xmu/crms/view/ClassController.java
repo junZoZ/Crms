@@ -163,6 +163,7 @@ public class ClassController {
     @ResponseBody
     public void ModifyClass(@PathVariable("classId") Integer classId) throws ClassesNotFoundException
     {
+        System.out.println(classId);
         classService.deleteClassByClassId(new BigInteger(classId.toString()));
     }
 

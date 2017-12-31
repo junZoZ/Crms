@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import xmu.crms.dao.SeminarDao;
 import xmu.crms.entity.Course;
 import xmu.crms.entity.Seminar;
+import xmu.crms.entity.SeminarGroup;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.InfoIllegalException;
 import xmu.crms.exception.SeminarNotFoundException;
@@ -52,13 +53,16 @@ public class SeminarServiceImpl implements SeminarService {
             throw new IllegalArgumentException();
         }
         List<Seminar> seminarList = listSeminarByCourseId(courseId);
-        courseService.getCourseByCourseId(courseId);
 
-        //删除seminar的topic
+
         for (Seminar item : seminarList) {
-            topicService.deleteTopicBySeminarId(item.getId());
+            try {
+                deleteSeminarBySeminarId(item.getId());
+            } catch (SeminarNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-        seminarDao.deleteSeminarByCourseId(courseId);
+
     }
 
     @Override
@@ -83,6 +87,11 @@ public class SeminarServiceImpl implements SeminarService {
         if (seminarId.intValue() <= 0) {
             throw new IllegalArgumentException();
         }
+
+        //删除seminarGroup(级联已实现)
+        seminarGroupService.deleteSeminarGroupBySeminarId(seminarId);
+        //删除seminarTopic（Topic的级联删除已经实现）
+        topicService.deleteTopicBySeminarId(seminarId);
         seminarDao.deleteSeminarBySeminarId(seminarId);
     }
 

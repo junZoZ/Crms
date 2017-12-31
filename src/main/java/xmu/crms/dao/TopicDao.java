@@ -85,6 +85,11 @@ public class TopicDao {
         return topicMapper.listSeminarGroupTopicByGroupId(groupId);
     }
 
+    public  List<SeminarGroupTopic> listSeminarGroupTopicByTopicId(BigInteger topicId)
+    {
+        return topicMapper.listSeminarGroupTopicByTopicId(topicId);
+    }
+
     public void deleteTopicBySeminarId(Seminar seminar)
      {
          Integer res=topicMapper.deleteTopicBySeminarId(seminar);

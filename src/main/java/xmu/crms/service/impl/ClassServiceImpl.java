@@ -6,6 +6,7 @@ import xmu.crms.entity.*;
 import xmu.crms.exception.*;
 import xmu.crms.mapper.ClassMapper;
 import xmu.crms.service.ClassService;
+import xmu.crms.service.FixGroupService;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ public class ClassServiceImpl implements ClassService {
 
     @Autowired
     private ClassMapper classMapper;
+
+    @Autowired
+    private FixGroupService fixGroupService;
 
     /**
      * 打分比例的总和。
@@ -116,6 +120,8 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public void deleteClassByClassId(BigInteger classId) throws ClassesNotFoundException {
 
+        fixGroupService.deleteFixGroupByClassId(classId);
+        deleteClassSelectionByClassId(classId);
         if(!classMapper.deleteClassById(classId)) {
             throw new ClassesNotFoundException(String.format("Class with id %d not found!",classId));
         }
@@ -193,12 +199,13 @@ public class ClassServiceImpl implements ClassService {
         // 获取该课程下的所有班级
         List<ClassInfo> classInfoList = classMapper.listClassByCourseId(courseId);
 
-        classInfoList.forEach(e -> {
-            // 删除所有班级的选课记录
-            classMapper.deleteCourseSelectionByClassId(e.getId());
-            // 删除该班级
-            classMapper.deleteClassById(e.getId());
-        });
+        for(ClassInfo item:classInfoList){
+            try {
+                deleteClassByClassId(item.getId());
+            } catch (ClassesNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 

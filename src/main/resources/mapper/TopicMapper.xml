@@ -81,12 +81,20 @@
         WHERE seminar_group_id=#{groupId}
     </select>
 
+    <select id="listSeminarGroupTopicByTopicId"  resultMap="seminarGroupTopicResultMap">
+        SELECT  id,topic_id,seminar_group_id,presentation_grade
+        From seminar_group_topic
+        WHERE topic_id=#{topicId}
+    </select>
+
     <resultMap id="seminarGroupTopicResultMap" type="xmu.crms.entity.SeminarGroupTopic">
         <id property="id" column="id"/>
         <result property="presentationGrade" column="presentation_grade"/>
         <association property="topic"  column="topic_id" select="xmu.crms.mapper.UtilityMapper.selectTopic"/>
         <association property="seminarGroup" column="seminar_group_id" select="xmu.crms.mapper.UtilityMapper.selectSeminarGroup"/>
     </resultMap>
+
+
 
     <resultMap id="topicResultMap" type="xmu.crms.entity.Topic">
         <id property="id" column="id"/>

@@ -102,10 +102,8 @@ public class FixGroupServiceImpl implements FixGroupService {
             fixGroupMapper.deleteFixGroupMemberByFixGroupId(fixGroup.getId());
             fixGroupMapper.deleteFixGroupTopicByGroupId(fixGroup.getId());
         }
-        Boolean res=fixGroupMapper.deleteFixGroupTopicByGroupId(fixGroups.get(0).getId());
-        if(!res){
-            throw new ClassesNotFoundException("");
-        }
+        fixGroupMapper.deleteFixGroupByClassId(classId);
+
     }
 
     @Override

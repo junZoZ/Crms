@@ -66,7 +66,7 @@
 
            var date = new Date();
            var nowDate = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();//获取当前实际日期
-           if(nowDate < data.endTime){
+           if(nowDate <= data.endTime){
                $("#changeButton").html("查看选题");
            }
            else {$("#changeButton").html("评分");
@@ -88,7 +88,7 @@
 
         function gotoScore()
         {
-           if($("#changeButton").html()=="查看选题"){}
+           if($("#changeButton").html()=="查看选题"){window.location.href="/teacher/TeacherCheckRandomGroupTopic";}
            else{window.location.href="/teacher/TeacherScoreHome";}
         }
          //修改实现
@@ -140,7 +140,7 @@
     <div class="icon">
         <a href="/teacher/TeacherCourseHomePage"><img src="/images/home.png">首页</a>
         <img src="/images/help.png">帮助
-        <a href="/common/WechatLoginPage.html"><img src="/images/exit.png">退出</a>
+        <a href="/common/WechatLoginPage"><img src="/images/exit.png">退出</a>
     </div>
     <div class="clear"></div>
 </div>

@@ -61,6 +61,9 @@ public class TeacherPageController {
     @RequestMapping(value="/TeacherUpdateTopic")
     public String teacherUpdateTopic() { return "teacher/TeacherUpdateTopic"; }
 
+    @RequestMapping(value="/TeacherUpdateCourse")
+    public String teacherUpdateCourse() { return "teacher/TeacherUpdateCourse"; }
+
     @RequestMapping(value="/TeacherCheckRandomGroupTopic")
     public String teacherCheckRandomGroupTopic() { return "teacher/TeacherCheckRandomGroupTopic"; }
 }

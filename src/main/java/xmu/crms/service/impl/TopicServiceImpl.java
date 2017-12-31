@@ -8,6 +8,8 @@ import xmu.crms.entity.SeminarGroup;
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 import xmu.crms.exception.TopicNotFoundException;
+import xmu.crms.service.GradeService;
+import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.TopicService;
 
 import java.math.BigInteger;
@@ -22,6 +24,11 @@ public class TopicServiceImpl implements TopicService{
    @Autowired
     private TopicDao topicDao;
 
+    @Autowired
+    private GradeService gradeService;
+
+    @Autowired
+    private SeminarGroupService seminarGroupService;
 
     @Override
     public Topic getTopicByTopicId(BigInteger topicId) throws TopicNotFoundException, IllegalArgumentException {
@@ -50,6 +57,15 @@ public class TopicServiceImpl implements TopicService{
         }
         Topic topic=new Topic();
         topic.setId(topicId);
+        //删除seminarGroupScore的信息
+        List<SeminarGroupTopic> seminarGroupTopicList = topicDao.listSeminarGroupTopicByTopicId(topicId);
+        for(SeminarGroupTopic item:seminarGroupTopicList) {
+            System.out.println(item.getId());
+            gradeService.deleteStudentScoreGroupByTopicId(item.getId());
+        }
+        //删除seminarGroupTopic的信息
+        deleteSeminarGroupTopicByTopicId(topicId);
+        //删除topic的信息
         topicDao.deleteTopicByTopicId(topic);
     }
 
@@ -97,6 +113,7 @@ public class TopicServiceImpl implements TopicService{
         {
             throw new IllegalArgumentException();
         }
+
         topicDao.deleteSeminarGroupTopicByTopicId(topicId);
     }
 
@@ -133,6 +150,15 @@ public class TopicServiceImpl implements TopicService{
         }
         Seminar seminar=new Seminar();
         seminar.setId(seminarId);
-        topicDao.deleteTopicBySeminarId(seminar);
+        List<Topic> topicList = listTopicBySeminarId(seminarId);
+        for(Topic item :topicList){
+            try {
+                deleteTopicByTopicId(item.getId());
+            } catch (TopicNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 }

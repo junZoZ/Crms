@@ -75,6 +75,7 @@ public class CourseController {
         course.setFourPointPercentage(newCourseVO.getProportions().getB());
         course.setThreePointPercentage(newCourseVO.getProportions().getC());
         BigInteger courseId  = courseService.insertCourseByUserId(userId,course);
+
         return courseId.intValue();
     }
 
@@ -83,13 +84,34 @@ public class CourseController {
     @ResponseBody
     public CourseVO CourseDescription(@PathVariable("courseId") Integer courseId)
             throws IllegalArgumentException,CourseNotFoundException {
-//      courseNotFound报500错误
+
         Course course = courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
         CourseVO courseVO = new CourseVO(course.getId(),course.getName(),
                 course.getDescription(),course.getTeacher().getName(),course.getTeacher().getEmail());
         return courseVO;
     }
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value = "/course/{courseId}/detail",method = RequestMethod.GET)
+    @ResponseBody
+    public CourseVO CourseDescriptionDetail(@PathVariable("courseId") Integer courseId)
+            throws IllegalArgumentException,CourseNotFoundException {
 
+        Course course = courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
+        CourseVO courseVO = new CourseVO();
+        ProportionsVO proportionsVO = new ProportionsVO();
+        proportionsVO.setA(course.getFivePointPercentage());
+        proportionsVO.setB(course.getFourPointPercentage());
+        proportionsVO.setC(course.getThreePointPercentage());
+        proportionsVO.setReport(course.getReportPercentage());
+        proportionsVO.setPresentation(course.getPresentationPercentage());
+        courseVO.setProportions(proportionsVO);
+        courseVO.setStartTime(course.getStartDate());
+        courseVO.setEndTime(course.getEndDate());
+        courseVO.setId(course.getId());
+        courseVO.setName(course.getName());
+        courseVO.setDescription(course.getDescription());
+        return courseVO;
+    }
 
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value="/course/{courseId}",method = RequestMethod.PUT)
@@ -142,6 +164,7 @@ public class CourseController {
         ClassInfo classInfo=new ClassInfo();
         Course course=courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
         classInfo.setCourse(course);
+        classInfo.setSite(newClass.getSite());
         classInfo.setName(newClass.getName());
         classInfo.setDescription(newClass.getSite());
         classInfo.setClassTime(newClass.getTime());
