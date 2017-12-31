@@ -3,7 +3,7 @@
 <!--命名空间应该是对应接口的包名+类名 -->
 <mapper namespace="xmu.crms.mapper.UserMapper">
     <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
-    <select id="getUserByUserIdBigInteger" resultType="xmu.crms.entity.User">
+    <select id="getUserByUserIdBigInteger" resultMap="userResultMap">
         SELECT
         id,
         gmt_create,
@@ -35,7 +35,7 @@
         FROM attendance
         WHERE class_id=#{classId} AND seminar_id=#{seminarId} AND student_id=#{userId};
     </select>
-    <select id="listAbsenceStudent" resultType="xmu.crms.entity.User">
+    <select id="listAbsenceStudent" resultMap="userResultMap">
         SELECT
         id,
         gmt_create,
@@ -97,7 +97,7 @@
         FROM course
         Where teacher_id in(SELECT id FROM user_info WHERE name=#{userName}AND type=1);
     </select>
-    <select id="listLateStudent" resultType="xmu.crms.entity.User">
+    <select id="listLateStudent" resultMap="userResultMap">
         SELECT
         id,
         gmt_create,
@@ -119,7 +119,7 @@
         WHERE id IN
         (SELECT student_id FROM attendance WHERE class_id=#{classId} AND seminar_id=#{seminarId} AND attendance_status=1);
     </select>
-    <select id="listPresentStudent" resultType="xmu.crms.entity.User">
+    <select id="listPresentStudent" resultMap="userResultMap">
         SELECT
         id,
         gmt_create,
@@ -142,7 +142,7 @@
         (SELECT student_id FROM attendance WHERE class_id=#{classId}
         AND seminar_id=#{seminarId} AND attendance_status=0);
     </select>
-    <select id="listUserByClassId" resultType="xmu.crms.entity.User">
+    <select id="listUserByClassId" resultMap="userResultMap">
         SELECT
         id,
         gmt_create,
@@ -163,7 +163,8 @@
         FROM user_info
         WHERE id IN(SELECT student_id from attendance WHERE class_id=#{classId} AND name LIKE #{nameBeginWith} AND number LIKE #{numBeginWith});
     </select>
-    <select id="listUserByUserName" resultType="xmu.crms.entity.User">
+
+    <select id="listUserByUserName" resultMap="userResultMap">
         SELECT
         id,
         gmt_create,
@@ -219,4 +220,36 @@
         FROM location
         WHERE class_id=#{classId} AND seminar_id=#{seminarId};
     </select>
+    <resultMap id="userResultMap" type="xmu.crms.entity.User">
+
+    <id column="id" property="id"/>
+
+    <result column="phone" property="phone"/>
+
+    <result column="wechat_id" property="wechatId"/>
+
+    <result column="openid" property="openid"/>
+
+    <result column="avatar" property="avatar"/>
+
+    <result column="password" property="password"/>
+
+    <result column="name" property="name"/>
+
+    <result column="gender" property="gender"/>
+
+    <result column="type" property="type"/>
+
+    <result column="number" property="number"/>
+
+    <result column="education" property="education"/>
+
+    <result column="title" property="title"/>
+
+    <result column="email" property="email"/>
+
+    <association column="school_id" property="school" select="xmu.crms.mapper.UtilityMapper.selectSchool"/>
+
+</resultMap>
+
 </mapper>

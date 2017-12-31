@@ -192,6 +192,25 @@ public class SeminarController {
 //    get seminar/{seminarId}/class/{classId}/attendence/absent
 //    put seminar/{seminarId}/class/{classId}/attendence/{studentId}
 
+    @ResponseStatus(value= HttpStatus.OK)
+    @RequestMapping(value = "/seminar/{seminarId}/randomTopic",method = RequestMethod.GET)
+    @ResponseBody
+    public List<TopicVO> CheckRandomGroup(@PathVariable("seminarId") Integer seminarId){
+        List<Topic> listTopic=topicService.listTopicBySeminarId(new BigInteger(seminarId.toString()));
+        List<TopicVO> listTopicVO=new ArrayList<>(16);
+        for(Topic item:listTopic)
+        {
+            TopicVO topicVO=new TopicVO();
+            topicVO.setSerial(item.getSerial());
+            topicVO.setName(item.getName());
+            List<SeminarGroup> listGroupVO=new ArrayList<>(16);
+            listGroupVO=seminarGroupService.listGroupByTopicId(item.getId());
+            topicVO.setGroups((ArrayList<SeminarGroup>) listGroupVO);
+            listTopicVO.add(topicVO);
+        }
+
+        return listTopicVO;
+    }
     }
 
 

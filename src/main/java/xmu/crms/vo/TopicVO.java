@@ -1,5 +1,10 @@
 package xmu.crms.vo;
 
+import xmu.crms.entity.Seminar;
+import xmu.crms.entity.SeminarGroup;
+
+import java.util.ArrayList;
+
 public class TopicVO {
 
     Integer id;
@@ -9,6 +14,7 @@ public class TopicVO {
     Integer groupLimit;
     Integer groupMemberLimit;
     Integer groupLeft;
+    ArrayList<SeminarGroup> groups;
 
     public TopicVO() {
     }
@@ -69,16 +75,13 @@ public class TopicVO {
         this.groupLeft = groupLeft;
     }
 
-    @Override
-    public String toString() {
-        return "TopicVO{" +
-                "id=" + id +
-                ", serial='" + serial + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", groupLimit=" + groupLimit +
-                ", groupMemberLimit=" + groupMemberLimit +
-                ", groupLeft=" + groupLeft +
-                '}';
+    public ArrayList<SeminarGroup> getGroups() {
+        return groups;
     }
+
+    public void setGroups(ArrayList<SeminarGroup> groups) {
+        this.groups = groups;
+    }
+
+
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import xmu.crms.entity.School;
 import xmu.crms.entity.User;
 import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.security.auth.JwtService;
@@ -41,19 +42,45 @@ public class MeController {
         u1.setId(u.getId().intValue());
         u1.setName(u.getName());
         if(u.getType()==1)
-            u1.setType("teacher");
+        {u1.setType("teacher");}
         else
-            u1.setType("student");
+        { u1.setType("student");}
         u1.setNumber(u.getNumber());
         u1.setPhone(u.getPhone());
         u1.setEmail(u.getEmail());
         if(u.getGender()==1)
-            u1.setGender("female");
+        {u1.setGender("female");}
         else
-            u1.setGender("male");
-        u1.setTitle(u.getTitle().toString());
+        {u1.setGender("male");}
+        if(u.getTitle()==null)
+        {
+            u1.setTitle(" ");
+        }
+        else if(u.getTitle()!=null&&u.getTitle().toString()=="0")
+        {
+            u1.setTitle("本科生");
+        }
+        else
+        {
+            u1.setTitle("教职工");
+        }
+        if(u.getAvatar()==null)
+        {
+            u.setAvatar("");
+        }
         u1.setAvatar(u.getAvatar());
-        return new UserVO();
+
+        SchoolVO schoolVO=new SchoolVO();
+        if(u.getSchool()!=null)
+        {
+            schoolVO.setId(u.getSchool().getId().intValue());
+            schoolVO.setName(u.getSchool().getName());
+            schoolVO.setCity(u.getSchool().getCity());
+            schoolVO.setProvince(u.getSchool().getProvince());
+            u1.setSchool(schoolVO);
+        }
+
+        return u1;
     }
     SchoolVO school;
     String jwt ;

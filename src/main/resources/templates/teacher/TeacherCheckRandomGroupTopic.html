@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>教师课程首页</title>
+    <link rel="stylesheet" href="/css/teacher/TeacherCourseInformation.css" type="text/css" />
+
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/jquery.inview.min.js"></script>
+    <script src="/js/jquery.params.js"></script>
+    <script src="/js/cookie3.js"></script>
+    <script>
+
+        var courseID = getCookie("courseId");
+        window.onload=function(){
+
+            getCourseInformation(courseID);
+            getTopics("2");
+
+        }
+
+        function getTopics(seminarID)
+        {
+            $.ajax({
+                type:"GET", //请求方式
+                url: "/seminar/"+seminarID+"/randomTopic",
+                cache: false,   //如果使用缓存
+                contentType : "application/json",
+                dataType: 'json',   //返回值类型
+                success:function(data){
+                    str="";
+                    if(data){
+                        $.each(data,function(i,item){
+                            str = str + "<div class=\"seminarInfo\">"
+                                + "<div class=\"title\">" + item.name + "</div>"
+                                + "<div class=\"line\"></div><div class=\"blockBody\" id=\"classBody\">" ;
+                            $.each(item.groups,function(i,item2) {
+                                    str=str + "<a class=\"block\"><div class=\"blockFont\"> "+item2.leader.name+"的小组</div></a>"
+                            })
+                            str=str+"</div></div>";
+                        });
+                    }
+
+                    $("#content").html(str);
+                },
+
+                error:function(result){
+                    alert("页面加载错误！");
+                }
+            });
+        }
+
+        //得到课程的基本信息
+        function getCourseInformation(courseID)
+        {
+
+            $.ajax({
+                type:"GET", //请求方式
+                url: "/course/"+courseID,
+                cache: true,   //如果使用缓存
+                contentType : "application/json",
+                dataType: 'json',   //返回值类型
+
+                success:function(data){
+
+                    $("#courseName").html(data.name);
+                    $("#courseDescription").html(data.description);
+
+                },
+                error:function(data){
+                }
+            });
+        }
+        function goback()
+        {
+            window.location.href="/teacher/TeacherTopicCheck";
+        }
+
+
+
+    </script>
+</head>
+<body>
+<div class="top">
+    <div class="font">
+        课堂管理系统
+    </div>
+    <div class="icon">
+        <a href="/teacher/TeacherCourseHomePage.html"><img src="/images/home.png">首页</a>
+        <img src="/images/help.png">帮助
+        <a href="/common/WechatLoginPage"><img src="/images/exit.png">退出</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="body">
+    <div class="navigation">
+        <div class="courseName"  id="courseName" ></div>
+        <div class="line"></div>
+        <div class="courseDescription"  id="courseDescription"></div>
+    </div>
+
+    <div class="content" >
+            <button  class="returnButton" onclick="goback()">返回上一页</button>
+        <div id="content"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+</body>
+</html>
