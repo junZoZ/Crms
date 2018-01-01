@@ -61,9 +61,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private boolean comparePassword(String input, String trusted) {
         try {
-            System.out.println(input);
+            System.out.println(md5Hex(input).substring(8,24));
             System.out.println(trusted);
-            return md5Hex(input).equals(trusted);
+            return md5Hex(input).substring(8,24).equals(trusted);
         } catch (Exception e){
             return false;
         }

@@ -1,19 +1,18 @@
 package xmu.crms.view;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import xmu.crms.entity.SeminarGroup;
-import xmu.crms.entity.SeminarGroupTopic;
-import xmu.crms.entity.Topic;
-import xmu.crms.entity.User;
+import xmu.crms.entity.*;
 import xmu.crms.exception.FixGroupNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.mapper.GradeMapper;
 import xmu.crms.service.*;
+import xmu.crms.vo.CourseVO;
 import xmu.crms.vo.GroupVO;
 import xmu.crms.vo.IdAndNameVO;
 import xmu.crms.vo.SeminarGroupGradeVO;
@@ -76,7 +75,18 @@ public class GroupController {
 //    put /group/{groupId}/assign
 //    put /group/{groupId}/add
 //    put /group/{groupId}/remove
-//      post /fixGroup/{groupID}/topic
+//      post /Group/{groupID}/topic
+
+
+    @ResponseStatus(value= HttpStatus.CREATED)
+    @RequestMapping(value="/Group/{groupID}/topic/{topicID}",method = RequestMethod.POST)
+    public void NewCourse(@PathVariable ("groupID") Integer groupId,@PathVariable ("topicID") Integer topicId) throws GroupNotFoundException {
+
+        SeminarGroupTopic seminarGroupTopic = new SeminarGroupTopic();
+        seminarGroupService.insertTopicByGroupId(new BigInteger(groupId.toString()),new BigInteger(topicId.toString()));
+
+    }
+
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/fixGroup/{groupID}/seminar/{seminarID}/topic",method = RequestMethod.GET)
     public void FixGrouptopicChoose(@PathVariable("groupID") Integer groupId,@PathVariable("seminarID") Integer seminarId)

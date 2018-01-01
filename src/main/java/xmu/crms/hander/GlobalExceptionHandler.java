@@ -55,13 +55,14 @@ public class GlobalExceptionHandler {
         ExceptionResponse response=new  ExceptionResponse("话题没有找到！");
         return response;
     }
-    @ExceptionHandler(value = UserNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ExceptionResponse UserNotFoundExceptionHandler()
-    {
-        ExceptionResponse response=new  ExceptionResponse("用户没有找到！");
-        return response;
-    }
+
+//    @ExceptionHandler(value = UserNotFoundException.class)
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    public ExceptionResponse UserNotFoundExceptionHandler()
+//    {
+//        ExceptionResponse response=new  ExceptionResponse("用户没有找到！");
+//        return response;
+//    }
 
     @ExceptionHandler(value = InvalidOperationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

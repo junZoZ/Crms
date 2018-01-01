@@ -73,35 +73,12 @@ public class UserDetailsServiceImpl implements xmu.crms.security.auth.UserDetail
 
         User users=new User();
         users.setPhone(phone);
-        User user =new User();//loginService.getUserByPhone(phone);
-        user.setId(new BigInteger("5"));
-        user.setPhone("5152");
-        try {
-            user.setPassword(md5Hex("2321312"));
-        } catch (NoSuchAlgorithmException e) {
-        }
-        user.setType(0);
-        user.setName("dasdas");
+        User user =loginService.getUserByPhone(phone);
 
         if (user == null) {
             throw new UsernameNotFoundException("");
         }
         return user;
-    }
-    private String md5Hex(String input) throws NoSuchAlgorithmException {
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        byte[] res = md5.digest(input.getBytes());
-        return toHex(res);
-    }
-    private  String toHex(byte[] bytes) {
-
-        final char[] HEX_DIGITS = "0123456789ABCDEF".toCharArray();
-        StringBuilder ret = new StringBuilder(bytes.length * 2);
-        for (int i=0; i<bytes.length; i++) {
-            ret.append(HEX_DIGITS[(bytes[i] >> 4) & 0x0f]);
-            ret.append(HEX_DIGITS[bytes[i] & 0x0f]);
-        }
-        return ret.toString();
     }
     /**
      * 获取 open id

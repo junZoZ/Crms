@@ -75,6 +75,7 @@ public interface LoginService {
 	 */
 	void deleteStudentAccount(BigInteger userId) throws IllegalArgumentException,
 			UserNotFoundException;
-	
-	
+
+	User getUserByPhone(String  phone) ;
+
 }

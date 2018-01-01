@@ -23,7 +23,14 @@
     INSERT INTO user_info(phone, password,name,school_id,gender,type,number,email)
         VALUES (#{user.phone},#{user.password},#{user.name},#{user.school.id},#{user.gender},#{user.type},#{user.number},#{user.email});
     </insert>
-    
+
+
+    <select id="getUserByPhone"  resultType="xmu.crms.entity.User">
+    SELECT
+    id, phone, wechat_id,openid,avatar,password,name,school_id,gender,type,number,education,title,email
+    FROM user_info
+    WHERE phone = #{phone};
+    </select>
 
     <delete id="deleteTeacherAccount"  >
         DELETE 

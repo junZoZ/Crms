@@ -65,6 +65,12 @@ public class LoginServiceImpl implements LoginService{
 		loginMapper.deleteStudentAccount(userId);
 	}
 
-	
+	@Override
+	public User getUserByPhone(String  phone)
+	{
+		User user=loginMapper.getUserByPhone(phone);
+		return  user;
+	}
+
 
 }

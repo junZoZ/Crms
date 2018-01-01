@@ -49,13 +49,17 @@ function getClass()
 }
 
 function Del(id)
- {   var msg=confirm("确定要退课吗？");
-     var userId=localStorage.get("userId")
-   if(msg==1)
+ {
+   var token = localStorage.getItem("jwt")
+  var msg=confirm("确定要退课吗？");
+     var userId=localStorage.getItem("userId")
+
+   if(msg)
    {
    $.ajax({
 		     type:"DELETE", //请求方式
 			 url: "/class/"+id+"/student/"+userId,
+			   headers: {"Authorization": "Bearer " + token},
              cache: false,   //如果使用缓存
              contentType : "application/json",
              dataType: 'json',   //返回值类型
@@ -64,6 +68,7 @@ function Del(id)
                  },
 
                 error:function(result){
+                alert("fidgo");
                 }
          });
    }

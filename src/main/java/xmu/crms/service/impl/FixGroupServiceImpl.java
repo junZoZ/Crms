@@ -178,7 +178,7 @@ public class FixGroupServiceImpl implements FixGroupService {
         if(list.isEmpty()){
             throw new UserNotFoundException("");
         }
-        List<FixGroup> list1=fixGroupMapper.listFixGroupById(list.get(0).getFixGroup().getId());
+        List<FixGroup> list1 = fixGroupMapper.listFixGroupById(list.get(0).getFixGroup().getId());
 
         for(FixGroup temp:list1){
             if(temp.getClassInfo().getId().intValue()==classId.intValue()){

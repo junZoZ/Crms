@@ -55,12 +55,14 @@
 
     function cho(id)
     {
+    var token = localStorage.getItem("jwt")
      var msg=confirm("是否要选择此门课？");
    if(msg==1)
    {
     $.ajax({
         type:"POST", //请求方式
         url: "/class/"+id+"/student",
+            headers: {"Authorization": "Bearer " + token},
         cache: true,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型

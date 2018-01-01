@@ -39,28 +39,28 @@
         if (!$('#phone').val() || !$('#password').val()) {
             alert("账号密码不能为空!");
         }
-        else if (!myreg.test($("#phone").val())) {
-            alert('请输入有效的手机号码！');
-        }
+
         else
         {
             $.ajax({
                 type: "POST", //请求方式
-                url: "/signin", //请求路径
+                url: "/login", //请求路径
                 cache: false,
                 contentType: "application/json",
                 data: JSON.stringify(u),
                 dataType: 'json',   //返回值类型
                 success: function (data) {
                     if (data) {
+                      localStorage.setItem("jwt", data.jwt)
+                      localStorage.setItem("userId", data.id)
                         if (data.type == "student")
-                            location.href = '/student/StudentBindPage';
+                            location.href = '/student/StudentHomePage';
                         if (data.type == "teacher")
-                            location.href = '/teacher/TeacherBindPage';
+                            location.href = '/teacher/TeacherHomePage';
                     }
                 },
                 error: function (result) {
-
+                    alert("用户名或者密码错误！");
                 }
             });
         }

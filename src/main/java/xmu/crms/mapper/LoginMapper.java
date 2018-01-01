@@ -79,4 +79,5 @@ public interface LoginMapper {
      */
 	void deleteStudentAccount(@Param(value = "userId") BigInteger userId);
 
+	User getUserByPhone(@Param(value = "phone") String  phone) ;
 }
