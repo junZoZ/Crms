@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -58,18 +59,21 @@
         dataType: 'json',   //返回值类型
 
         success:function(data){
-               var presentationGrade = item.presentationGrade;
-               var reportGrade = item.reportGrade;
-               var grade = item.grade;
+
                str = "<table class=\"studenttable\"> <tr>  <th>讨论课</th> <th>组名</th> <th>组长</th>  <th>课堂讨论课得分</th> <th>报告分数</th>  <th>总分</th>  </tr>";
                 $.each(data,function(i,item){
-
+                var presentationGrade = item.presentationGrade;
+                var reportGrade = item.reportGrade;
+                var grade = item.grade;
+                if(presentationGrade == null)presentationGrade = "暂无";
+                if(reportGrade == null)reportGrade = "暂无";
+                if(grade == null)grade = "暂无";
                 if(i%2 != 0)
                     { str=str+" <tr>  <td>" +item.seminarName +"</th> <td>"+ item.groupName +"</td> <td>"+ item.leaderName+"</td> "+
-                  " <td>"+item.presentationGrade+ "</td> <td>"+item.reportGrade+"</td>  <td>"+ item.grade+"</td>  </tr>";}
+                  " <td>"+presentationGrade+ "</td> <td>"+reportGrade+"</td>  <td>"+ grade+"</td>  </tr>";}
                 else
                   { str=str+" <tr class=\"alt\">  <td>" +item.seminarName +"</td> <td>"+ item.groupName +"</td> <td>"+ item.leaderName+"</td> "+
-                  " <td>"+item.presentationGrade+"</td> <td>"+item.reportGrade+"</td>  <td>"+ item.grade+"</td>  </tr>";}
+                  " <td>"+presentationGrade+"</td> <td>"+reportGrade+"</td>  <td>"+ grade+"</td>  </tr>";}
 
 			    });
 
