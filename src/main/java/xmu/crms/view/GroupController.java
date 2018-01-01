@@ -89,7 +89,7 @@ public class GroupController {
 
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/fixGroup/{groupID}/seminar/{seminarID}/topic/{topicID}",method = RequestMethod.POST)
-    public void FixGrouptopicChoose(@PathVariable("groupID") Integer groupId,@PathVariable("seminarID") Integer seminarId,
+    public Integer FixGrouptopicChoose(@PathVariable("groupID") Integer groupId,@PathVariable("seminarID") Integer seminarId,
                                     @PathVariable ("topicID") Integer topicId,@RequestAttribute("userId") String userId) throws FixGroupNotFoundException, SeminarNotFoundException {
        System.out.println("fgidogdof");
        BigInteger groupeID = new BigInteger("0");
@@ -97,14 +97,26 @@ public class GroupController {
        //先确定这个组不存在seminarGroup中
         try {
             seminarGroup = seminarGroupService.getSeminarGroupById(new BigInteger(seminarId.toString()),new BigInteger(userId));
-        } catch (GroupNotFoundException e) {
+        } catch (GroupNotFoundException e) { System.out.println("fg854444444444");
             groupeID =  fixGroupService.fixedGroupToSeminarGroup(new BigInteger(seminarId.toString()),new BigInteger(groupId.toString()));}
-        if(seminarGroup!=null && seminarGroup.getId() == null)  {groupeID = seminarGroup.getId();}
-        try {
-            seminarGroupService.insertTopicByGroupId(groupeID,new BigInteger(topicId.toString()));
-        } catch (GroupNotFoundException e) {
-            e.printStackTrace();
-        }
+        if(seminarGroup!=null && seminarGroup.getId() != null)  {groupeID = seminarGroup.getId();}
+        System.out.println(groupeID);
+
+        if(groupeID.intValue()!=0  ){
+
+                SeminarGroupTopic seminarGroup1 = topicService.getSeminarGroupTopicById(new BigInteger(topicId.toString()),groupeID);
+
+                if(seminarGroup1 == null){
+                try {
+
+                    seminarGroupService.insertTopicByGroupId(groupeID,new BigInteger(topicId.toString()));
+                    return groupeID.intValue();
+                } catch (GroupNotFoundException e1) {
+                    System.out.println("fg877777777");
+                }
+            }}
+
+       return  null;
     }
 
 //    delete  /group/{groupId}/topic/{topicId}

@@ -253,6 +253,7 @@ public class FixGroupServiceImpl implements FixGroupService {
             }
         }
         fixGroupMapper.deleteFixGroupTopicByGroupId(fixedGroupId);
+        System.out.println(seminarGroup.getId()+"ghfghfghg");
         return seminarGroup.getId();
     }
 }
