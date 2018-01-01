@@ -15,6 +15,8 @@ import xmu.crms.entity.SeminarGroup;
 import xmu.crms.entity.SeminarGroupMember;
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.User;
+import xmu.crms.vo.FixedGroupLeaderVO;
+import xmu.crms.vo.FixedGroupVO;
 
 @Mapper
 @Component
@@ -181,5 +183,10 @@ public interface FixGroupMapper {
      * @return 查询结果
      */
     List<ClassInfo> listClassById(BigInteger classId);
-
+    /**
+     * 向fixgroup,fixgroupmember表中插入记录
+     * @param fixedGroupLeaderVO 记录信息
+     * @return 是否成功
+     */
+    boolean insertNewFixGroupStudent(@Param("fixedGroupLeader") FixedGroupLeaderVO fixedGroupLeaderVO);
 }

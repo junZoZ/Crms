@@ -30,6 +30,7 @@
     var courseID=getCookie("courseId");
     var classID=getCookie("classId");
    window.onload=function(){
+  $(document.getElementById("create")).hide();
    getCourseInformation(courseID);
    load(classID);
    }
@@ -55,16 +56,25 @@
          });
     }
     function load(id){
+      var userId=localStorage.getItem("userId")
+      var token = localStorage.getItem("jwt")
       $.ajax({
              type:"GET", //请求方式
              url:"/class/"+id+"/classgroup", //请求路径
+             headers: {"Authorization": "Bearer " + token},
              cache: false,
              contentType : "application/json",
              dataType: 'json',   //返回值类型
              success:function(data){
-               if(data)
+               if(data&&data.leader.id==userId)
                    {
-                   var html='<tr><td>队长</td><td>'+data.leader.number+'</td> <td>'+data.leader.name+'</td> </tr>';
+                   setCookie("fixgroupId",data.id);
+                    }
+                    else if(data&&data.leader.id!=userId)
+                    {
+                      $(document.getElementById("modify")).hide();
+                    }
+                    var html='<tr><td>队长</td><td>'+data.leader.number+'</td> <td>'+data.leader.name+'</td> </tr>';
                    $('#studenttable').append(html);
                     $.each(data.user,function(i,item){
                     if(i%2==0)
@@ -73,10 +83,32 @@
                      {html='<tr><td>队员</td><td>'+item.number+'</td> <td>'+item.name+'</td> </tr>';}
                           $('#studenttable').append(html);
                           });
-                    }
              },
-                    error:function(result){alert("123");}
+                    error:function(result){
+                              $(document.getElementById("modify")).hide();
+                               $(document.getElementById("create")).show();
+                    }
       }); }
+      function goCreate()
+    {
+      var userId=localStorage.getItem("userId")
+      var token = localStorage.getItem("jwt")
+      $.ajax({
+             type:"POST", //请求方式
+             url:"/class/"+classID+"/newleader", //请求路径
+             headers: {"Authorization": "Bearer " + token},
+             cache: false,
+             contentType : "application/json",
+             dataType: 'json',   //返回值类型
+             success:function(data){
+                      alert("新建成功，你成为组长！");
+                      load(classID);
+            },
+             error:function(result){
+                            alert("1");
+                    }
+            });
+      }
 </script>
 
 </head>
@@ -112,7 +144,8 @@
                         </div>
 						<div class="itemBody">
 						  <div class="item">
-						<button class="modifyButton" onclick="gonext()"> 修改 </button>
+						<button class="modifyButton" onclick="gonext()" id="modify"> 修改 </button>
+                              <button class="modifyButton" onclick="goCreate()" id="create"> 创建 </button>
 						</div>
 					</div>
 					</div>

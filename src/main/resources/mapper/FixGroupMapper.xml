@@ -32,7 +32,11 @@
         seminar_group_topic(topic_id, seminar_group_id)
         VALUES (#{seminarGroupTopic.topic.id},#{seminarGroupTopic.seminarGroup.id})
     </insert>
-
+    <insert id="insertNewFixGroupStudent" keyProperty="fixedGroupLeader.id" useGeneratedKeys="true">
+        INSERT INTO
+        fix_group(class_id,leader_id)
+        VALUES (#{fixedGroupLeader.classId},#{fixedGroupLeader.leader.id})
+    </insert>
 
     <update id="updateFixGroupByGroupId">
         update fix_group

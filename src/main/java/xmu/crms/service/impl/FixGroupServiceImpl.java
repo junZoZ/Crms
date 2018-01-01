@@ -6,6 +6,8 @@ import xmu.crms.entity.*;
 import xmu.crms.exception.*;
 import xmu.crms.mapper.FixGroupMapper;
 import xmu.crms.service.FixGroupService;
+import xmu.crms.vo.FixedGroupLeaderVO;
+import xmu.crms.vo.UserVO;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -254,5 +256,16 @@ public class FixGroupServiceImpl implements FixGroupService {
         }
         fixGroupMapper.deleteFixGroupTopicByGroupId(fixedGroupId);
         return seminarGroup.getId();
+    }
+
+    @Override
+    public BigInteger insertNewFixGroupStudent(BigInteger classId, BigInteger userId) {
+        FixedGroupLeaderVO fixedGroupLeaderVO=new FixedGroupLeaderVO();
+        fixedGroupLeaderVO.setClassId(classId);
+        UserVO leader=new UserVO();
+        leader.setId(userId.intValue());
+        fixedGroupLeaderVO.setLeader(leader);
+       boolean bigInteger = fixGroupMapper.insertNewFixGroupStudent(fixedGroupLeaderVO);
+       return  fixedGroupLeaderVO.getId();
     }
 }

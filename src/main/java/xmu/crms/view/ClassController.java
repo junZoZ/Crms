@@ -299,5 +299,15 @@ public class ClassController {
         catch (UserNotFoundException e) { System.out.println("123");}
     }
 
-
+    @ResponseStatus(value= HttpStatus.CREATED)
+    @RequestMapping(value = "/class/{classId}/newleader", method = RequestMethod.POST)
+    @ResponseBody
+    public BigInteger insertNewFixGroupStudent(@PathVariable("classId") Integer classId,@RequestAttribute("userId") String userId) {
+        BigInteger id = fixGroupService.insertNewFixGroupStudent(new BigInteger(classId.toString()), new BigInteger(userId));
+        try {
+            fixGroupService.insertStudentIntoGroup(new BigInteger(userId), id);
+        }catch (Exception e)
+        { System.out.println("123");}
+        return id;
+    }
 }

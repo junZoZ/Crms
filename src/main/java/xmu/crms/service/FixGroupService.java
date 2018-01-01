@@ -3,6 +3,7 @@ package xmu.crms.service;
 import java.math.BigInteger;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import xmu.crms.entity.FixGroup;
 import xmu.crms.entity.FixGroupMember;
 import xmu.crms.entity.SeminarGroup;
@@ -12,6 +13,7 @@ import xmu.crms.exception.FixGroupNotFoundException;
 import xmu.crms.exception.InvalidOperationException;
 import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
+import xmu.crms.vo.FixedGroupVO;
 
 /**
  * @author ZhouChulun YeHongjie Heqi Aixing
@@ -186,4 +188,15 @@ public interface FixGroupService {
     BigInteger fixedGroupToSeminarGroup(BigInteger semianrId, BigInteger fixedGroupId) throws
             IllegalArgumentException, FixGroupNotFoundException, SeminarNotFoundException;
 
+    /**
+     * 将固定小组作为讨论课小组名单.
+     *
+     * @param classId   讨论课ID
+     * @param userId 小组ID
+     * @throws IllegalArgumentException  信息不合法，id格式错误
+     * @throws FixGroupNotFoundException 未找到小组
+     * @throws SeminarNotFoundException  未找到讨论课
+     * @author qinlingyun
+     */
+    public BigInteger insertNewFixGroupStudent(BigInteger classId,BigInteger userId);
 }
