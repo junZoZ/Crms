@@ -42,10 +42,10 @@
              success:function(data){
 
                if(data && data.leader.id != userId)
-                   {alert(data.leader.id);$(".modifyButton").hide();}
-                else if(data){setCookie("fixGroupId",data.id);alert(data.id);}
+                   {$(".modifyButton").hide();}
+                else if(data){setCookie("fixGroupId",data.id);}
              },
-             error:function(result){alert("fgd");$(".modifyButton").hide();}
+             error:function(result){$(".modifyButton").hide();}
       }); }
 
  //得到课程的基本信息
@@ -96,7 +96,7 @@
                 $(".modifyButton").hide();
          },
          error:function(data){
-           alert("选题失败！");
+           alert("已经选择过话题！不可重新选题！");
          }
          });
          }
@@ -131,7 +131,7 @@
     function goback()
     {
       //你所要跳转的页面
-      window.location.href="/student/StudentCourseInformation";
+      window.location.href="/student/StudentSeminarPage(fixed)";
     }
 
     </script>

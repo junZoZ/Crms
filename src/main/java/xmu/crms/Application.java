@@ -16,9 +16,13 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import javax.servlet.MultipartConfigElement;
 import java.text.SimpleDateFormat;
 
+/**
+ * @author zzj
+ */
 @SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
 @MapperScan(basePackages = "xmu.crms.mapper")
 @EnableScheduling
+
 public class Application {
 
     public static void main(String[] args){

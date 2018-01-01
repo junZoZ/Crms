@@ -105,10 +105,11 @@ public class JwtServiceImpl implements xmu.crms.security.auth.JwtService {
 
     @Override
     public JwtPayload verifyJwt(String jwtString) {
-    //    System.out.println(7);
+
 
         String[] t = jwtString.split("\\.");
-        if (t.length != 3) {
+        int a = 3;
+        if (t.length != a) {
             return null;
         }
         String headerString = t[0];
