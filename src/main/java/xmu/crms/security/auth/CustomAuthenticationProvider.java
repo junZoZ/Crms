@@ -35,14 +35,16 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        String ran1 = "wechat";
+        String ran2 = "phone";
         String username = authentication.getName();
         User user = userDetailsService.loadUserByUsername(username);
         System.out.println(user.getPassword()+"    sdasdasdas"+"    "+authentication.getCredentials().toString());
         UsernamePasswordAuthenticationToken auth;
-        if (username.startsWith("wechat")) {
+        if (username.startsWith(ran1)) {
             auth = new UsernamePasswordAuthenticationToken(username, null, getAuthorities(user.getType()));
             auth.setDetails(user);
-        } else if (username.startsWith("phone")
+        } else if (username.startsWith(ran2)
                 && comparePassword(authentication.getCredentials().toString(), user.getPassword())) {
             auth = new UsernamePasswordAuthenticationToken(username, null, getAuthorities(user.getType()));
             auth.setDetails(user);

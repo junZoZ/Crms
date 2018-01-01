@@ -49,22 +49,22 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
-      //  System.out.println(1);
-        if (!request.getMethod().equals("POST")) {
+      String ran = "POST";
+        if (!request.getMethod().equals(ran)) {
             throw new AuthenticationServiceException(
                     "Authentication method not supported: " + request.getMethod());
         }
         String username = null;
         String password = null;
+        ran = "phone ";
+        String ran1="phone" ;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             Map map;
             map = objectMapper.readValue(request.getInputStream(), Map.class);
-            if (map.get("phone") != null) {
-                username = "phone " + map.get("phone");
+            if (map.get(ran1) != null) {
+                username = ran + map.get(ran1);
                 password =  map.get("password").toString();
-            } else if (map.get("code") != null) {
-                username = "code " + map.get("code");
             }
         } catch (Exception e) {
         }
@@ -81,7 +81,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
                 username, password);
-        // Allow subclasses to set the "details" property
+
         setDetails(request, authRequest);
 
         return this.getAuthenticationManager().authenticate(authRequest);
@@ -99,7 +99,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
      */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        //System.out.println(2);
+
         UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) authResult;
         User user = (User) auth.getDetails();
         String jwtString = jwtService.generateJwt(user);
@@ -125,7 +125,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
      */
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-      //  logger.error("An internal error occurred while trying to authenticate the user.", failed);
+       logger.error("An internal error occurred while trying to authenticate the user.", failed);
         response.setStatus(401);
     }
 }
