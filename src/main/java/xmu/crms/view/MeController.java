@@ -109,9 +109,9 @@ public class MeController {
         try {
             user.setPassword(md5Hex(user.getPassword())); //加密
         } catch (NoSuchAlgorithmException e) { }
-        loginService.signUpPhone(user);
-        String jwt = jwtService.generateJwt(user);
-        LoginSuccessVO l=new LoginSuccessVO(user.getId(), user.getType() == 0 ? "student" : "teacher", user.getName(), jwt);
+        User u= loginService.signUpPhone(user);
+        String jwt = jwtService.generateJwt(u);
+        LoginSuccessVO l=new LoginSuccessVO(u.getId(), u.getType() == 0 ? "student" : "teacher", u.getName(), jwt);
         System.out.println(l);
         return l;
     }

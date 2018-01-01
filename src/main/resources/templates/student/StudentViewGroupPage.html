@@ -35,10 +35,11 @@
     //得到课程的基本信息
     function getCourseInformation(courseID)
     {
-
+        var token = localStorage.getItem("jwt")
         $.ajax({
         type:"GET", //请求方式
         url: "/course/"+courseID,
+            headers: {"Authorization": "Bearer " + token},
         cache: true,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型

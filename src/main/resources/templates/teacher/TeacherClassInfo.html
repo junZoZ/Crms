@@ -57,9 +57,11 @@
             var msg = confirm("确认删除？");
            if( msg)
            {
+               var token = localStorage.getItem("jwt")
               $.ajax({
                     type:"DELETE", //请求方式
                     url: "/class/" + classID,
+                  headers: {"Authorization": "Bearer " + token},
                     cache: true,   //如果使用缓存
                     contentType : "application/json",
                     dataType: 'json',   //返回值类型
@@ -77,9 +79,11 @@
 //得到班级的基本信息
     function getClassInformation(classID)
     {
+        var token = localStorage.getItem("jwt")
         $.ajax({
         type:"GET", //请求方式
         url: "/class/" + classID,
+            headers: {"Authorization": "Bearer " + token},
         cache: true,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型

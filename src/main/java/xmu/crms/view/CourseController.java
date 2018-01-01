@@ -39,13 +39,12 @@ public class CourseController {
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/course",method = RequestMethod.GET)
-    public   List<CourseVO> getCourseList()  {
+    public   List<CourseVO> getCourseList(@RequestAttribute("userId") String userId)  {
 //        需要用到jwt
 //        返回这个错误不是很有道理
-        BigInteger userId = new BigInteger("1");
         List<Course> courseList = null;
         try {
-            courseList = courseService.listCourseByUserId(userId);
+            courseList = courseService.listCourseByUserId(new BigInteger(userId));
             List<CourseVO> courseVOList = new ArrayList<>();
             for (Course item:courseList){
                 //获取每个course的班级数
@@ -60,10 +59,9 @@ public class CourseController {
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/course",method = RequestMethod.POST)
-    public Integer NewCourse(@RequestBody CourseVO newCourseVO)
+    public Integer NewCourse(@RequestBody CourseVO newCourseVO,@RequestAttribute("userId") String userId)
     {
-//        需要用到jwt
-        BigInteger userId = new BigInteger("1");
+
         Course course = new Course();
         course.setName(newCourseVO.getName());
         course.setDescription(newCourseVO.getDescription());
@@ -74,7 +72,7 @@ public class CourseController {
         course.setFivePointPercentage(newCourseVO.getProportions().getA());
         course.setFourPointPercentage(newCourseVO.getProportions().getB());
         course.setThreePointPercentage(newCourseVO.getProportions().getC());
-        BigInteger courseId  = courseService.insertCourseByUserId(userId,course);
+        BigInteger courseId  = courseService.insertCourseByUserId(new BigInteger(userId),course);
 
         return courseId.intValue();
     }
@@ -180,11 +178,11 @@ public class CourseController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/course/{courseId}/seminar",method = RequestMethod.GET)
     @ResponseBody
-    public ArrayList<SeminarVO> ListSeminars(@PathVariable("courseId") Integer courseId,@RequestParam(value="embedGrade",required = false) boolean embedGrades) throws CourseNotFoundException{
+    public ArrayList<SeminarVO> ListSeminars(@PathVariable("courseId") Integer courseId,@RequestParam(value="embedGrade",required = false) boolean embedGrades,@RequestAttribute("userId") String userId) throws CourseNotFoundException{
 //        和小程序有交集
 //        需要用到jwt
 //        有一个属性用不到
-        BigInteger userId=new BigInteger("233");
+
         List<Seminar> seminar = seminarService.listSeminarByCourseId(new BigInteger(courseId.toString()));
         ArrayList<SeminarVO> seminarVO=new ArrayList<SeminarVO>(16);
         for(Seminar item:seminar)
@@ -205,7 +203,7 @@ public class CourseController {
             if(embedGrades)
             {
                 try {
-                    SeminarGroup seminarGroup=seminarGroupService.getSeminarGroupById(userId,item.getId());
+                    SeminarGroup seminarGroup=seminarGroupService.getSeminarGroupById(new BigInteger(userId),item.getId());
                     s.setGrade(seminarGroup.getFinalGrade());
                 } catch (GroupNotFoundException e) {
                 }
@@ -240,11 +238,11 @@ public class CourseController {
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/course/{courseID}/grade",method = RequestMethod.GET)
-    public   ArrayList<CourseGradeVO> courseGrade(@PathVariable("courseID") Integer courseId) throws IllegalArgumentException{
+    public   ArrayList<CourseGradeVO> courseGrade(@PathVariable("courseID") Integer courseId,@RequestAttribute("userId") String userId) throws IllegalArgumentException{
 //        需要用到jwt
-        BigInteger userId = new BigInteger("3");
 
-        List<SeminarGroup> courseGradeList = gradeService.listSeminarGradeByCourseId(userId,new BigInteger(courseId.toString()));
+
+        List<SeminarGroup> courseGradeList = gradeService.listSeminarGradeByCourseId(new BigInteger(userId),new BigInteger(courseId.toString()));
         ArrayList<CourseGradeVO> courseGradeVOArrayList = new ArrayList<CourseGradeVO>();
         for(SeminarGroup item:courseGradeList){
            CourseGradeVO courseGradeVO = new CourseGradeVO();

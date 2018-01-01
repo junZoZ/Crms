@@ -52,10 +52,11 @@
 //得到班级的基本信息
     function getClassInformation(classID)
     {
-
+        var token = localStorage.getItem("jwt")
         $.ajax({
         type:"GET", //请求方式
         url: "/class/" + classID,
+            headers: {"Authorization": "Bearer " + token},
         cache: false,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
@@ -80,7 +81,7 @@
     }
  function submit()
         {
-
+            var token = localStorage.getItem("jwt")
              //判断是否为空()
              if($('#name').val() == ""||$('#site').val()== ""||$('#report').val()== ""|| $('#presentation').val()== ""||
                     $('#c').val()== ""||$('#b').val()== ""||$('#a').val()== ""){
@@ -109,6 +110,7 @@
                   $.ajax({
                type:"PUT",
                url:"/class/"+classID,
+                      headers: {"Authorization": "Bearer " + token},
                cache: false,
                contentType : "application/json",
                data:JSON.stringify(modifyClass),

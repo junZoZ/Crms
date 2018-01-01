@@ -25,9 +25,11 @@
 
         function getTopics(seminarID)
         {
+            var token = localStorage.getItem("jwt")
             $.ajax({
                 type:"GET", //请求方式
                 url: "/seminar/"+seminarID+"/randomTopic",
+                headers: {"Authorization": "Bearer " + token},
                 cache: false,   //如果使用缓存
                 contentType : "application/json",
                 dataType: 'json',   //返回值类型

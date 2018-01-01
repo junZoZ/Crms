@@ -140,9 +140,11 @@
     "number": $('#number').val() ,
     "email": $('#email').val()
     }
+        var token = localStorage.getItem("jwt")
         $.ajax({
         type:"PUT", //请求方式
         url: "/me",
+            headers: {"Authorization": "Bearer " + token},
         contentType :"application/json",
         data:JSON.stringify(bind),
         success:function(data){

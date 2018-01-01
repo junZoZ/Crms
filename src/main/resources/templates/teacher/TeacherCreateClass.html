@@ -127,6 +127,7 @@ jQuery(document).ready(function($) {
 
         function submit()
         {
+            var token = localStorage.getItem("jwt")
              //判断是否为空()
              if($('#name').val() == ""||$('#site').val()== ""||$('#time').val()== ""||$('#report').val()== ""|| $('#presentation').val()== ""||
                     $('#c').val()== ""||$('#b').val()== ""||$('#a').val()== ""){
@@ -158,6 +159,7 @@ jQuery(document).ready(function($) {
             $.ajax({
                type:"POST",
                url:"/course/"+courseID+"/class",
+                headers: {"Authorization": "Bearer " + token},
                cache: false,
                contentType : "application/json",
                data:JSON.stringify(newClass),

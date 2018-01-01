@@ -54,9 +54,11 @@
   //得到讨论课的概要信息
 function getSeminars(courseID)
 {
+    var token = localStorage.getItem("jwt")
 	$.ajax({
 		     type:"GET", //请求方式
 			 url: "/course/"+courseID+"/seminar",
+        headers: {"Authorization": "Bearer " + token},
              cache: false,   //如果使用缓存
              contentType : "application/json",
              dataType: 'json',   //返回值类型

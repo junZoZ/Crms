@@ -30,9 +30,11 @@
     }
     var tr=" <div class=\"title\">课程信息</div>"+
               "<hr class=\"line\"/>"
+        var token = localStorage.getItem("jwt")
         $.ajax({
         type:"GET", //请求方式
         url: "/class?courseName="+cn+"&teacherName="+tn,
+            headers: {"Authorization": "Bearer " + token},
         cache: true,   //如果使用缓存
         data:'',
         contentType : "application/json",

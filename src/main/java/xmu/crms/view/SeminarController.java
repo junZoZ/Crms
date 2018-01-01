@@ -163,11 +163,10 @@ public class SeminarController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/seminar/{seminarId}/group/my",method = RequestMethod.GET)
     @ResponseBody
-    public GroupVO MySeminarGroup(@PathVariable("seminarId") Integer seminarId) throws GroupNotFoundException {
+    public GroupVO MySeminarGroup(@PathVariable("seminarId") Integer seminarId,@RequestAttribute("userId") String userId) throws GroupNotFoundException {
 //        用到jwt
 //         没有实现404尚未分组
-        BigInteger userId = new BigInteger("27");
-        SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupById(new BigInteger(seminarId.toString()),userId);
+        SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupById(new BigInteger(seminarId.toString()),new BigInteger(userId));
         GroupVO groupVO = new GroupVO();
         groupVO.setId(seminarGroup.getId().intValue());
         groupVO.setName(seminarGroup.getLeader().getName()+"的小组");

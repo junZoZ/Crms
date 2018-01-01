@@ -69,10 +69,11 @@
          var seminarID = getCookie("seminarId");
     $(function() {
 
-
+        var token = localStorage.getItem("jwt")
           $.ajax({
              type:"GET", //请求方式
              url:"/group/"+groupID, //请求路径
+              headers: {"Authorization": "Bearer " + token},
              cache: false,
              contentType : "application/json",
              dataType: 'json',   //返回值类型
@@ -92,6 +93,7 @@
     });
 
     function sscore(){
+        var token = localStorage.getItem("jwt")
     var a=$('#reportGrade').val();
     if(a)
     {
@@ -100,6 +102,7 @@
           $.ajax({
              type:"PUT", //请求方式
              url:"/group/"+groupID+"/grade/report", //请求路径
+              headers: {"Authorization": "Bearer " + token},
              cache: false,
              contentType : "application/json",
               data:JSON.stringify(a),

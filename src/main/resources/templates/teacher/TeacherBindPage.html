@@ -112,6 +112,7 @@
 
     function sub()
     {
+        var token = localStorage.getItem("jwt")
     if(($("#male").val()==0&&$("#female").val()==0)||
     ($("#male").val()==1&&$("#female").val()==1)||
     !$("#name").val()||!$("#email").val()||!$("#number").val()
@@ -138,6 +139,7 @@
         $.ajax({
         type:"PUT", //请求方式
         url: "/me",
+            headers: {"Authorization": "Bearer " + token},
         contentType :"application/json",
         data:JSON.stringify(bind),
         success:function(data){

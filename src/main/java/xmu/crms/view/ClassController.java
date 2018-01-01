@@ -41,11 +41,10 @@ public class ClassController {
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/class",method = RequestMethod.GET)
-    public List<ClassVO> classCheck(@RequestParam(value = "courseName",required = false) String courseName, @RequestParam(value = "teacherName",required = false) String teacherName)
+    public List<ClassVO> classCheck(@RequestParam(value = "courseName",required = false) String courseName, @RequestParam(value = "teacherName",required = false) String teacherName,@RequestAttribute("userId") String userId)
     {
 //userID JWT
 
-        BigInteger userId=new BigInteger("5");
         System.out.println(courseName);
         List<ClassVO> listClassVO = new ArrayList<ClassVO>(16);
         List<ClassInfo> listClass =new ArrayList<ClassInfo>(16);
@@ -53,7 +52,7 @@ public class ClassController {
         if(courseName!=null||teacherName!=null) {
             try {
                 listClass = courseService.listClassByName(courseName,teacherName);
-                myClassInfoList = classService.listClassByUserId(userId);
+                myClassInfoList = classService.listClassByUserId(new BigInteger(userId));
                 //取差集
                 for(ClassInfo item1: myClassInfoList){
                     for(ClassInfo item:listClass) {
@@ -73,7 +72,7 @@ public class ClassController {
         else
         {
             try {
-                listClass = classService.listClassByUserId(userId);
+                listClass = classService.listClassByUserId(new BigInteger(userId));
             } catch (ClassesNotFoundException e) {
             }
         }
@@ -172,11 +171,10 @@ public class ClassController {
     @RequestMapping(value = "class/{classId}/student", method = RequestMethod.GET)
     @ResponseBody
     public List<UserVO> index3(@PathVariable("classId") Integer classId,@RequestParam("nameWith") String name,
-                               @RequestParam("noWith") String no) throws ClassesNotFoundException, UserNotFoundException, FixGroupNotFoundException {
+                               @RequestParam("noWith") String no,@RequestAttribute("userId") String userId) throws ClassesNotFoundException, UserNotFoundException, FixGroupNotFoundException {
         //jwt
-        BigInteger userId=new BigInteger("5");
         List<UserVO> listUserVO=new ArrayList<UserVO>(16);
-        FixGroup fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
+        FixGroup fixGroup=fixGroupService.getFixedGroupById(new BigInteger(userId),new BigInteger(classId.toString()));
         BigInteger groupId=fixGroup.getId();
         List<User> listUsers=fixGroupService.listFixGroupMemberByGroupId(groupId);
         try {
@@ -203,13 +201,12 @@ public class ClassController {
 
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/class/{classId}/student",method = RequestMethod.POST)
-    Integer classChoose(@PathVariable("classId") Integer classId)
+    Integer classChoose(@PathVariable("classId") Integer classId,@RequestAttribute("userId") String userId)
     {
 //JWT
 //
-        BigInteger userId=new BigInteger("5");
         try {
-            return classService.insertCourseSelectionById(userId,new BigInteger(classId.toString())).intValue();
+            return classService.insertCourseSelectionById(new BigInteger(userId),new BigInteger(classId.toString())).intValue();
         } catch (UserNotFoundException e) { } catch (ClassesNotFoundException e) { }
         return null;
     }
@@ -217,22 +214,21 @@ public class ClassController {
 
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value="/class/{classID}/student/{studentID}",method = RequestMethod.DELETE)
-    public  void classDelete(@PathVariable("classID") Integer classId,@PathVariable("studentID") Integer studentId) throws UserNotFoundException, ClassesNotFoundException {
+    public  void classDelete(@PathVariable("classID") Integer classId,@PathVariable("studentID") Integer studentId,@RequestAttribute("userId") String userId) throws UserNotFoundException, ClassesNotFoundException {
 //JWT
 //
-        BigInteger userId=new BigInteger("5");
-             classService.deleteCourseSelectionById(userId,new BigInteger(classId.toString()));
+             classService.deleteCourseSelectionById(new BigInteger(userId),new BigInteger(classId.toString()));
     }
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/class/{classId}/classgroup", method = RequestMethod.GET)
     @ResponseBody
-    public FixedGroupVO getFixGroupById(@PathVariable("classId") Integer classId) throws UserNotFoundException, ClassesNotFoundException, FixGroupNotFoundException {
+    public FixedGroupVO getFixGroupById(@PathVariable("classId") Integer classId,@RequestAttribute("userId") String userId) throws UserNotFoundException, ClassesNotFoundException, FixGroupNotFoundException {
 //JWT
 //
-        BigInteger userId=new BigInteger("5");
+
         FixedGroupVO fixedGroupVO=new FixedGroupVO();
-            FixGroup fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
+            FixGroup fixGroup=fixGroupService.getFixedGroupById(new BigInteger(userId),new BigInteger(classId.toString()));
                  UserVO uservo=new UserVO();
                  uservo.setId(fixGroup.getLeader().getId().intValue());
                  uservo.setName(fixGroup.getLeader().getName());
@@ -260,12 +256,11 @@ public class ClassController {
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/class/{classId}/classgroup/add", method = RequestMethod.PUT)
     @ResponseBody
-    public void insertFixGroupMember(@PathVariable("classId") Integer classId, @RequestBody Integer memberId) {
+    public void insertFixGroupMember(@PathVariable("classId") Integer classId, @RequestBody Integer memberId,@RequestAttribute("userId") String userId) {
 //JWT
 //
-        BigInteger userId=new BigInteger("5");
         try {
-            FixGroup fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
+            FixGroup fixGroup=fixGroupService.getFixedGroupById(new BigInteger(userId),new BigInteger(classId.toString()));
             try {
                 fixGroupService.insertStudentIntoGroup(new BigInteger(memberId.toString()),fixGroup.getId());
         } catch (FixGroupNotFoundException e)
@@ -278,12 +273,11 @@ public class ClassController {
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/class/{classId}/classgroup/remove", method = RequestMethod.PUT)
     @ResponseBody
-    public void deleteFixGroupMember(@PathVariable("classId") Integer classId, @RequestBody Integer memberId) {
+    public void deleteFixGroupMember(@PathVariable("classId") Integer classId, @RequestBody Integer memberId,@RequestAttribute("userId") String userId) {
 //JWT
 //
-        BigInteger userId=new BigInteger("5");
         try {
-            FixGroup fixGroup=fixGroupService.getFixedGroupById(userId,new BigInteger(classId.toString()));
+            FixGroup fixGroup=fixGroupService.getFixedGroupById(new BigInteger(userId),new BigInteger(classId.toString()));
             try {
                 fixGroupService.deleteFixGroupUserById(fixGroup.getId(),new BigInteger(memberId.toString()));
             } catch (FixGroupNotFoundException e)

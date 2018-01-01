@@ -35,6 +35,38 @@
             id = #{schoolId}
     </select>
 
+    <select id="listClassByTeacherId" resultMap="ClassInfo">
+        SELECT
+        class_info.id
+
+
+
+        ,
+        class_info.name
+
+
+
+        ,
+        course_id,
+        site,
+        class_time,
+        class_info.report_percentage,
+        class_info.presentation_percentage,
+        class_info.five_point_percentage,
+        class_info.four_point_percentage,
+        class_info.three_point_percentage
+        FROM
+        class_info, course
+        WHERE
+        course.teacher_id = #{teacherId}
+        AND
+        class_info.course_id = course.id
+
+
+
+        ;
+    </select>
+
     <select id="getTeacherByTeacherId" resultMap="User">
         SELECT
             id,

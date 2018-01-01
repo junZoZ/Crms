@@ -28,6 +28,7 @@
         $.ajax({
         type:"GET", //请求方式
         url: "/course/"+courseID,
+            headers: {"Authorization": "Bearer " + token},
         cache: true,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
@@ -45,9 +46,11 @@
 
    function getSeminarInformation(seminarID)
    {
+       var token = localStorage.getItem("jwt")
        $.ajax({
         type:"GET", //请求方式
         url: "/seminar/" + seminarID,
+           headers: {"Authorization": "Bearer " + token},
         cache: false,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
@@ -79,6 +82,7 @@
 
 function submit()
         {
+            var token = localStorage.getItem("jwt")
              //判断是否为空()
              if($('#name').val() == ""||$('#startTime').val()== ""||$('#endTime').val()== ""){
                     alert("带*内容不能为空！");
@@ -106,6 +110,7 @@ function submit()
             $.ajax({
                type:"PUT",
                url:"/seminar/"+seminarID,
+                headers: {"Authorization": "Bearer " + token},
                cache: false,
                contentType : "application/json",
                data:JSON.stringify(newSemiar),

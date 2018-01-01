@@ -48,6 +48,7 @@ var bool=confirm("确定要重置吗？");
 
 
   function submit(){
+      var token = localStorage.getItem("jwt")
    var a={
    "name":$('#name').val(),
    "description":document.getElementById("description").value,
@@ -63,6 +64,7 @@ var bool=confirm("确定要重置吗？");
   $.ajax({
              type:"POST", //请求方式
              url:"/seminar/"+seminarID+"/topic", //请求路径
+      headers: {"Authorization": "Bearer " + token},
              cache: false,
              contentType : "application/json",
              data:JSON.stringify(a),

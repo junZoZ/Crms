@@ -129,9 +129,11 @@ jQuery(document).ready(function($) {
 
    function getSeminarInformation(seminarID)
    {
+       var token = localStorage.getItem("jwt")
        $.ajax({
         type:"GET", //请求方式
         url: "/seminar/" + seminarID,
+           headers: {"Authorization": "Bearer " + token},
         cache: false,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
@@ -159,9 +161,11 @@ jQuery(document).ready(function($) {
 
  function getMyGroupInformation(seminarID)
    {
+       var token = localStorage.getItem("jwt")
        $.ajax({
         type:"GET", //请求方式
         url: "/seminar/" + seminarID+"/group/my",
+           headers: {"Authorization": "Bearer " + token},
         cache: false,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型

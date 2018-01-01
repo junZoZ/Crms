@@ -48,9 +48,11 @@ var bool=confirm("确定要重置吗？");
     }
 
   function topicLoad(){
+      var token = localStorage.getItem("jwt")
    $.ajax({
              type:"GET", //请求方式
              url:"/topic/"+topicID, //请求路径
+       headers: {"Authorization": "Bearer " + token},
              cache: false,
              contentType : "application/json",
              dataType: 'json',   //返回值类型
@@ -68,6 +70,7 @@ var bool=confirm("确定要重置吗？");
       });
   }
   function submit(){
+      var token = localStorage.getItem("jwt")
    var a={
    "name":$('#name').val(),
    "description":document.getElementById("description").value,
@@ -83,6 +86,7 @@ var bool=confirm("确定要重置吗？");
   $.ajax({
              type:"PUT", //请求方式
              url:"/topic/"+topicID, //请求路径
+      headers: {"Authorization": "Bearer " + token},
              cache: false,
              contentType : "application/json",
              data:JSON.stringify(a),

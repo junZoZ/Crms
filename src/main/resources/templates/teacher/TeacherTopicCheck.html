@@ -44,9 +44,11 @@
 
     function getTopicInformation(id)
     {
+        var token = localStorage.getItem("jwt")
         $.ajax({
         type:"GET", //请求方式
         url: "/topic/"+id,
+            headers: {"Authorization": "Bearer " + token},
         cache: true,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
@@ -68,12 +70,14 @@
     <script type="text/javascript">
     function del()
     {
+        var token = localStorage.getItem("jwt")
        var bool=confirm("是否要删除此话题!");
        if(bool)
        {
             $.ajax({
         type:"DELETE", //请求方式
         url: "/topic/"+topicID,
+                headers: {"Authorization": "Bearer " + token},
         cache: true,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型

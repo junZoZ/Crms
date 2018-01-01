@@ -42,7 +42,8 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public User signInPhone(User user) throws UserNotFoundException {
 		// 若user为空，则用户名或密码不正确
-		return loginMapper.signInPhone(user);
+		User users=loginMapper.signInPhone(user);
+		return users;
 	}
 
 	@Override

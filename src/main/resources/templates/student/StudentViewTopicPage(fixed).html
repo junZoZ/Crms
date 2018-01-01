@@ -49,11 +49,12 @@
     //小组选题
      function chooseTopicInformation()
     {
-
+        var token = localStorage.getItem("jwt")
        var tid=topicID;
         $.ajax({
         type:"POST", //请求方式
         url: "/group/"+groupID+"/topic",
+            headers: {"Authorization": "Bearer " + token},
         cache: true,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
@@ -69,9 +70,11 @@
 
    function getTopicInformation(topicID)
    {
+       var token = localStorage.getItem("jwt")
        $.ajax({
         type:"GET", //请求方式
         url: "/topic/" + topicID,
+           headers: {"Authorization": "Bearer " + token},
         cache: false,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型

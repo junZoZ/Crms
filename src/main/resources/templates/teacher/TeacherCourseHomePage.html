@@ -52,6 +52,7 @@
 
     function del(id)
     {
+        var token = localStorage.getItem("jwt")
     var bool=confirm("是否要删除此课程!");
     var u= "/course/"+id
     if(bool)
@@ -59,6 +60,7 @@
         $.ajax({
         type:"DELETE", //请求方式
         url: u,
+            headers: {"Authorization": "Bearer " + token},
         cache: false,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
@@ -80,11 +82,13 @@
  //得到课程的基本信息
     function getCourseInformation()
     {
+        var token = localStorage.getItem("jwt")
     var tr=" <div class=\"title\">课程信息</div>"+
               "<hr class=\"line\"/>"
         $.ajax({
         type:"GET", //请求方式
         url: "/course",
+            headers: {"Authorization": "Bearer " + token},
         cache: true,   //如果使用缓存
         data:'',
         contentType : "application/json",

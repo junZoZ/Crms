@@ -20,14 +20,16 @@
 
 function getClass()
 {
+    var token = localStorage.getItem("jwt")
 	$.ajax({
 		     type:"GET", //请求方式
 			 url: "/class",
+        headers: {"Authorization": "Bearer " + token},
              cache: false,   //如果使用缓存
              contentType : "application/json",
              dataType: 'json',   //返回值类型
              success:function(data){
-               str="";
+               var str="";
            $.each(data,function(i,item){
 
            str+= "<div class=\"main_box_right_content\">  <h3 class=\"classtitle\"><span >"+item.courseName+"</span>"+
@@ -48,11 +50,12 @@ function getClass()
 
 function Del(id)
  {   var msg=confirm("确定要退课吗？");
+     var userId=localStorage.get("userId")
    if(msg==1)
    {
    $.ajax({
 		     type:"DELETE", //请求方式
-			 url: "/class/"+id+"/student/5",
+			 url: "/class/"+id+"/student/"+userId,
              cache: false,   //如果使用缓存
              contentType : "application/json",
              dataType: 'json',   //返回值类型

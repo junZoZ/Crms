@@ -15,6 +15,7 @@
 
         function submit()
         {
+            var token = localStorage.getItem("jwt")
              //判断是否为空
              if($('#name').val() == ""||$('#startTime').val()== ""||$('#endTime').val()== ""||$('#report').val()== ""|| $('#presentation').val()== ""||
                     $('#c').val()== ""||$('#b').val()== ""||$('#a').val()== ""){
@@ -45,6 +46,7 @@
             $.ajax({
                type:"POST",
                url:"/course",
+                headers: {"Authorization": "Bearer " + token},
                cache: false,
                contentType : "application/json",
                data:JSON.stringify(newCourse),

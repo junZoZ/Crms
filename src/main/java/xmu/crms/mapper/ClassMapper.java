@@ -250,5 +250,12 @@ public interface ClassMapper {
     Seminar getSeminarById(@Param("seminarId") BigInteger seminarId);
 
 
+    /**
+     * 根据teacherId查询Class
+     *
+     * @param teacherId
+     * @return
+     */
+    List<ClassInfo>  listClassByTeacherId(@Param("teacherId") BigInteger teacherId);
 
 }

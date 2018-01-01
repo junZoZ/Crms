@@ -39,10 +39,11 @@
          });
     }
     function load(id){
-
+        var token = localStorage.getItem("jwt")
       $.ajax({
              type:"GET", //请求方式
              url:"/class/"+id+"/classgroup", //请求路径
+          headers: {"Authorization": "Bearer " + token},
              cache: false,
              contentType : "application/json",
              dataType: 'json',   //返回值类型
@@ -75,10 +76,11 @@
 
        function getOtherStudent()
     {
+        var token = localStorage.getItem("jwt")
      $.ajax({
              type:"GET", //请求方式
              url:"/class/"+classId+"/student?nameWith="+ $('#name').val() +"&noWith=" +$('#no').val(), //请求路径
-
+         headers: {"Authorization": "Bearer " + token},
              cache: false,
              contentType : "application/json",
              dataType: 'json',   //返回值类型
@@ -112,12 +114,14 @@
   function Del(memberId)
   {
         var msg = confirm("确定要删除吗？");
+      var token = localStorage.getItem("jwt")
         if(msg){
 
 
                $.ajax({
              type:"PUT", //请求方式
              url:"/class/"+classId+"/classgroup/remove", //请求路径
+                   headers: {"Authorization": "Bearer " + token},
              cache: false,
              contentType : "application/json",
              data:JSON.stringify(memberId),
@@ -135,6 +139,7 @@
 
    function add(memberId)
   {
+      var token = localStorage.getItem("jwt")
         var msg = confirm("确定要添加吗？");
         if(msg){
 
@@ -142,6 +147,7 @@
                $.ajax({
              type:"PUT", //请求方式
              url:"/class/"+classId+"/classgroup/add", //请求路径
+                   headers: {"Authorization": "Bearer " + token},
              cache: false,
              contentType : "application/json",
              data:JSON.stringify(memberId),
