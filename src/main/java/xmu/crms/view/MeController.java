@@ -34,21 +34,35 @@ public class MeController {
      * @return User deleteNumber
      */
     @RequestMapping(value="/me", method=RequestMethod.GET)
-    public UserVO getUser() throws UserNotFoundException {
+    public UserVO getUser(@RequestAttribute("userId") String userId) throws UserNotFoundException {
         //jwt
-        BigInteger id=new BigInteger("5");
-        User u=userSeviceImpl.getUserByUserId(id);
+        User u=userSeviceImpl.getUserByUserId(new BigInteger(userId));
         UserVO u1=new UserVO();
         u1.setId(u.getId().intValue());
         u1.setName(u.getName());
-        if(u.getType()==1)
-        {u1.setType("teacher");
-           if(u.getTitle() == 1){
-               u1.setTitle("教授");
-           }else{ u1.setTitle("非教授");}
+        if(u.getType()==1) {
+            u1.setType("teacher");
         }
         else
-        { u1.setType("student");}
+        {
+            u1.setType("student");
+        }
+        if(u.getEducation()==null)
+        {
+            u1.setEducation(" ");
+        }
+        else if(u.getEducation()!=null&&u.getEducation()==0)
+        {
+            u1.setEducation("本科生");
+        }
+        else if(u.getEducation()!=null&&u.getEducation()==1)
+        {
+            u1.setEducation("研究生");
+        }
+        else if(u.getEducation()!=null&&u.getEducation()==2)
+        {
+            u1.setEducation("博士");
+        }
         u1.setNumber(u.getNumber());
         u1.setPhone(u.getPhone());
         u1.setEmail(u.getEmail());
@@ -60,14 +74,6 @@ public class MeController {
         if(u.getTitle()==null)
         {
             u1.setTitle(" ");
-        }
-        else if(u.getTitle()!=null&&u.getTitle().toString()=="0")
-        {
-            u1.setTitle("本科生");
-        }
-        else
-        {
-            u1.setTitle("教职工");
         }
         if(u.getAvatar()==null)
         {

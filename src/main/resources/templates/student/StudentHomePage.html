@@ -34,7 +34,7 @@
        document.getElementById("phone").innerText=data.phone;
        document.getElementById("gender").innerText=data.gender;
        document.getElementById("email").innerText=data.email;
-       document.getElementById("title").innerText=data.title;
+       document.getElementById("education").innerText=data.education;
        document.getElementById("school").innerText=data.school.name;
          },
          error:function(data){
@@ -44,7 +44,8 @@
 
     function login()
     {
-    window.location.href="/me/modify/Student";
+        var userId=localStorage.getItem("userId")
+    window.location.href="/me/modify/Student/"+userId;
     }
 
      </script>
@@ -91,7 +92,7 @@
         </tr>
         <tr class="itemName">
         <td>学校：<span id="school"></span></td>
-        <td>学历：<span id="title"></span></td>
+        <td>学历：<span id="education"></span></td>
         </tr>
         <tr class="itemName">
         <td>E-mail：<span id="email"></span></td>

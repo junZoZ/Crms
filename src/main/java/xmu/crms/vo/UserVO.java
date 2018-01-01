@@ -10,6 +10,7 @@ public class UserVO {
     String gender;
     String title;
     String avatar;
+    String education;
     SchoolVO school;
     String jwt ;
 
@@ -36,8 +37,16 @@ public class UserVO {
         this.school = school;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
     }
 
     public void setId(Integer id) {
