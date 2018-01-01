@@ -54,4 +54,13 @@ public class LoginSuccessVO {
         this.jwt = header + '.' + payload + '.' + signature;
     }
 
+    @Override
+    public String toString() {
+        return "LoginSuccessVO{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", name='" + name + '\'' +
+                ", jwt='" + jwt + '\'' +
+                '}';
+    }
 }

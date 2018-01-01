@@ -134,7 +134,7 @@
         var id=$('#school').val()
     var bind={
     "name": $('#name').val() ,
-    "school":{"id":$('#school').val() ,"name": $("#"+id).val(),"province": $('#province').val(),
+    "school":{"id":$('#school option:selected').attr('id') ,"name": $('#school').val(),"province": $('#province').val(),
     "city":$('#city').val() },
     "gender":gender ,
     "number": $('#number').val() ,

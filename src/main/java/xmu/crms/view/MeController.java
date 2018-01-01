@@ -49,9 +49,9 @@ public class MeController {
         u1.setPhone(u.getPhone());
         u1.setEmail(u.getEmail());
         if(u.getGender()==1)
-        {u1.setGender("female");}
+        {u1.setGender("女");}
         else
-        {u1.setGender("male");}
+        {u1.setGender("男");}
         if(u.getTitle()==null)
         {
             u1.setTitle(" ");
@@ -102,7 +102,7 @@ public class MeController {
      * @throws UserNotFoundException
      */
     @RequestMapping(value="/register", method=RequestMethod.POST)
-    @ResponseStatus(value=HttpStatus.NO_CONTENT)
+    @ResponseBody
     public LoginSuccessVO registerByPhone(@RequestBody User user) throws UserNotFoundException{
 
         System.out.println(user);
@@ -111,7 +111,9 @@ public class MeController {
         } catch (NoSuchAlgorithmException e) { }
         loginService.signUpPhone(user);
         String jwt = jwtService.generateJwt(user);
-        return new LoginSuccessVO(user.getId(), user.getType() == 0 ? "student" : "teacher", user.getName(), jwt);
+        LoginSuccessVO l=new LoginSuccessVO(user.getId(), user.getType() == 0 ? "student" : "teacher", user.getName(), jwt);
+        System.out.println(l);
+        return l;
     }
     /**
      * 微信登录，返回用户基本信息

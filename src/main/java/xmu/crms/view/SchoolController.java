@@ -42,6 +42,7 @@ public class SchoolController {
         school.setProvince(schoolVO.getProvince());
         school.setCity(schoolVO.getCity());
         BigInteger schoolId = schoolService.insertSchool(school);
+        System.out.println(112213321);
         return schoolId.intValue();
     }
 }

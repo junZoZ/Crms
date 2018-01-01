@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,
                                      initial-scale=1.0,
                                      maximum-scale=1.0,
                                      user-scalable=no">
-    <title>ClassManage</title>
+    <title>åˆ›å»ºå­¦æ ¡</title>
     <link href="/css/teacher/TeacherCreateSchool.css" rel="stylesheet" type="text/css"/>
 
     <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
@@ -18,7 +18,8 @@
     <script src="/js/cookie3.js"></script>
 
     <script type="text/javascript">
-        (function () {
+
+  (function () {
     var token = localStorage.getItem("jwt");
     $.ajax({
         url: "http://apis.map.qq.com/ws/district/v1/list?key=7DFBZ-K4PWQ-TYK5Y-GL7XN-RBDSQ-XSB6M&output=jsonp",
@@ -65,47 +66,64 @@
         });
     })
 
-    $("#submit").on("click", function () {
-        school = {
-            name: $("#school").val(),
-            province: $("#province option:selected").attr("value"),
-            city: $("#city option:selected").attr("value")
+
+})();
+
+function sub()
+{
+if( $("#school").val()=="")
+{
+   alert("å­¦æ ¡ä¸èƒ½ä¸ºç©º!");
+   return ;
+}
+       var school = {
+            "name": $("#school").val(),
+            "province": $("#province option:selected").attr("value"),
+            "city":  $("#city option:selected").attr("value")
         };
         $.ajax({
             url: "/school",
             type: "POST",
-            headers: {"Authorization": "Bearer " + token},
             contentType: "application/json",
             data: JSON.stringify(school),
             success: function (data) {
-                alert("success");
+                alert("åˆ›å»ºæˆåŠŸ!");
+                  window.location.href="/common/RegisterPage";
             }
         })
-    });
-})();
+}
 </script>
+
 
 
 </head>
 
 <body>
+
+
 <div class="titleBackground"></div>
-<div class="title">¿Î³Ì¹ÜÀíÏµÍ³</div>
-<div class="icon">
-    <a href="TeacherCourseHomePage.html"><img src="../../static/images/home.png">Ê×Ò³</a>
-    <img src="../../static/images/help.png">°ïÖú
-    <a href="../common/WechatLoginPage.html"><img src="../../static/images/exit.png">ÍË³ö</a>
+<div class="title">è¯¾ç¨‹ç®¡ç†ç³»ç»Ÿ</div>
+<div class="top">
+    <div class="font">
+        è¯¾å ‚ç®¡ç†ç³»ç»Ÿ
+    </div>
+    <div class="icon">
+        <a href="/student/StudentCourseHome"><img src="/images/home.png">é¦–é¡µ</a>
+        <img src="/images/help.png">å¸®åŠ©
+        <a href="/common/AccountLoginPage"><img src="/images/exit.png">é€€å‡º</a>
+    </div>
+    <div class="clear"></div>
 </div>
-<div class="province">ËùÔÚÊ¡·İ:<select class="provinceSelect" id="province">
+<div class="province">æ‰€åœ¨çœä»½:<select class="provinceSelect" id="province">
 </select></div>
-<div class="city">ËùÔÚ³ÇÊĞ:
+<div class="city">æ‰€åœ¨åŸå¸‚:
     <select class="citySelect" id="city" >
     </select>
 </div>
-<div class="school">Ñ§Ğ£Ãû³Æ:
-    <input type="text" name="school" id="name"/>
+<div class="school">å­¦æ ¡åç§°:
+    <input type="text" name="school" id="school"/>
 </div>
-<button class="submit" onclick="submit()">Ìá½»</button>
+<button class="submit" name="sub" id="sub" onclick="sub()" >æäº¤</button>
 </body>
 
 </html>

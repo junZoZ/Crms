@@ -10,6 +10,8 @@ import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.mapper.LoginMapper;
 
 import xmu.crms.service.LoginService;
+import xmu.crms.service.UserService;
+
 /**
  * 
  * @author Zhao zhengyu
@@ -20,6 +22,9 @@ public class LoginServiceImpl implements LoginService{
 
 	@Autowired
 	private LoginMapper loginMapper;
+
+	@Autowired
+	private UserService userService;
 	@Override
 	public User signInWeChat(BigInteger userId, String code, String state, String successUrl)
 			throws UserNotFoundException {

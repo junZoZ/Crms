@@ -49,7 +49,7 @@
         </tr>
         <tr class="itemName">
         <td>学校：<input type="text" name="school" value="${userVO.school.name!""}"/></td>
-        <td>职称：<input type="text" name="title" value="${userVO.title!""}"/></td>
+        <td>学历：<input type="text" name="title" value="${userVO.title!""}"/></td>
         </tr>
         <tr class="itemName">
         <td>E-mail：<input type="text" name="e-mail" value="${userVO.email!""}"/></td>
