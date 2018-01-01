@@ -42,7 +42,11 @@ public class MeController {
         u1.setId(u.getId().intValue());
         u1.setName(u.getName());
         if(u.getType()==1)
-        {u1.setType("teacher");}
+        {u1.setType("teacher");
+           if(u.getTitle() == 1){
+               u1.setTitle("教授");
+           }else{ u1.setTitle("非教授");}
+        }
         else
         { u1.setType("student");}
         u1.setNumber(u.getNumber());
@@ -52,6 +56,7 @@ public class MeController {
         {u1.setGender("女");}
         else
         {u1.setGender("男");}
+
         if(u.getTitle()==null)
         {
             u1.setTitle(" ");

@@ -100,7 +100,20 @@ font-size:15px;
 }
 .submit{
 position:absolute;
-left:47%;top:535px;
+left:40%;top:535px;
+background-color: white;
+color:black;
+padding:3px 4px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 20px;
+font-family:Arial;
+cursor: pointer;
+}
+.goback{
+position:absolute;
+left:50%;top:535px;
 background-color: white;
 color:black;
 padding:3px 4px;

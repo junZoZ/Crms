@@ -92,6 +92,11 @@ if( $("#school").val()=="")
             }
         })
 }
+
+function goback()
+{
+   window.location.href="/common/RegisterPage";
+}
 </script>
 
 
@@ -124,6 +129,7 @@ if( $("#school").val()=="")
     <input type="text" name="school" id="school"/>
 </div>
 <button class="submit" name="sub" id="sub" onclick="sub()" >提交</button>
+<button class="goback" name="sub" id="goback" onclick="goback()" >返回</button>
 </body>
 
 </html>
