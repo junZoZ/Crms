@@ -3,8 +3,17 @@ package xmu.crms.vo;
 import java.util.ArrayList;
 
 public class FixedGroupVO {
+    Integer id;
     UserVO leader;
     ArrayList<UserVO> user;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public UserVO getLeader() {
         return leader;

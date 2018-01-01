@@ -28,9 +28,10 @@
     <script src="/js/cookie3.js"></script>
     <script type="text/javascript">
     var courseID=getCookie("courseId");
+    var classID=getCookie("classId");
    window.onload=function(){
    getCourseInformation(courseID);
-   load(1);
+   load(classID);
    }
     //得到课程的基本信息
     function getCourseInformation(courseID)

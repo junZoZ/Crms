@@ -78,22 +78,33 @@ public class GroupController {
 //      post /Group/{groupID}/topic
 
 
+//    @ResponseStatus(value= HttpStatus.CREATED)
+//    @RequestMapping(value="/Group/{groupID}/topic/{topicID}",method = RequestMethod.POST)
+//    public void NewCourse(@PathVariable ("groupID") Integer groupId,@PathVariable ("topicID") Integer topicId) throws GroupNotFoundException {
+//
+//        SeminarGroupTopic seminarGroupTopic = new SeminarGroupTopic();
+//
+//
+//    }
+
     @ResponseStatus(value= HttpStatus.CREATED)
-    @RequestMapping(value="/Group/{groupID}/topic/{topicID}",method = RequestMethod.POST)
-    public void NewCourse(@PathVariable ("groupID") Integer groupId,@PathVariable ("topicID") Integer topicId) throws GroupNotFoundException {
-
-        SeminarGroupTopic seminarGroupTopic = new SeminarGroupTopic();
-        seminarGroupService.insertTopicByGroupId(new BigInteger(groupId.toString()),new BigInteger(topicId.toString()));
-
-    }
-
-    @ResponseStatus(value= HttpStatus.CREATED)
-    @RequestMapping(value="/fixGroup/{groupID}/seminar/{seminarID}/topic",method = RequestMethod.GET)
-    public void FixGrouptopicChoose(@PathVariable("groupID") Integer groupId,@PathVariable("seminarID") Integer seminarId)
-    {
+    @RequestMapping(value="/fixGroup/{groupID}/seminar/{seminarID}/topic/{topicID}",method = RequestMethod.POST)
+    public void FixGrouptopicChoose(@PathVariable("groupID") Integer groupId,@PathVariable("seminarID") Integer seminarId,
+                                    @PathVariable ("topicID") Integer topicId,@RequestAttribute("userId") String userId) throws FixGroupNotFoundException, SeminarNotFoundException {
+       System.out.println("fgidogdof");
+       BigInteger groupeID = new BigInteger("0");
+        SeminarGroup seminarGroup = new SeminarGroup();
+       //先确定这个组不存在seminarGroup中
         try {
-            fixGroupService.fixedGroupToSeminarGroup(new BigInteger(seminarId.toString()),new BigInteger(groupId.toString()));
-        } catch (FixGroupNotFoundException e) { } catch (SeminarNotFoundException e) { }
+            seminarGroup = seminarGroupService.getSeminarGroupById(new BigInteger(seminarId.toString()),new BigInteger(userId));
+        } catch (GroupNotFoundException e) {
+            groupeID =  fixGroupService.fixedGroupToSeminarGroup(new BigInteger(seminarId.toString()),new BigInteger(groupId.toString()));}
+        if(seminarGroup!=null && seminarGroup.getId() == null)  {groupeID = seminarGroup.getId();}
+        try {
+            seminarGroupService.insertTopicByGroupId(groupeID,new BigInteger(topicId.toString()));
+        } catch (GroupNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 //    delete  /group/{groupId}/topic/{topicId}

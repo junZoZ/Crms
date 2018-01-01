@@ -206,7 +206,7 @@ public class FixGroupServiceImpl implements FixGroupService {
     }*/
 
     @Override
-    public void fixedGroupToSeminarGroup(BigInteger semianrId, BigInteger fixedGroupId) throws IllegalArgumentException, FixGroupNotFoundException, SeminarNotFoundException {
+    public BigInteger fixedGroupToSeminarGroup(BigInteger semianrId, BigInteger fixedGroupId) throws IllegalArgumentException, FixGroupNotFoundException, SeminarNotFoundException {
         if(semianrId.intValue()<0 || fixedGroupId.intValue()<0){
             throw new IllegalArgumentException();
         }
@@ -253,5 +253,6 @@ public class FixGroupServiceImpl implements FixGroupService {
             }
         }
         fixGroupMapper.deleteFixGroupTopicByGroupId(fixedGroupId);
+        return seminarGroup.getId();
     }
 }

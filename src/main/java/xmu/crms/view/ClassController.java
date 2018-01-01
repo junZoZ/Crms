@@ -56,9 +56,8 @@ public class ClassController {
                 //取差集
                 for(ClassInfo item1: myClassInfoList){
                     for(ClassInfo item:listClass) {
-                        if (item1.getId().equals(item.getId())) {
+                        if (item1.getCourse().getId().equals(item.getCourse().getId())) {
                             listClass.remove(item);
-                            break;
                         }
                     }
                 }
@@ -233,8 +232,9 @@ public class ClassController {
     public FixedGroupVO getFixGroupById(@PathVariable("classId") Integer classId,@RequestAttribute("userId") String userId) throws  ClassesNotFoundException, FixGroupNotFoundException {
 //JWT
 //
-
+        System.out.println(userId);
         FixedGroupVO fixedGroupVO=new FixedGroupVO();
+
         FixGroup fixGroup= null;
         try {
             fixGroup = fixGroupService.getFixedGroupById(new BigInteger(userId),new BigInteger(classId.toString()));
@@ -261,6 +261,7 @@ public class ClassController {
                     }
                 }
                 fixedGroupVO.setUser(listUserVO);
+                fixedGroupVO.setId(fixGroup.getId().intValue());
         return fixedGroupVO;
     }
 

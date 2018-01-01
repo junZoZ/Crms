@@ -183,7 +183,7 @@ public interface FixGroupService {
      * @throws SeminarNotFoundException  未找到讨论课
      * @author qinlingyun
      */
-    void fixedGroupToSeminarGroup(BigInteger semianrId, BigInteger fixedGroupId) throws
+    BigInteger fixedGroupToSeminarGroup(BigInteger semianrId, BigInteger fixedGroupId) throws
             IllegalArgumentException, FixGroupNotFoundException, SeminarNotFoundException;
 
 }

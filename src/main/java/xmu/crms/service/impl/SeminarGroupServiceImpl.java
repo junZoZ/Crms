@@ -177,11 +177,13 @@ public  class SeminarGroupServiceImpl implements SeminarGroupService {
              groupNumber += item.getGroupNumberLimit();
          }
          //根据seminarID创建seminarGroup
+        List<User> attendenceUserList = userSerive.listAbsenceStudent(seminarId,classId);
+         if(attendenceUserList.size()<groupNumber){groupNumber = attendenceUserList.size();}
         for(int i = 0;i<groupNumber;i++){
          insertSeminarGroupBySeminarId(seminarId,classId,new SeminarGroup());}
          List<SeminarGroup> seminarGroupList = listSeminarGroupBySeminarId(seminarId);
          //给所有的组添加成员
-         List<User> attendenceUserList = userSerive.listAbsenceStudent(seminarId,classId);
+
          Collections.shuffle(attendenceUserList);
          int count = 0;
          groupNumber = seminarGroupList.size();

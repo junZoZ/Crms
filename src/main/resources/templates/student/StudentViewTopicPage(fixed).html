@@ -16,13 +16,37 @@
     <script src="/js/cookie3.js"></script>
     <script>
           var courseID = getCookie("courseId");
+          var classID = getCookie("classId");
+          var seminarID = getCookie("seminarId");
           var topicID = getCookie("topicId");
+
+
          window.onload=function(){
          getCourseInformation(courseID);
          getTopicInformation(topicID);
+         load(classID)
 
     }
+    //获取是否是组长的信息
+ function load(id){
 
+      var userId=localStorage.getItem("userId")
+      var token = localStorage.getItem("jwt")
+      $.ajax({
+             type:"GET", //请求方式
+             url:"/class/"+id+"/classgroup", //请求路径
+              headers: {"Authorization": "Bearer " + token},
+             cache: false,
+             contentType : "application/json",
+             dataType: 'json',   //返回值类型
+             success:function(data){
+
+               if(data && data.leader.id != userId)
+                   {alert(data.leader.id);$(".modifyButton").hide();}
+                else if(data){setCookie("fixGroupId",data.id);alert(data.id);}
+             },
+             error:function(result){alert("fgd");$(".modifyButton").hide();}
+      }); }
 
  //得到课程的基本信息
     function getCourseInformation(courseID)
@@ -39,34 +63,40 @@
 
          $("#courseName").html(data.name);
          $("#courseDescription").html(data.description);
-
          },
          error:function(data){
          }
          });
     }
 
+
+
     //小组选题
      function chooseTopicInformation()
     {
-    var token = localStorage.getItem("jwt")
        var msg = confirm("选题之后不能更改选题，确定要选择吗？");
-       var tid=topicID;
-       if(mag){
+
+     var token = localStorage.getItem("jwt")
+     var userId=localStorage.getItem("userId")
+
+       if(msg){
+       var groupID = getCookie("fixGroupId");
+
         $.ajax({
         type:"POST", //请求方式
-        url: "/group/"+groupID+"/topic/"+topicID,
+        url: "/fixGroup/"+groupID+"/seminar/"+seminarID+"/topic/"+topicID,
+
                  headers: {"Authorization": "Bearer " + token},
         cache: true,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
-        data:JSON.stringify(tid),
+        data:JSON.stringify(topicID),
         success:function(data){
               alert("选择话题成功!");
                 $(".modifyButton").hide();
          },
          error:function(data){
-           alert("选择话题失败！");
+           alert("选题失败！");
          }
          });
          }
@@ -90,8 +120,6 @@
          $("#serial").html("话题"+data.serial);
          $("#name").html(data.name);
          $("#description").html(data.description);
-
-
           $("#groupLimit").html(data.groupLimit);
           $("#groupMemberLimit").html(data.groupMemberLimit);
 
