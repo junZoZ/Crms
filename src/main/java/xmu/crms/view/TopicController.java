@@ -14,6 +14,9 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author  cb
+ */
 @RestController
 public class TopicController {
 
@@ -36,7 +39,7 @@ public class TopicController {
     @Autowired
     private  TopicService topicService;
 
-    //话题GET
+
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/topic/{topicId}",method = RequestMethod.GET)
     @ResponseBody
@@ -55,7 +58,7 @@ public class TopicController {
         return topicVO;
     }
 
-    //修改话题PUT
+
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value="/topic/{topicId}",method = RequestMethod.PUT)
     @ResponseBody

@@ -22,6 +22,9 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author  zyx
+ */
 @RestController
 public class GroupController {
 
@@ -89,7 +92,7 @@ public class GroupController {
 
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/fixGroup/{groupID}/seminar/{seminarID}/topic/{topicID}",method = RequestMethod.POST)
-    public Integer FixGrouptopicChoose(@PathVariable("groupID") Integer groupId,@PathVariable("seminarID") Integer seminarId,
+    public Integer fixGrouptopicChoose(@PathVariable("groupID") Integer groupId,@PathVariable("seminarID") Integer seminarId,
                                     @PathVariable ("topicID") Integer topicId,@RequestAttribute("userId") String userId) throws FixGroupNotFoundException, SeminarNotFoundException {
        System.out.println("fgidogdof");
        BigInteger groupeID = new BigInteger("0");
@@ -133,9 +136,10 @@ public class GroupController {
        seminarGroupGradeVO.setReportGrade(seminarGroup.getReportGrade());
        seminarGroupGradeVO.setFinalGrade(seminarGroup.getFinalGrade());
        seminarGroupGradeVO.setReport(seminarGroup.getReport());
-
-       if(seminarGroup.getReport().equals("")){seminarGroupGradeVO.setSubmit("未提交");}
-       else{seminarGroupGradeVO.setSubmit("已提交");}
+       String ran ="未提交" ;
+       String ran1 = "已提交";
+       if("".equals(seminarGroup.getReport())){seminarGroupGradeVO.setSubmit(ran);}
+       else{seminarGroupGradeVO.setSubmit(ran1);}
        //处理小组的topic
         String topicSerial = "";
         List<SeminarGroupTopic> seminarGroupTopicList = topicService.listSeminarGroupTopicByGroupId(seminarGroup.getId());

@@ -1,7 +1,9 @@
 package xmu.crms.vo;
 
 import java.math.BigInteger;
-
+/**
+ * @author  cb
+ */
 public class LoginSuccessVO {
     private BigInteger id;
     private String type;

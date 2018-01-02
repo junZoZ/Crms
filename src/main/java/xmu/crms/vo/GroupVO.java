@@ -1,7 +1,9 @@
 package xmu.crms.vo;
 
 import java.util.ArrayList;
-
+/**
+ * @author  cb
+ */
 public class GroupVO {
 
   private Integer id;

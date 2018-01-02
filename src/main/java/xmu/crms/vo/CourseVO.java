@@ -2,7 +2,9 @@ package xmu.crms.vo;
 
 import java.math.BigInteger;
 import java.util.Date;
-
+/**
+ * @author  cb
+ */
 public class CourseVO {
     private BigInteger id;
     private String name;
@@ -113,7 +115,18 @@ public class CourseVO {
         this.proportions = courseProportion;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "CourseVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", numClass=" + numClass +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", description='" + description + '\'' +
+                ", teacherName='" + teacherName + '\'' +
+                ", teacherEmail='" + teacherEmail + '\'' +
+                ", proportions=" + proportions +
+                '}';
+    }
 }

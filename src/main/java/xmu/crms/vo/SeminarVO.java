@@ -3,7 +3,9 @@ package xmu.crms.vo;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+/**
+ * @author  cb
+ */
 public  class SeminarVO {
 
 	Integer id;

@@ -4,7 +4,9 @@ import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroup;
 
 import java.util.ArrayList;
-
+/**
+ * @author  cb
+ */
 public class TopicVO {
 
     Integer id;
@@ -83,5 +85,17 @@ public class TopicVO {
         this.groups = groups;
     }
 
-
+    @Override
+    public String toString() {
+        return "TopicVO{" +
+                "id=" + id +
+                ", serial='" + serial + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", groupLimit=" + groupLimit +
+                ", groupMemberLimit=" + groupMemberLimit +
+                ", groupLeft=" + groupLeft +
+                ", groups=" + groups +
+                '}';
+    }
 }

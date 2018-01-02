@@ -19,6 +19,9 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * @author  zzj
+ */
 @RestController
 public class MeController {
     @Autowired
@@ -118,7 +121,8 @@ public class MeController {
 
         System.out.println(user);
         try {
-            user.setPassword(md5Hex(user.getPassword()).substring(8,24)); //加密
+            //加密
+            user.setPassword(md5Hex(user.getPassword()).substring(8,24));
         } catch (NoSuchAlgorithmException e) { }
         User u= loginService.signUpPhone(user);
         String jwt = jwtService.generateJwt(u);

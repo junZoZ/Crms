@@ -14,6 +14,9 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author  zyx
+ */
 @RestController
 public class SeminarController {
 
@@ -39,7 +42,7 @@ public class SeminarController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/seminar/{seminarId}",method = RequestMethod.GET)
     @ResponseBody
-    public SeminarVO SeminarInfo(@PathVariable("seminarId") Integer seminarId) throws IllegalArgumentException,SeminarNotFoundException {
+    public SeminarVO seminarInfo(@PathVariable("seminarId") Integer seminarId) throws IllegalArgumentException,SeminarNotFoundException {
 
         List<Topic> topicList = topicService.listTopicBySeminarId(new BigInteger(seminarId.toString()));
         //处理topic
@@ -68,7 +71,7 @@ public class SeminarController {
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/seminar/{seminarId}",method = RequestMethod.PUT)
     @ResponseBody
-    public void ModifySeminar(@PathVariable("seminarId") Integer seminarId, @RequestBody SeminarVO modifySeminar) throws IllegalArgumentException,SeminarNotFoundException {
+    public void modifySeminar(@PathVariable("seminarId") Integer seminarId, @RequestBody SeminarVO modifySeminar) throws IllegalArgumentException,SeminarNotFoundException {
         Seminar seminar = seminarService.getSeminarBySeminarId(new BigInteger(seminarId.toString()));
         seminar.setName(modifySeminar.getName());
         seminar.setDescription(modifySeminar.getDescription());
@@ -81,7 +84,7 @@ public class SeminarController {
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/seminar/{seminarId}",method = RequestMethod.DELETE)
     @ResponseBody
-    public void DeleteSeminar(@PathVariable("seminarId") Integer seminarId) throws
+    public void deleteSeminar(@PathVariable("seminarId") Integer seminarId) throws
             IllegalArgumentException,SeminarNotFoundException{
         seminarService.deleteSeminarBySeminarId(new BigInteger(seminarId.toString()));
     }
@@ -89,7 +92,7 @@ public class SeminarController {
 //    get seminar/{seminarid}/my
 //    get seminar/{seminarid}/detail
 
-    //获得话题Topic
+
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/seminar/{seminarId}/topic",method = RequestMethod.GET)
     @ResponseBody
@@ -112,7 +115,7 @@ public class SeminarController {
         return topicVOList;
     }
 
-    //创建话题POST
+
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/seminar/{seminarId}/topic",method = RequestMethod.POST)
@@ -163,7 +166,7 @@ public class SeminarController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/seminar/{seminarId}/group/my",method = RequestMethod.GET)
     @ResponseBody
-    public GroupVO MySeminarGroup(@PathVariable("seminarId") Integer seminarId,@RequestAttribute("userId") String userId) throws GroupNotFoundException {
+    public GroupVO mySeminarGroup(@PathVariable("seminarId") Integer seminarId,@RequestAttribute("userId") String userId) throws GroupNotFoundException {
 //        用到jwt
 //         没有实现404尚未分组
         SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupById(new BigInteger(seminarId.toString()),new BigInteger(userId));
@@ -194,7 +197,7 @@ public class SeminarController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/seminar/{seminarId}/randomTopic",method = RequestMethod.GET)
     @ResponseBody
-    public List<TopicVO> CheckRandomGroup(@PathVariable("seminarId") Integer seminarId){
+    public List<TopicVO> checkRandomGroup(@PathVariable("seminarId") Integer seminarId){
         List<Topic> listTopic=topicService.listTopicBySeminarId(new BigInteger(seminarId.toString()));
         List<TopicVO> listTopicVO=new ArrayList<>(16);
         for(Topic item:listTopic)

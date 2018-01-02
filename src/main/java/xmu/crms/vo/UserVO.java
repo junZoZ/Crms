@@ -1,5 +1,7 @@
 package xmu.crms.vo;
-
+/**
+ * @author  cb
+ */
 public class UserVO {
     Integer id;
     String name;

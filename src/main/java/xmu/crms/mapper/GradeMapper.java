@@ -11,8 +11,11 @@ import java.lang.*;
 import java.math.BigInteger;
 import java.util.List;
 
+
+
 /**
- * Created by status200 on 2017/12/19.
+ * @author  lyh
+ *  Created by status200 on 2017/12/19.
  */
 @Mapper
 @Component
@@ -29,14 +32,39 @@ public interface GradeMapper {
      */
     SeminarGroup getSeminarGroupBySeminarGroupId(@Param("seminarGroupId") BigInteger seminarGroupId);
 
+    /**
+     * gfdgfg
+     * @param userId
+     * @return
+     */
     User getUserByUserId(@Param("userId")BigInteger userId);
 
+    /**
+     * dfdd
+     * @param schoolId
+     * @return
+     */
     School getSchoolBySchoolId(@Param("schoolId")BigInteger schoolId);
 
+    /**
+     * klfdg
+     * @param seminarId
+     * @return
+     */
     Seminar getSeminarBySeminarId(@Param("seminarId")BigInteger seminarId);
 
+    /**
+     * irdo
+     * @param courseId
+     * @return
+     */
     Course getCourseByCourseId(@Param("courseId")BigInteger courseId);
 
+    /**
+     * ifod
+     * @param classId
+     * @return
+     */
     ClassInfo getClassInfoByClassId(@Param("classId")BigInteger classId);
     /**
      * 获取某学生所有讨论课的所有成绩
@@ -53,37 +81,111 @@ public interface GradeMapper {
      * @return List 该课程下所有讨论课列表
      */
     List<SeminarGroup> listSeminarGradeByCourseId(@Param("userId")BigInteger userId, @Param("courseId")BigInteger courseId);
+
     /**
-     * 提交对其他小组的打分
+     * jdifhoi
+     * @param topicId
+     * @param seminarGroupId
+     * @return
      */
      BigInteger getSeminarGroupTopicId(@Param("topicId")BigInteger topicId,@Param("seminarGroupId")BigInteger seminarGroupId);
-     void insertGroupGradeByUserId(@Param("userId")BigInteger userId, @Param("groupId")BigInteger seminarGroupTopicId, @Param("grade")BigInteger grade);
+
     /**
-     * 按ID设置小组报告分.
+     * ftiojhfj
+     * @param userId
+     * @param seminarGroupTopicId
+     * @param grade
+     */
+     void insertGroupGradeByUserId(@Param("userId")BigInteger userId, @Param("groupId")BigInteger seminarGroupTopicId, @Param("grade")BigInteger grade);
+
+    /**
+     * iofghjfio
+     * @param seminarGroupId
+     * @param grade
      */
     void updateGroupByGroupId(@Param("seminarGroupId") BigInteger seminarGroupId, @Param("grade") BigInteger grade);
+
     /**
-     * 定时器方法.
-     * 讨论课结束后计算展示得分.
+     * jthofjoigh
      * @param seminarId
-     * @throws IllegalArgumentException seminarId或seminarGroupId格式错误
+     * @return
      */
     List<BigInteger> getSeminarGroupIdBySeminarId(@Param("seminarId")BigInteger seminarId);
-    List<BigInteger> getSeminarGroupTopicIdBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId);
-    List<Integer> getGradeBySeminarGroupTopicId(@Param("seminarGroupTopicId")BigInteger seminarGroupTopicId);
-    void updatePresentationGradeBySeminarGroupTopicId(@Param("seminarGroupTopicId")BigInteger seminarGroupTopicId,@Param("grade")int grade);
-    void updatePresentationGradeBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId,@Param("grade")int grade);
+
     /**
-     * 定时器方法.
-     * 讨论课结束后计算本次讨论课得分.
-     * <p>条件: 讨论课已结束，展示得分已算出<br>*GradeService<br>
-     * @throws IllegalArgumentException seminarId或seminarGroupId格式错误
+     * jgfihj
+     * @param seminarGroupId
+     * @return
+     */
+    List<BigInteger> getSeminarGroupTopicIdBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId);
+
+    /**
+     * jgiohfh
+     * @param seminarGroupTopicId
+     * @return
+     */
+    List<Integer> getGradeBySeminarGroupTopicId(@Param("seminarGroupTopicId")BigInteger seminarGroupTopicId);
+
+    /**
+     * jgiohjhfiog
+     * @param seminarGroupTopicId
+     * @param grade
+     */
+    void updatePresentationGradeBySeminarGroupTopicId(@Param("seminarGroupTopicId")BigInteger seminarGroupTopicId,@Param("grade")int grade);
+
+    /**
+     * joifghjfoijh
+     * @param seminarGroupId
+     * @param grade
+     */
+    void updatePresentationGradeBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId,@Param("grade")int grade);
+
+    /**
+     * jitfouitf
+     * @param seminarGroupId
+     * @return
      */
     Integer getPresentationGradeBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId);
+
+    /**
+     * jiofgji
+     * @param seminarGroupId
+     * @return
+     */
     Integer getReportGradeBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId);
+
+    /**
+     * fithopfih
+     * @param seminarId
+     * @return
+     */
     BigInteger getCourseIdBySeminarId(@Param("seminarId")BigInteger seminarId);
+
+    /**
+     * iofgjhoig
+     * @param courseId
+     * @return
+     */
     Integer getFivePercentageByCourseId(@Param("courseId")BigInteger courseId);
+
+    /**
+     * jfioghfh
+     * @param courseId
+     * @return
+     */
     Integer getFourPercentageByCourseId(@Param("courseId")BigInteger courseId);
+
+    /**
+     * jtflhjtofihj
+     * @param courseId
+     * @return
+     */
     Integer getThreePercentageByCourseId(@Param("courseId")BigInteger courseId);
+
+    /**
+     * jgoifjioh
+     * @param seminarGroupId
+     * @param grade
+     */
     void updateFinalGradeBySeminarGroupId(@Param("seminarGroupId")BigInteger seminarGroupId,@Param("grade")int grade);
 }

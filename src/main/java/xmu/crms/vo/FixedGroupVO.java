@@ -2,6 +2,9 @@ package xmu.crms.vo;
 
 import java.util.ArrayList;
 
+/**
+ * @author  cb
+ */
 public class FixedGroupVO {
     Integer id;
     UserVO leader;

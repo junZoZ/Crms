@@ -21,64 +21,114 @@ import java.util.List;
 @Mapper
 @Component
 public interface UserMapper {
-/**
- * 根据id得到用户
-*/
-	User getUserByUserIdBigInteger(@Param("userId") BigInteger userId);
 	/**
-	 * 返回签到序列
-	*/
+	 * fjgfdglkdfg
+	 * @param userId
+	 * @return
+	 */
+	User getUserByUserIdBigInteger(@Param("userId") BigInteger userId);
+
+	/**
+	 *  返回签到序列
+	 * @param classId
+	 * @param seminarId
+	 * @param userId
+	 * @return
+	 */
 	BigInteger getIdByInfo(@Param("classId") BigInteger classId, @Param("seminarId") BigInteger seminarId, @Param("userId")
             BigInteger userId);
-/**
- * 插入学生签到信息
-*/
+
+	/**
+	 * 插入学生签到信息
+	 * @param classId
+	 * @param seminarId
+	 * @param userId
+	 */
 	void insertAttendanceById(@Param("classId") BigInteger classId, @Param("seminarId") BigInteger seminarId, @Param("userId")
             BigInteger userId);
+
 	/**
-	* 获取经度
-	*/
+	 * 获取经度
+	 * @param seminarId
+	 * @param classId
+	 * @return seminarId
+	 */
 	double getLongitude(@Param("seminarId") BigInteger seminarId, @Param("classId") BigInteger classId);
+
 	/**
-	* 获取纬度
-	*/
+	 * 获取纬度
+	 * @param seminarId
+	 * @param classId
+	 * @return
+	 */
 	double getLatitude(@Param("seminarId") BigInteger seminarId, @Param("classId") BigInteger classId);
+
 	/**
-* 获取讨论课所在班级缺勤学生名单
-*/
+	 * cvmblkc
+	 * @param seminarId
+	 * @param classId
+	 * @return
+	 */
 	List<User> listAbsenceStudent(@Param("seminarId") BigInteger seminarId, @Param("classId") BigInteger classId);
 
 	/**
-	 * 
-	* 获取学生签到信息.
-	*/
+	 * khfgpoh
+	 * @param seminarId
+	 * @param classId
+	 * @return
+	 */
 	List<Attendance> listAttendanceById(@Param("seminarId") BigInteger seminarId, @Param("classId") BigInteger classId);
+
 	/**
-	* 根据教师名称列出课程名称.
-	*/
+	 * jfiohjfgioh
+	 * @param userName
+	 * @return
+	 */
 	List<Course>listCourseByTeacherName(@Param("userName") String userName);
+
 	/**
-	* 获取讨论课所在班级迟到学生名单.
-	*/
+	 * jfghfgioh
+	 * @param seminarId
+	 * @param classId
+	 * @return
+	 */
 	List<User>listLateStudent(@Param("seminarId") BigInteger seminarId, @Param("classId") BigInteger classId);
+
 	/**
-	* 获取讨论课所在的班级出勤的学生名单
-	*/
+	 * jfighfoi
+	 * @param seminarId
+	 * @param classId
+	 * @return
+	 */
 	List<User> listPresentStudent(@Param("seminarId") BigInteger seminarId, @Param("classId") BigInteger classId);
+
 	/**
-	*按班级ID、学号开头、姓名开头获取学生列表.
-	*/
+	 * kohgfkog
+	 * @param classId
+	 * @param numBeginWith
+	 * @param nameBeginWith
+	 * @return
+	 */
 	List<User>listUserByClassId(@Param("classId") BigInteger classId, @Param("numBeginWith") String numBeginWith, @Param("nameBeginWith") String nameBeginWith);
+
 	/**
-	*根据用户名获取用户列表.
-	*/
+	 * kogkhko
+	 * @param userName
+	 * @return
+	 */
 	List<User>listUserByUserName(@Param("userName") String userName);
+
 	/**
-	*根据用户名获取用户ID.
-	*/
+	 * fgohifoh
+	 * @param userName
+	 * @return
+	 */
 	List<BigInteger> listUserIdByUserName(@Param("userName") String userName);
+
 	/**
-	*根据用户ID修改用户信息.
-	*/
+	 * kogphkpog
+	 * @param userId
+	 * @param user
+	 */
 	void updateUserByUserId(@Param("userId") BigInteger userId, @Param("user") User user);
 }

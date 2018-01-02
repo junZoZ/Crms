@@ -168,7 +168,9 @@ public interface SeminarGroupMapper {
 
 
     /**
-     * 异常讨论课小组成员.
+     * jgodjfgj
+     * @param seminarGroupMember
+     * @return SeminarGroupMember
      */
     Integer deleteSeminarGroupMemberById(SeminarGroupMember seminarGroupMember);
 }

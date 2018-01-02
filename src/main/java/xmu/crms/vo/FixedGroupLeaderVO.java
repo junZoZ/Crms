@@ -2,7 +2,9 @@ package xmu.crms.vo;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-
+/**
+ * @author  cb
+ */
 public class FixedGroupLeaderVO {
     BigInteger id;
     BigInteger classId;

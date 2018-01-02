@@ -1,5 +1,7 @@
 package xmu.crms.vo;
-
+/**
+ * @author  cb
+ */
 public class SeminarGroupGradeVO {
     private String topicSerial;
     private String groupName;

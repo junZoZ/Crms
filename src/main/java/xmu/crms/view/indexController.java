@@ -18,9 +18,11 @@ import java.math.BigInteger;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-
+/**
+ * @author  zzj
+ */
 @Controller
-public class indexController {
+public class IndexController {
 
 @Autowired
     UserService userService;

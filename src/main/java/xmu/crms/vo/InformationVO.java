@@ -1,5 +1,7 @@
 package xmu.crms.vo;
-
+/**
+ * @author  cb
+ */
 public class InformationVO {
   Integer id;
   String type;
@@ -106,5 +108,21 @@ public class InformationVO {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    @Override
+    public String toString() {
+        return "InformationVO{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", name='" + name + '\'' +
+                ", number='" + number + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", gender='" + gender + '\'' +
+                ", school=" + school +
+                ", title='" + title + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
     }
 }

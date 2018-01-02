@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * @author zyx
+ */
 @RestController
 public class CourseController {
 
@@ -59,7 +63,7 @@ public class CourseController {
     @JsonIgnoreProperties
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value="/course",method = RequestMethod.POST)
-    public Integer NewCourse(@RequestBody CourseVO newCourseVO,@RequestAttribute("userId") String userId)
+    public Integer newCourse(@RequestBody CourseVO newCourseVO,@RequestAttribute("userId") String userId)
     {
 
         Course course = new Course();
@@ -80,7 +84,7 @@ public class CourseController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/course/{courseId}",method = RequestMethod.GET)
     @ResponseBody
-    public CourseVO CourseDescription(@PathVariable("courseId") Integer courseId)
+    public CourseVO courseDescription(@PathVariable("courseId") Integer courseId)
             throws IllegalArgumentException,CourseNotFoundException {
 
         Course course = courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
@@ -91,7 +95,7 @@ public class CourseController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/course/{courseId}/detail",method = RequestMethod.GET)
     @ResponseBody
-    public CourseVO CourseDescriptionDetail(@PathVariable("courseId") Integer courseId)
+    public CourseVO courseDescriptionDetail(@PathVariable("courseId") Integer courseId)
             throws IllegalArgumentException,CourseNotFoundException {
 
         Course course = courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
@@ -113,7 +117,7 @@ public class CourseController {
 
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value="/course/{courseId}",method = RequestMethod.PUT)
-    public void NewCourse1(@PathVariable("courseId") Integer courseId,@RequestBody CourseVO courseDetail)
+    public void newCourse1(@PathVariable("courseId") Integer courseId,@RequestBody CourseVO courseDetail)
     {
         Course course = null;
         try {
@@ -143,8 +147,7 @@ public class CourseController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/course/{courseId}/class",method = RequestMethod.GET)
     @ResponseBody
-//    500错误
-    public ArrayList<IdAndNameVO> Classes(@PathVariable("courseId") Integer courseId) throws CourseNotFoundException{
+    public ArrayList<IdAndNameVO> classes(@PathVariable("courseId") Integer courseId) throws CourseNotFoundException{
         List<ClassInfo> classInfo = classService.listClassByCourseId(new BigInteger(courseId.toString()));
         ArrayList<IdAndNameVO> idAndNameVOArrayList = new ArrayList<>();
         for(ClassInfo item :classInfo){
@@ -157,7 +160,7 @@ public class CourseController {
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value = "/course/{courseId}/class",method = RequestMethod.POST)
     @ResponseBody
-    public Integer NewClass(@PathVariable("courseId") Integer courseId,@RequestBody ClassVO newClass) throws CourseNotFoundException {
+    public Integer newClass(@PathVariable("courseId") Integer courseId,@RequestBody ClassVO newClass) throws CourseNotFoundException {
 
         ClassInfo classInfo=new ClassInfo();
         Course course=courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
@@ -178,7 +181,7 @@ public class CourseController {
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value = "/course/{courseId}/seminar",method = RequestMethod.GET)
     @ResponseBody
-    public ArrayList<SeminarVO> ListSeminars(@PathVariable("courseId") Integer courseId,@RequestParam(value="embedGrade",required = false) boolean embedGrades,@RequestAttribute("userId") String userId) throws CourseNotFoundException{
+    public ArrayList<SeminarVO> listSeminars(@PathVariable("courseId") Integer courseId,@RequestParam(value="embedGrade",required = false) boolean embedGrades,@RequestAttribute("userId") String userId) throws CourseNotFoundException{
 //        和小程序有交集
 //        需要用到jwt
 //        有一个属性用不到
@@ -216,7 +219,7 @@ public class CourseController {
     @ResponseStatus(value= HttpStatus.CREATED)
     @RequestMapping(value = "/course/{courseId}/seminar",method = RequestMethod.POST)
     @ResponseBody
-    public Integer NewSeminar(@PathVariable("courseId") Integer courseId, @RequestBody SeminarVO newSeminar) throws CourseNotFoundException {
+    public Integer newSeminar(@PathVariable("courseId") Integer courseId, @RequestBody SeminarVO newSeminar) throws CourseNotFoundException {
         Seminar seminar=new Seminar();
         Course course=courseService.getCourseByCourseId(new BigInteger(courseId.toString()));
         seminar.setCourse(course);
@@ -224,7 +227,8 @@ public class CourseController {
         seminar.setDescription(newSeminar.getDescription());
         seminar.setStartTime(newSeminar.getStartTime());
         seminar.setEndTime(newSeminar.getEndTime());
-        if(newSeminar.getGroupingMethod().equals("fixed"))
+        String ran = "fixed";
+        if(ran.equals(newSeminar.getGroupingMethod()))
         {seminar.setFixed(true);}
         else
         {

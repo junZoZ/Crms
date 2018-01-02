@@ -141,7 +141,7 @@ public class ClassController {
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/class/{classId}",method = RequestMethod.PUT)
     @ResponseBody
-    public void ModifyClass(@PathVariable("classId") Integer classId,@RequestBody ClassVO modifyClass) throws ClassesNotFoundException {
+    public void modifyClass(@PathVariable("classId") Integer classId,@RequestBody ClassVO modifyClass) throws ClassesNotFoundException {
           ClassInfo classInfo= classService.getClassByClassId(new BigInteger(classId.toString()));
           classInfo.setClassTime(modifyClass.getTime());
           classInfo.setFivePointPercentage(modifyClass.getProportions().getA());
@@ -159,7 +159,7 @@ public class ClassController {
     @ResponseStatus(value= HttpStatus.NO_CONTENT)
     @RequestMapping(value = "/class/{classId}",method = RequestMethod.DELETE)
     @ResponseBody
-    public void ModifyClass(@PathVariable("classId") Integer classId) throws ClassesNotFoundException
+    public void modifyClass(@PathVariable("classId") Integer classId) throws ClassesNotFoundException
     {
         System.out.println(classId);
         classService.deleteClassByClassId(new BigInteger(classId.toString()));
@@ -257,7 +257,7 @@ public class ClassController {
                         uservos.setName(item.getName());
                         uservos.setNumber(item.getNumber());
                         listUserVO.add(uservos);
-                        //System.out.println(item.getId());
+
                     }
                 }
                 fixedGroupVO.setUser(listUserVO);

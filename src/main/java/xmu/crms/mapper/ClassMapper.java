@@ -40,6 +40,8 @@ public interface ClassMapper {
      * 根据班级id修改班级信息<br>
      *
      * @param classId 班级ID
+     * @param newClass
+     *@return Boolean
      */
     Boolean updateClassByClassId(@Param("classId") BigInteger classId, @Param("newClass") ClassInfo newClass);
 
@@ -109,12 +111,11 @@ public interface ClassMapper {
     Boolean updateScoreRuleById(@Param("classId") BigInteger classId, @Param("proportions") ClassInfo proportions);
 
 
-    /**
-     * 新建班级.
-     * <p>
-     * 根据课程id新建班级<br>
+
+    /**根据课程id新建班级<br>
      *
-     * @return classId 班级Id
+     * @param classInfo
+     * @return
      * @author ixing
      */
     Boolean insertClassById(@Param("classInfo") ClassInfo classInfo);
