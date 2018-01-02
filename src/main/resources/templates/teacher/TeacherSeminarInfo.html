@@ -68,7 +68,7 @@
            $("#endTime").html(data.endTime);
 
            var date = new Date();
-           alert(data.endTime)
+
            var month = date.getMonth() + 1;
            var strDate = date.getDate();
            if (month >= 1 && month <= 9) {
@@ -78,7 +78,7 @@
                 strDate = "0" + strDate;
            }
            var nowDate = date.getFullYear()+"-"+month+"-"+strDate;//获取当前实际日期
-           alert(nowDate)
+          
            if(nowDate <= data.endTime){
                $("#changeButton").html("查看选题");
            }
