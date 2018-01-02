@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查看话题（随机分组）</title>
+    <link href="/css/student/content.css" rel="stylesheet" type="text/css"/>
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/jquery.inview.min.js"></script>
+    <script src="/js/cookie3.js"></script>
+    <script>
+        //var courseID = ${sessionScope.courseID};
+          var courseID = getCookie("courseId");
+          var topicID = getCookie("topicId");
+
+         window.onload=function(){
+         getCourseInformation(courseID);
+         getTopicInformation(topicID);
+
+    }
+
+
+ //得到课程的基本信息
+    function getCourseInformation(courseID)
+    {
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+courseID,
+        cache: true,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+        success:function(data){
+
+         $("#courseName").html(data.name);
+         $("#courseDescription").html(data.description);
+
+         },
+         error:function(data){
+
+         }
+         });
+    }
+
+   function getTopicInformation(topicID)
+   {
+       var token = localStorage.getItem("jwt")
+       $.ajax({
+        type:"GET", //请求方式
+        url: "/topic/" + topicID,
+           headers: {"Authorization": "Bearer " + token},
+        cache: false,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+
+        success:function(data){
+
+         $("#serial").html(data.serial);
+         $("#name").html(data.name);
+         $("#description").html(data.description);
+
+          $("#groupLimit").html(data.groupLimit);
+          $("#groupMemberLimit").html(data.groupMemberLimit);
+
+         },
+         error:function(data){
+         }
+         });
+   }
+    function goback()
+    {
+    //你所要跳转的页面
+    window.location.href="/student/StudentCourseInformation";
+    }
+
+function checkGrade()
+{
+   alert("跳转到新的界面！");
+}
+    </script>
+</head>
+<body>
+<div class="top">
+    <div class="font">
+        课堂管理系统
+    </div>
+    <div class="icon">
+        <a href="/student/StudentCourseHome"><img src="/images/home.png">首页</a>
+        <img src="/images/help.png">帮助
+        <a href="/common/AccountLoginPage"><img src="/images/exit.png">退出</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="body">
+    <div class="navigation">
+        <div class="courseName" id="courseName"></div>
+        <div class="line"></div>
+        <div class="courseIntroduction" id="courseDescription"></div>
+    </div>
+    <div class="content">
+        <div class="block">
+            <div class="title" id="serial"></div>
+            <button class="returnButton"onClick="goback()">返回上一页</button>
+            <div class="line"></div>
+            <div class="itemBody">
+                <div class="item">
+                    <label class="itemName">题目:</label>
+                    <label class="itemName" id="name"></label>
+                </div>
+                <div class="item">
+                    <label class="itemName">说明:</label>
+                    <label class="itemName" id="description"></label>
+                </div>
+                <div class="item">
+                    <label class="itemName">组数限制:</label>
+                    <label class="itemName" id="groupLimit"></label>
+                </div>
+                <div class="item">
+                    <label class="itemName">组内人数上限:</label>
+                    <label class="itemName" id="groupMemberLimit"></label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+</body>
+</html>

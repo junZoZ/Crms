@@ -19,7 +19,7 @@
         WHERE id = #{seminarId}
     </select>
 
-    <update id="updateSeminarBySeminarId" parameterType="Seminar">
+    <update id="updateSeminarBySeminarId" parameterType="xmu.crms.entity.Seminar">
         UPDATE  seminar
         <set>
             <if test="name!=null">
@@ -35,7 +35,7 @@
                 is_fixed=#{fixed},
             </if>
             <if test="startTime!=null">
-                start_time=#{groupStudentLimit},
+                start_time=#{startTime},
             </if>
             <if test="endTime!=null">
                 end_time=#{endTime},
@@ -48,14 +48,14 @@
         DELETE FROM seminar WHERE id = #{seminarId}
     </delete>
 
-    <insert id="insertSeminarByCourseId" parameterType="Seminar" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSeminarByCourseId" parameterType="xmu.crms.entity.Seminar" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO seminar
         (id,name,description,course_id,is_fixed,start_time,end_time)
         VALUES
         (#{id}, #{name},#{description},#{course.id},#{fixed},#{startTime},#{endTime})
     </insert>
 
-    <resultMap id="SeminarResultMap" type="Seminar">
+    <resultMap id="SeminarResultMap" type="xmu.crms.entity.Seminar">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="description" column="description"/>

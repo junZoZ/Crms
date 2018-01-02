@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>班级信息</title>
+   <link rel="stylesheet" href="/css/teacher/content.css">
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/jquery.inview.min.js"></script>
+    <script src="/js/jquery.params.js"></script>
+    <script src="/js/cookie3.js"></script>
+    <script>
+ var roster ="";
+
+ var classID= getCookie("classId");
+ var courseID=getCookie("courseId");
+
+     window.onload=function(){
+     getCourseInformation(courseID);
+     getClassInformation(classID);
+    }
+
+ //得到课程的基本信息
+    function getCourseInformation(courseID)
+    {
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/course/"+courseID,
+        cache: true,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+
+        success:function(data){
+
+         $("#courseName").html(data.name);
+         $("#courseDescription").html(data.description);
+
+         },
+         error:function(data){
+         }
+         });
+    }
+        //修改实现
+        function modify()
+        {
+           window.location.href="/teacher/TeacherUpdateClass";
+        }
+
+         //删除实现
+         function Del()
+        {
+            var msg = confirm("确认删除？");
+           if( msg)
+           {
+               var token = localStorage.getItem("jwt")
+              $.ajax({
+                    type:"DELETE", //请求方式
+                    url: "/class/" + classID,
+                  headers: {"Authorization": "Bearer " + token},
+                    cache: true,   //如果使用缓存
+                    contentType : "application/json",
+                    dataType: 'json',   //返回值类型
+                     success:function(data){
+                              alert("删除成功！");
+                              window.location.href="/teacher/TeacherCourseInformation";
+                        },
+                     error:function(data){
+                             }
+                         });
+           }
+        }
+
+
+//得到班级的基本信息
+    function getClassInformation(classID)
+    {
+        var token = localStorage.getItem("jwt")
+        $.ajax({
+        type:"GET", //请求方式
+        url: "/class/" + classID,
+            headers: {"Authorization": "Bearer " + token},
+        cache: true,   //如果使用缓存
+        contentType : "application/json",
+        dataType: 'json',   //返回值类型
+        success:function(data){
+         $("#name").html(data.name);
+         $("#time").html(data.time);
+         $("#site").html(data.site);
+          roster = data.roster;
+          $("#report").html(data.proportions.report+"%");
+          $("#presentation").html(data.proportions.presentation+"%");
+          $("#c").html(data.proportions.c+"%");
+          $("#b").html(data.proportions.b+"%");
+          $("#a").html(data.proportions.a+"%");
+         },
+         error:function(data){
+
+         }
+         });
+    }
+
+
+
+
+
+    </script>
+</head>
+<body>
+    
+        <div class="top">
+          <div class="font">
+            课堂管理系统
+          </div>
+          <div class="icon">
+              <a href="/teacher/TeacherCourseHomePage.html"><img src="/images/home.png">首页</a>
+              <img src="/images/help.png">帮助
+              <a href="/common/WechatLoginPage"><img src="/images/exit.png">退出</a>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="body">
+            <div class="navigation">
+                <div class="courseName" id="courseName"></div>
+                <div class="line"></div>
+                <div class="courseIntroduction" id="courseDescription"></div>
+            </div>
+            <div class="content">
+                <div class="block">
+                    <div class="title" >班级信息</div>
+                    <a href="/teacher/TeacherCourseInformation" ><div class="returnButton">返回上一页</div></a>
+                    <div class="line"></div>
+                    <div class="itemBody">
+                        <div class="item">
+                          <label class="itemName" >班级名称:</label>
+                          <label class="itemName" id="name"></label>
+                        </div>
+                        <div class="item">
+                          <label class="itemName">上课地点:</label>
+                          <label class="itemName" id="site"></label>
+                        </div>
+                        <div class="item">
+                          <label class="itemName">上课时间:</label>
+                          <label class="itemName" id="time"> </label>
+
+                        </div>
+                        <div class="item">
+                          <label class="itemName">评分规则:</label>
+                          <label class="itemName" >讨论课分数占比</label>
+                          <label class="itemName" id="presentation"></label>
+                          <label class="itemName" > 报告分数占比</label>
+                          <label class="itemName" id="report"></label>
+                        </div>
+                        <div class="item" style="margin-left: 25%">
+                          <label class="smallItemName">3分占比</label>
+                          <label class="itemName" id="c"></label>
+                          <label class="smallItemName">4分占比</label>
+                           <label class="itemName" id="b" ></label>
+                          <label class="smallItemName">5分占比</label>
+                           <label class="itemName" id="a"></label>
+                        </div>
+                
+                        <div class="item">
+                          <label class="itemName">导入学生名单:</label>
+                          <button class="selectFile">下载文件</button>
+                        </div>
+                        <div class="item">
+                          <button class="submit" onclick="modify()">修改</button>
+                          <button class="reset" onclick="Del()">删除班级</button>
+                          <div class="clear"></div>
+                        </div>
+                        <div class="item">
+                          <div class="clear"></div>
+                        </div>
+                      
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+</body>
+</html>

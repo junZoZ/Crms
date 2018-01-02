@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,
+                                     initial-scale=1.0,
+                                     maximum-scale=1.0,
+                                     user-scalable=no">
+    <title>ClassManage</title>
+<link href="/css/common/RegisterPage.css" rel="stylesheet" type="text/css"/>
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.isotope.min.js"></script>
+    <script src="/js/jquery.inview.min.js"></script>
+    <script src="/js/cookie3.js"></script>
+    <script src="/js/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url: "http://apis.map.qq.com/ws/district/v1/list?key=7DFBZ-K4PWQ-TYK5Y-GL7XN-RBDSQ-XSB6M&output=jsonp",
+            type: "GET",
+            dataType: "JSONP",
+            success: function (data) {
+                console.log(data);
+                var result = data.result[0];
+                for(var i = 0;i<result.length;i++)
+                    $("#province").append(
+                        "<option value=\"" + result[i].name + "\" id=\"" + result[i].id + "\">" + result[i].name + "</option>"
+                    );
+                $.ajax({
+                    url: "http://apis.map.qq.com/ws/district/v1/getchildren?key=7DFBZ-K4PWQ-TYK5Y-GL7XN-RBDSQ-XSB6M&output=jsonp&id=" + $("#province option:selected").attr("id"),
+                    type: "GET",
+                    dataType: "JSONP",
+                    success: function (data) {
+                        var result = data.result[0];
+                        for(var i = 0;i<result.length;i++)
+                            $("#city").append(
+                                "<option value=\"" + result[i].name + "\" id=\"" + result[i].id + "\">" + result[i].name + "</option>"
+                            );
+                        $.ajax({
+                            url: "/school?city=" + $("#city option:selected").attr("value"),
+                            type: "GET",
+                            success: function (data) {
+                                for(var i = 0;i<data.length;i++)
+                                    $("#city").append(
+                                        "<option value=\"" + data.name + "\" id=\"" + data.id + "\">" + data.name + "</option>"
+                                    );
+                            }
+                        })
+                    }
+                });
+            }
+        });
+
+        $("#province").change(function () {
+            $("#city").empty();
+            $("#school").empty();
+            $.ajax({
+                url: "http://apis.map.qq.com/ws/district/v1/getchildren?key=7DFBZ-K4PWQ-TYK5Y-GL7XN-RBDSQ-XSB6M&output=jsonp&id=" + $("#province option:selected").attr("id"),
+                type: "GET",
+                dataType: "JSONP",
+                success: function (data) {
+                    var result = data.result[0];
+                       $("#city").append("<option value =\"请选择市区\">请选择市区</option>")
+                    for(var i = 0;i<result.length;i++)
+                        $("#city").append(
+                            "<option value=\"" + result[i].name + "\" id=\"" + result[i].id + "\">" + result[i].name + "</option>"
+                        );
+                    $.ajax({
+                        url: "/school?city=" + $("#city option:selected").attr("value"),
+                        type: "GET",
+                        success: function (data) {
+                            for(var i = 0;i<data.length;i++)
+                                $("#city").append(
+                                    "<option value=\"" + data.name + "\" id=\"" + data.id + "\">" + data.name + "</option>"
+                                );
+                        }
+                    })
+                }
+            });
+        });
+
+      $("#city").change(function () {
+            $("#school").empty();
+            $.ajax({
+                url: "/school?city=" + $("#city option:selected").attr("value"),
+                type: "GET",
+                success: function (data) {
+                    for(var i = 0;i<data.length;i++)
+                        $("#school").append(
+                            "<option value=\"" + data[i].name + "\" id=\"" + data[i].id + "\">" + data[i].name + "</option>"
+                        );
+                }
+            });
+        });
+    })()
+
+    function sub()
+    {
+    var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+    if(!$("#name").val()||!$("#email").val()||!$("#number").val()
+    ||!$("#phone").val()||!$("#password").val()||$('#province').val()=="请选择省份"||$('#city').val()=="请选择市区"||$('#school').val() =="无"
+    ) alert("请填写全部资料！");
+    else if($("#name").val().length>=10){alert("姓名过长！")}
+    else if($("#phone").val().length!=11){alert("手机号位数不对！")}
+    else if(!reg.test($("#email").val()))
+        {
+            alert("邮箱格式不正确，请重新输入！");
+        }
+    else
+    {
+    var gender = $("input[name='gender']:checked").val();
+    var type = $("input[name='role']:checked").val();
+    var id=$('#school').val()
+
+    var bind={
+    "phone":$('#phone').val() ,
+    "password":$('#password').val() ,
+    "name": $('#name').val() ,
+    "school":{"id":$('#school option:selected').attr('id') ,"name": $('#school').val(),"province": $('#province').val(),
+    "city":$('#city').val() },
+    "gender": gender == "男" ? 0 : 1,
+    "type": type == "学生" ? 0 : 1,
+    "number": $('#number').val() ,
+    "email": $('#email').val()
+    }
+        $.ajax({
+        type:"POST", //请求方式
+        url: "/register",
+        contentType :"application/json",
+        data:JSON.stringify(bind),
+        success:function(data){
+
+              localStorage.setItem("jwt", data.jwt)
+              localStorage.setItem("userId", data.id)
+              console.log(data)
+              alert("注册成功！");
+             if(data.type=="student")
+             {
+                 window.location.href="/student/StudentHomePage";
+             }
+             else if(data.type=="teacher")
+             {
+               window.location.href="/teacher/TeacherHomePage";
+             }
+         },
+         error:function(data){
+         alert("注册失败！该手机号已被注册过！");
+         }
+         });
+      }
+     }
+
+     function to_change(i){
+                if(i==1){
+                  document.getElementById('ifTeacher').innerHTML="学号:<input type=\"text\" name=\"stuffNum\" id=\"number\"/>";
+                  var str="学校:<select class=\"schoolSelect\" id=\"school\"></select>"
+                  $("#creatSchool").html(str);
+                }else if(i==2){
+                    document.getElementById('ifTeacher').innerHTML="教工号:<input type=\"text\" name=\"stuffNum\" id=\"number\"/>";
+                    var str="学校:<select class=\"schoolSelect\" id=\"school\"></select> <a href=\"/teacher/TeacherCreateSchool\" id=\"create\"><div class=\"createSchool\">创建学校</div></a>"
+                     $("#creatSchool").html(str);
+                }
+     }
+     </script>
+
+</head>
+
+<body>
+<div class="titleBackground"></div>
+<div class="title">课程管理系统</div>
+<div class="icon">
+</div>
+<div class="phoneNum">手机号:<input type="text" name="phoneNum" id="phone"/></div>
+<div class="password">密码:<input type="text" name="password" id="password"/></div>
+<div class="name">姓名:<input type="text" name="name" id="name"/></div>
+<div class="province">省:<select class="provinceSelect" id="province" >
+    <option value ="请选择省份">请选择省份</option>
+</select></div>
+<div class="city">市:<select class="citySelect" id="city"><option value ="请选择市区">请选择市区</option></select></div>
+<div class="school" id="creatSchool">学校:<select class="schoolSelect" id="school"></select></div>
+<div class="gender">性别:</div>
+<div class="male" > 男<input type="radio" value="男" name="gender" checked="checked" id="male" /></div>
+<div class="female" > 女<input type="radio" value="女" name="gender" id="female" /></div>
+<div class="role">角色:</div>
+<div class="student">学生<input type="radio" value="学生" name="role" id="student" checked="checked" onclick="to_change(1)" /></div>
+<div class="teacher">教师<input type="radio" value="教师" name="role"  id="teacher" onclick="to_change(2)"  /></div>
+<div class="stuffNum" id="ifTeacher">学号:<input type="text" name="stuffNum" id="number"/></div>
+<div class="eMail">邮箱:<input type="text" name="eMail" id="email"/></div>
+<button class="submit" onclick="sub()">提交</button>
+</body>
+
+</html>
