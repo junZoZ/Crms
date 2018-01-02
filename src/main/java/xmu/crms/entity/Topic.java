@@ -1,7 +1,9 @@
 package xmu.crms.entity;
 
 import java.math.BigInteger;
-
+/**
+ * @author zxy
+ * */
 public class Topic {
 	private BigInteger id;
 	private String name;

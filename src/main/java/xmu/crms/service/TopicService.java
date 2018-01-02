@@ -45,6 +45,7 @@ public interface TopicService {
      * @param topicId 要删除的topic的topicId
      * @throws IllegalArgumentException Id格式错误时抛出
      * @exception TopicNotFoundException 未找到该话题
+     * @exception IllegalArgumentException 格式错误
      */
     void deleteTopicByTopicId(BigInteger topicId) throws IllegalArgumentException,TopicNotFoundException;
 

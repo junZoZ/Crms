@@ -1,7 +1,9 @@
 package xmu.crms.hander;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
-
+/**
+ * @author zzj
+ * */
 @ControllerAdvice
 public class ExceptionResponse {
     String message;

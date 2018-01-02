@@ -225,25 +225,11 @@ public class ClassServiceImpl implements ClassService {
         return location.getId();
     }
 
-  /*  @Override
-    public void endCallRollById(Location location) throws SeminarNotFoundException, ClassesNotFoundException {
-
-        if(classMapper.countSeminarById(location.getSeminar().getId()) <= 0){
-            throw new SeminarNotFoundException(String.format("Seminar with id %d not found!",location.getSeminar().getId()));
-        }
-
-        if(classMapper.countClassByClassId(location.getClassInfo().getId()) <=0) {
-            throw new ClassesNotFoundException(String.format("Class with id %d not found!", location.getClassInfo().getId()));
-        }
-
-        classMapper.updateLocationBySeminarIdAndClassId(location);
-    }
-*/
 
     @Override
     public List<ClassInfo> listClassByUserId(BigInteger userId) throws IllegalArgumentException, ClassesNotFoundException {
-
-        if(userId.compareTo(new BigInteger("0")) <= 0) {
+      BigInteger r1=new BigInteger("0");
+        if(userId.compareTo(r1) <= 0) {
             throw new IllegalArgumentException(String.format("illegal userId format %d!", userId));
         }
 

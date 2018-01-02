@@ -40,6 +40,7 @@ public class MeController {
     @RequestMapping(value="/me", method=RequestMethod.GET)
     public UserVO getUser(@RequestAttribute("userId") String userId) throws UserNotFoundException {
         //jwt
+        Integer r1=new Integer(2);
         User u=userSeviceImpl.getUserByUserId(new BigInteger(userId));
         UserVO u1=new UserVO();
         u1.setId(u.getId().intValue());
@@ -63,7 +64,8 @@ public class MeController {
         {
             u1.setEducation("研究生");
         }
-        else if(u.getEducation()!=null&&u.getEducation()==2)
+
+        else if(u.getEducation()!=null&&u.getEducation().equals(r1))
         {
             u1.setEducation("博士");
         }

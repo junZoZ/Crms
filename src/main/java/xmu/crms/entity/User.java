@@ -1,7 +1,9 @@
 package xmu.crms.entity;
 
 import java.math.BigInteger;
-
+/**
+ * @author zyx
+ * */
 public class User {
 	private BigInteger id;
 	private String phone;

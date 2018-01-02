@@ -42,7 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith(tokenHeader)) {
             String authToken = authHeader.substring(tokenHeader.length());
             JwtPayload jwtPayload = jwtService.verifyJwt(authToken);
-//            System.out.println(jwtPayload.getType());
+
 
             if (jwtPayload != null && SecurityContextHolder.getContext().getAuthentication() == null
                     && jwtPayload.getExp() > System.currentTimeMillis()) {

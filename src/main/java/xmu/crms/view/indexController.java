@@ -29,6 +29,7 @@ public class IndexController {
 
     @RequestMapping(value="/me/modify/Student/{StudentId}",method=GET)
     public String studentInformationModify(Model model2,@PathVariable ("StudentId") Integer studentId) throws UserNotFoundException {
+        Integer r1=new Integer(2);
         User u=userService.getUserByUserId(new BigInteger(studentId.toString()));
         UserVO u1=new UserVO();
         u1.setId(u.getId().intValue());
@@ -65,7 +66,7 @@ public class IndexController {
         {
             u1.setEducation("研究生");
         }
-        else if(u.getEducation()!=null&&u.getEducation()==2)
+        else if(u.getEducation()!=null&&u.getEducation().equals(r1))
         {
             u1.setEducation("博士");
         }
@@ -103,16 +104,18 @@ public class IndexController {
     @RequestMapping(value="/me/modify/Student",method=POST)
     public String studentInformationModify(@RequestPart("profilePicture") MultipartFile profilePicture, UserVO user) throws IOException, UserNotFoundException {
 
+        String r1="研究生";
+        String r2="博士";
         User user1= new User();
         user1.setPhone(user.getPhone());
         user1.setNumber(user.getNumber());
         user1.setName(user.getName());
         user1.setEmail(user.getEmail());
         if(user.getEducation()!=null) {
-            if (user.getEducation() == "研究生") {
+            if (user.getEducation().equals(r1)) {
                 user1.setEducation(1);
             }
-            else if (user.getEducation() == "博士") {
+            else if (user.getEducation().equals(r2)) {
                 user1.setEducation(2);
             }
             else {
@@ -127,6 +130,7 @@ public class IndexController {
 
     @RequestMapping(value="/me/modify/Teacher/{TeacherId}",method=GET)
     public String teacherInformationModify(Model model3,@PathVariable ("TeacherId") Integer teacherId) throws UserNotFoundException {
+        Integer r1=new Integer(2);
         User u=userService.getUserByUserId(new BigInteger(teacherId.toString()));
         UserVO u1=new UserVO();
         u1.setId(u.getId().intValue());
@@ -163,7 +167,7 @@ public class IndexController {
         {
             u1.setEducation("研究生");
         }
-        else if(u.getEducation()!=null&&u.getEducation()==2)
+        else if(u.getEducation()!=null&&u.getEducation().equals(r1))
         {
             u1.setEducation("博士");
         }
@@ -188,17 +192,18 @@ public class IndexController {
 
     @RequestMapping(value="/me/modify/Teacher",method=POST)
     public String teacherInformationModify(@RequestPart("profilePicture") MultipartFile profilePicture,UserVO user) throws IOException, UserNotFoundException {
-
+        String r1="研究生";
+        String r2="博士";
         User user1= new User();
         user1.setNumber(user.getNumber());
         user1.setPhone(user.getPhone());
         user1.setName(user.getName());
         user1.setEmail(user.getEmail());
         if(user.getEducation()!=null) {
-            if (user.getEducation() == "研究生") {
+            if (user.getEducation() .equals(r1)) {
                 user1.setEducation(1);
             }
-            else if (user.getEducation() == "博士") {
+            else if (user.getEducation() .equals(r2)) {
                 user1.setEducation(2);
             }
             else {
