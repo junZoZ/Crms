@@ -11,6 +11,15 @@
     <script src="/js/jquery.inview.min.js"></script>
     <script src="/js/cookie3.js"></script>
     <script>
+
+     $(document).ready(function(){
+         var type=localStorage.getItem("type")
+    if(type=="teacher")
+    {
+        window.location.href="/common/AccountLoginPage";
+    }
+    });
+
     window.onload=function(){
       getCourseInformation();
     }

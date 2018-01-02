@@ -16,7 +16,13 @@
     <script src="/js/jquery.inview.min.js"></script>
     <script src="/js/cookie3.js"></script>
     <script>
-
+    $(document).ready(function(){
+         var type=localStorage.getItem("type")
+    if(type=="teacher")
+    {
+        window.location.href="/common/AccountLoginPage";
+    }
+    });
           var courseID = getCookie("courseId");
 
          window.onload=function(){
@@ -57,7 +63,6 @@
         cache: false,   //如果使用缓存
         contentType : "application/json",
         dataType: 'json',   //返回值类型
-
         success:function(data){
 
                str = "<table class=\"studenttable\"> <tr>  <th>讨论课</th> <th>组名</th> <th>组长</th>  <th>课堂讨论课得分</th> <th>报告分数</th>  <th>总分</th>  </tr>";

@@ -18,56 +18,79 @@
     <script src="/js/cookie3.js"></script>
 
     <script type="text/javascript">
+      $(document).ready(function(){
+         var type=localStorage.getItem("type")
+    if(type=="student")
+    {
+        window.location.href="/common/AccountLoginPage";
+    }
+    });
+   $(function () {
+        $.ajax({
+            url: "http://apis.map.qq.com/ws/district/v1/list?key=7DFBZ-K4PWQ-TYK5Y-GL7XN-RBDSQ-XSB6M&output=jsonp",
+            type: "GET",
+            dataType: "JSONP",
+            success: function (data) {
+                console.log(data);
+                var result = data.result[0];
+                for(var i = 0;i<result.length;i++)
+                    $("#province").append(
+                        "<option value=\"" + result[i].name + "\" id=\"" + result[i].id + "\">" + result[i].name + "</option>"
+                    );
+                $.ajax({
+                    url: "http://apis.map.qq.com/ws/district/v1/getchildren?key=7DFBZ-K4PWQ-TYK5Y-GL7XN-RBDSQ-XSB6M&output=jsonp&id=" + $("#province option:selected").attr("id"),
+                    type: "GET",
+                    dataType: "JSONP",
+                    success: function (data) {
+                        var result = data.result[0];
+                        for(var i = 0;i<result.length;i++)
+                            $("#city").append(
+                                "<option value=\"" + result[i].name + "\" id=\"" + result[i].id + "\">" + result[i].name + "</option>"
+                            );
+                        $.ajax({
+                            url: "/school?city=" + $("#city option:selected").attr("value"),
+                            type: "GET",
+                            success: function (data) {
+                                for(var i = 0;i<data.length;i++)
+                                    $("#city").append(
+                                        "<option value=\"" + data.name + "\" id=\"" + data.id + "\">" + data.name + "</option>"
+                                    );
+                            }
+                        })
+                    }
+                });
+            }
+        });
 
-  (function () {
-    var token = localStorage.getItem("jwt");
-    $.ajax({
-        url: "http://apis.map.qq.com/ws/district/v1/list?key=7DFBZ-K4PWQ-TYK5Y-GL7XN-RBDSQ-XSB6M&output=jsonp",
-        type: "GET",
-        headers: {"Authorization": "Bearer " + token},
-        dataType: "JSONP",
-        success: function (data) {
-            console.log(data);
-            var result = data.result[0];
-            for(var i = 0;i<result.length;i++)
-                $("#province").append(
-                    "<option value=\"" + result[i].name + "\" id=\"" + result[i].id + "\">" + result[i].name + "</option>"
-                );
+        $("#province").change(function () {
+            $("#city").empty();
+            $("#school").empty();
             $.ajax({
                 url: "http://apis.map.qq.com/ws/district/v1/getchildren?key=7DFBZ-K4PWQ-TYK5Y-GL7XN-RBDSQ-XSB6M&output=jsonp&id=" + $("#province option:selected").attr("id"),
                 type: "GET",
-                headers: {"Authorization": "Bearer " + token},
                 dataType: "JSONP",
                 success: function (data) {
                     var result = data.result[0];
+                       $("#city").append("<option value =\"请选择市区\">请选择市区</option>")
                     for(var i = 0;i<result.length;i++)
                         $("#city").append(
                             "<option value=\"" + result[i].name + "\" id=\"" + result[i].id + "\">" + result[i].name + "</option>"
                         );
+                    $.ajax({
+                        url: "/school?city=" + $("#city option:selected").attr("value"),
+                        type: "GET",
+                        success: function (data) {
+                            for(var i = 0;i<data.length;i++)
+                                $("#city").append(
+                                    "<option value=\"" + data.name + "\" id=\"" + data.id + "\">" + data.name + "</option>"
+                                );
+                        }
+                    })
                 }
             });
-        }
-    });
-
-    $("#province").change(function () {
-        $("#city").empty();
-        $.ajax({
-            url: "http://apis.map.qq.com/ws/district/v1/getchildren?key=7DFBZ-K4PWQ-TYK5Y-GL7XN-RBDSQ-XSB6M&output=jsonp&id=" + $("#province option:selected").attr("id"),
-            type: "GET",
-            headers: {"Authorization": "Bearer " + token},
-            dataType: "JSONP",
-            success: function (data) {
-                var result = data.result[0];
-                for(var i = 0;i<result.length;i++)
-                    $("#city").append(
-                        "<option value=\"" + result[i].name + "\" id=\"" + result[i].id + "\">" + result[i].name + "</option>"
-                    );
-            }
         });
-    })
 
-
-})();
+    })()
 
 function sub()
 {

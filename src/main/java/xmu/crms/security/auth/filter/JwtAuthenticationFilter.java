@@ -38,14 +38,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
         String tokenHeader = "Bearer ";
+        System.out.println(authHeader);
         if (authHeader != null && authHeader.startsWith(tokenHeader)) {
             String authToken = authHeader.substring(tokenHeader.length());
             JwtPayload jwtPayload = jwtService.verifyJwt(authToken);
+//            System.out.println(jwtPayload.getType());
+
             if (jwtPayload != null && SecurityContextHolder.getContext().getAuthentication() == null
                     && jwtPayload.getExp() > System.currentTimeMillis()) {
                 User user = jwtPayload.toUser();
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user.getPhone(),
-                        null, getAuthorities(1));
+                        null, getAuthorities(user.getType()));
                 authentication.setDetails(user);
                 request.setAttribute("user", user);
                 request.setAttribute("userId", user.getId());
@@ -59,6 +62,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private Collection<? extends GrantedAuthority> getAuthorities(
             int type) {
+        System.out.println(type+"    12131231132123");
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (type == 0) {
             authorities.add(new SimpleGrantedAuthority(ROLE_STUDENT));

@@ -91,6 +91,13 @@ jQuery(document).ready(function($) {
     </style>
 
     <script>
+        $(document).ready(function(){
+         var type=localStorage.getItem("type")
+    if(type=="teacher")
+    {
+        window.location.href="/common/AccountLoginPage";
+    }
+    });
           var courseID = getCookie("courseId");
           var seminarID = getCookie("seminarId");
 

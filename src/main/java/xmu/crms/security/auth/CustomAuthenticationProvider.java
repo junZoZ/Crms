@@ -87,6 +87,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     }
     private Collection<? extends GrantedAuthority> getAuthorities(
             Integer type) {
+        System.out.println(type+"    12131231132123");
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (type == null) {
             return authorities;

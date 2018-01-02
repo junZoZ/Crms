@@ -8,6 +8,14 @@
     <title>学生查看小组</title>
     <link href="/css/student/content.css" rel="stylesheet" type="text/css"/>
     <script>
+
+        $(document).ready(function(){
+         var type=localStorage.getItem("type")
+    if(type=="teacher")
+    {
+        window.location.href="/common/AccountLoginPage";
+    }
+    });
             function goback()
     {
     //你所要跳转的页面
@@ -105,7 +113,7 @@
                       load(classID);
             },
              error:function(result){
-                            alert("1");
+
                     }
             });
       }

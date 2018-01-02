@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsUtils;
 import xmu.crms.security.auth.filter.JwtAuthenticationFilter;
 import xmu.crms.security.auth.filter.LoginFilter;
 
@@ -74,9 +75,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // 添加权限控制
                 .authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/**").permitAll()
-             //   .antMatchers("/**/*.js","/**/*.css","/signin","/registerByPhone","/login","/register","/test","/common/*").permitAll()
-             //   .anyRequest().authenticated()
+                .anyRequest().authenticated()
                 // 添加 JWT 过滤器，对用户进行权限认证
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);

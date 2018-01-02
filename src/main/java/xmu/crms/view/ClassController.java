@@ -3,6 +3,7 @@ package xmu.crms.view;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import xmu.crms.entity.*;
 import xmu.crms.exception.*;
 import xmu.crms.service.ClassService;
@@ -41,6 +42,7 @@ public class ClassController {
 
     @ResponseStatus(value= HttpStatus.OK)
     @RequestMapping(value="/class",method = RequestMethod.GET)
+
     public List<ClassVO> classCheck(@RequestParam(value = "courseName",required = false) String courseName, @RequestParam(value = "teacherName",required = false) String teacherName,@RequestAttribute("userId") String userId)
     {
 //userID JWT
@@ -78,6 +80,8 @@ public class ClassController {
         for (ClassInfo item : listClass) {
             ClassVO classvo = new ClassVO();
             classvo.setId(item.getId().intValue());
+            classvo.setCourseId(item.getCourse().getId().intValue());
+            System.out.println(classvo.getCourseId().toString()+"ddddddddddddddd");
             classvo.setName(item.getName());
             classvo.setTime(item.getClassTime());
             classvo.setSite(item.getSite());

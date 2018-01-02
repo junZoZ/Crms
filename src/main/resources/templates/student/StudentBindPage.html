@@ -16,6 +16,14 @@
     <script src="/js/jquery.inview.min.js"></script>
     <script src="/js/cookie3.js"></script>
     <script type="text/javascript">
+
+     $(document).ready(function(){
+         var type=localStorage.getItem("type")
+    if(type=="teacher")
+    {
+        window.location.href="/common/AccountLoginPage";
+    }
+    });
    function setSelectUserNo(radioObj){
 
         var radioCheck= $(radioObj).val();

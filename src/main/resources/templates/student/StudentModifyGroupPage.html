@@ -10,7 +10,16 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/cookie3.js"></script>
     <script type="text/javascript">
-    var classId = 1;
+
+        $(document).ready(function(){
+         var type=localStorage.getItem("type")
+    if(type=="teacher")
+    {
+        window.location.href="/common/AccountLoginPage";
+    }
+    });
+
+    var classId = getCookie("classId");
     var courseID=getCookie("courseId");
    window.onload=function(){
 
@@ -132,7 +141,7 @@
                         getOtherStudent();
              },
                     error:function(result){
-                alert("页面加载错误！");}
+                }
       });
              }
   }
@@ -160,7 +169,7 @@
 
              },
                     error:function(result){
-                alert("页面加载错误！");}
+                }
       });
              }
   }

@@ -15,6 +15,14 @@
     <script src="/js/jquery.inview.min.js"></script>
     <script src="/js/cookie3.js"></script>
     <script>
+
+        $(document).ready(function(){
+         var type=localStorage.getItem("type")
+    if(type=="teacher")
+    {
+        window.location.href="/common/AccountLoginPage";
+    }
+    });
         //var courseID = ${sessionScope.courseID};
           var courseID = getCookie("courseId");
           var topicID = getCookie("topicId");
@@ -42,8 +50,10 @@
          $("#courseDescription").html(data.description);
 
          },
-         error:function(data){
-
+         error:function(data,status){
+            if(status === 401) {
+                window.location.href = '/common/AcountLoginPage';
+            }
          }
          });
     }
@@ -70,9 +80,11 @@
           $("#groupMemberLimit").html(data.groupMemberLimit);
 
          },
-         error:function(data){
+         error:function(data,status){
+            if(status === 401) {
+                window.location.href = '/common/AcountLoginPage';
+            }
          }
-         });
    }
     function goback()
     {

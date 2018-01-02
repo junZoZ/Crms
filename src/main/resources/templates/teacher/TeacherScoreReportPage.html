@@ -64,7 +64,13 @@
 	<script src="/js/jquery.params.js"></script>
 	<script src="/js/cookie3.js"></script>
 	<script type="text/javascript">
-
+      $(document).ready(function(){
+         var type=localStorage.getItem("type")
+    if(type=="student")
+    {
+        window.location.href="/common/AccountLoginPage";
+    }
+    });
          var groupID = getCookie("groupId");
          var seminarID = getCookie("seminarId");
     $(function() {

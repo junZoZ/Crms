@@ -13,6 +13,14 @@
     <script src="/js/jquery.params.js"></script>
     <script src="/js/cookie3.js"></script>
     <script>
+
+          $(document).ready(function(){
+         var type=localStorage.getItem("type")
+    if(type=="student")
+    {
+        window.location.href="/common/AccountLoginPage";
+    }
+    });
        var classID= getCookie("classId");
        var courseID=getCookie("courseId");
        //文件路径
@@ -154,7 +162,7 @@
           <div class="icon">
               <a href="/teacher/TeacherCourseHomePage"><img src="/images/home.png">首页</a>
               <img src="/images/help.png">帮助
-              <a href="/common/WechatLoginPage"><img src="/images/exit.png">退出</a>
+              <a href="/common/AccountLoginPage"><img src="/images/exit.png">退出</a>
           </div>
           <div class="clear"></div>
         </div>

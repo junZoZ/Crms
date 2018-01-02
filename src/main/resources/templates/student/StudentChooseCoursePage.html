@@ -12,6 +12,11 @@
     <script src="/js/cookie3.js"></script>
     <script>
     window.onload=function(){
+    var type=localStorage.getItem("type")
+    if(type=="teacher")
+    {
+        window.location.href="/common/AccountLoginPage";
+    }
       getCourseInformation();
     }
 
