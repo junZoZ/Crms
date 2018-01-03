@@ -18,13 +18,7 @@
     <script src="/js/cookie3.js"></script>
 
     <script type="text/javascript">
-      $(document).ready(function(){
-         var type=localStorage.getItem("type")
-    if(type=="student")
-    {
-        window.location.href="/common/AccountLoginPage";
-    }
-    });
+
    $(function () {
         $.ajax({
             url: "http://apis.map.qq.com/ws/district/v1/list?key=7DFBZ-K4PWQ-TYK5Y-GL7XN-RBDSQ-XSB6M&output=jsonp",

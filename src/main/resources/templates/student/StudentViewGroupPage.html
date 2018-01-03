@@ -76,6 +76,7 @@
              success:function(data){
                if(data&&data.leader.id==userId)
                    {
+
                    setCookie("fixgroupId",data.id);
                     }
                     else if(data&&data.leader.id!=userId)
@@ -101,6 +102,7 @@
     {
       var userId=localStorage.getItem("userId")
       var token = localStorage.getItem("jwt")
+
       $.ajax({
              type:"POST", //请求方式
              url:"/class/"+classID+"/newleader", //请求路径
@@ -110,6 +112,8 @@
              dataType: 'json',   //返回值类型
              success:function(data){
                       alert("新建成功，你成为组长！");
+                       $(document.getElementById("modify")).show();
+                       $(document.getElementById("create")).hide();
                       load(classID);
             },
              error:function(result){

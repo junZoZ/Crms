@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xmu.crms.entity.*;
 import xmu.crms.exception.*;
+import xmu.crms.mapper.ClassMapper;
 import xmu.crms.mapper.FixGroupMapper;
 import xmu.crms.service.FixGroupService;
 import xmu.crms.vo.FixedGroupLeaderVO;
@@ -21,6 +22,9 @@ import java.util.List;
 public class FixGroupServiceImpl implements FixGroupService {
     @Autowired
     private FixGroupMapper fixGroupMapper;
+
+    @Autowired
+    private ClassMapper classMapper;
     @Override
     public BigInteger insertFixGroupByClassId(BigInteger classId, BigInteger userId) throws IllegalArgumentException, UserNotFoundException {
         if(classId.intValue()<=0 || userId.intValue()<=0){
@@ -185,8 +189,8 @@ public class FixGroupServiceImpl implements FixGroupService {
         for(FixGroup temp:list1){
             if(temp.getClassInfo().getId().intValue()==classId.intValue()){
                 FixGroup fixGroup = new FixGroup();
-                List<ClassInfo> classInfo = fixGroupMapper.listClassById(temp.getClassInfo().getId());
-                fixGroup.setClassInfo(classInfo.get(0));
+                ClassInfo classInfo = classMapper.getClassByClassId(temp.getClassInfo().getId());
+                fixGroup.setClassInfo(classInfo);
                 List<User> leader = fixGroupMapper.listUsersById(temp.getLeader().getId());
                 fixGroup.setLeader(leader.get(0));
                 fixGroup.setId(temp.getId());
