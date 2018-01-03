@@ -176,17 +176,24 @@ public class ClassController {
     public List<UserVO> index3(@PathVariable("classId") Integer classId,@RequestParam("nameWith") String name,
                                @RequestParam("noWith") String no,@RequestAttribute("userId") String userId) throws ClassesNotFoundException,  FixGroupNotFoundException {
         //jwt
+        System.out.println(classId+" "+name+"  "+no+"  "+userId);
         List<UserVO> listUserVO=new ArrayList<UserVO>(16);
         FixGroup fixGroup= null;
         try {
             fixGroup = fixGroupService.getFixedGroupById(new BigInteger(userId),new BigInteger(classId.toString()));
+
         } catch (UserNotFoundException e) {
 
         }
         BigInteger groupId=fixGroup.getId();
         List<User> listUsers=fixGroupService.listFixGroupMemberByGroupId(groupId);
+
+        System.out.println(listUsers.get(0).toString());
         try {
            List<User> listUser=userService.listUserByClassId(new BigInteger(classId.toString()),no,name);
+            System.out.println(listUser.size());
+            System.out.println(listUser.get(0).toString());
+
             for(User item:listUser)
             {
                 UserVO uservo=new UserVO();
@@ -205,6 +212,7 @@ public class ClassController {
 
         } catch (UserNotFoundException e) { }
         System.out.println("fgodijgoitdj");
+        System.out.println(listUserVO.get(0).toString());
         return listUserVO;
     }
 

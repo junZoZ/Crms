@@ -86,6 +86,7 @@
        function getOtherStudent()
     {
         var token = localStorage.getItem("jwt")
+
      $.ajax({
              type:"GET", //请求方式
              url:"/class/"+classId+"/student?nameWith="+ $('#name').val() +"&noWith=" +$('#no').val(), //请求路径
